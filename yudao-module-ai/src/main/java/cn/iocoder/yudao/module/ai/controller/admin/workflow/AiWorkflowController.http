@@ -1,0 +1,11 @@
+### 测试 AI 工作流
+POST {{baseUrl}}/ai/workflow/test
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "id": 4,
+  "params": {
+    "message": "1 + 1 = ?"
+  }
+}
