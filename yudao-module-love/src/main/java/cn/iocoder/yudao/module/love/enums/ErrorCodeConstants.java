@@ -18,6 +18,10 @@ public interface ErrorCodeConstants {
     ErrorCode LOVE_MEMBER_PACKAGE_NOT_EXISTS = new ErrorCode(1_021_002_000, "会员套餐不存在");
     ErrorCode LOVE_MEMBER_PACKAGE_NAME_EXISTS = new ErrorCode(1_021_002_001, "会员套餐名称已存在");
     ErrorCode LOVE_MEMBER_PACKAGE_DISABLED = new ErrorCode(1_021_002_002, "会员套餐已停用");
+    ErrorCode LOVE_MEMBER_GROUP_NOT_EXISTS = new ErrorCode(1_021_002_003, "会员分组不存在");
+    ErrorCode LOVE_MEMBER_SKU_NOT_EXISTS = new ErrorCode(1_021_002_004, "会员 SKU 不存在");
+    ErrorCode LOVE_MEMBER_UPGRADE_NOT_ALLOWED = new ErrorCode(1_021_002_005, "当前状态不允许升级");
 
     ErrorCode LOVE_MEMBER_ORDER_NOT_EXISTS = new ErrorCode(1_021_003_000, "会员订单不存在");
+    ErrorCode LOVE_MEMBER_UPGRADE_ORDER_NOT_EXISTS = new ErrorCode(1_021_003_001, "会员升级订单不存在");
 }

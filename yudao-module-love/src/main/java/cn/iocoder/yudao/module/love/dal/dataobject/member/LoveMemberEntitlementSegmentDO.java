@@ -13,43 +13,25 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 /**
- * 婚恋会员订单 DO
+ * 婚恋会员权益分段 DO
  */
-@TableName("love_member_order")
-@KeySequence("love_member_order_seq")
+@TableName("love_member_entitlement_segment")
+@KeySequence("love_member_entitlement_segment_seq")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoveMemberOrderDO extends BaseDO {
+public class LoveMemberEntitlementSegmentDO extends BaseDO {
 
     @TableId
     private Long id;
 
     private Long userId;
 
-    private Long payOrderId;
+    private Long sourceOrderId;
 
-    private String orderNo;
-
-    private Long packageId;
-
-    private String packageName;
-
-    private Integer memberLevel;
-
-    private Integer priceFen;
-
-    private Integer durationMonths;
-
-    private Integer status;
-
-    private LocalDateTime payTime;
-
-    private LocalDateTime memberStartTime;
-
-    private LocalDateTime memberEndTime;
+    private Integer sourceOrderType;
 
     private Long groupId;
 
@@ -64,8 +46,6 @@ public class LoveMemberOrderDO extends BaseDO {
     private Integer durationDays;
 
     private Integer paidAmountFen;
-
-    private Integer orderType;
 
     private LocalDateTime startTime;
 

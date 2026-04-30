@@ -9,6 +9,12 @@ import lombok.Data;
 public class AppLoveMemberOrderCreateReqVO {
 
     @Schema(description = "会员套餐编号", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotNull(message = "会员套餐编号不能为空")
     private Long packageId;
+
+    @Schema(description = "会员 SKU 编号")
+    private Long skuId;
+
+    public Long resolveSkuId() {
+        return skuId != null ? skuId : packageId;
+    }
 }
