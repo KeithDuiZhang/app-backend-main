@@ -200,15 +200,25 @@ https://translation.superpowersai.cn/app-api/pay/notify/alipay
 
 Cloudflare 中 `translation.superpowersai.cn` 已经开启 Proxied 后，推荐：
 
-1. SSL/TLS 模式先用 `Full`。
-2. 有 Cloudflare Origin Certificate 后切换到 `Full (strict)`。
-3. 把 Origin Certificate 和私钥放到服务器 `deploy/nginx/cert/`。
-4. 打开 `deploy/nginx/conf.d/admin.conf` 里的 HTTPS 443 注释配置，替换证书文件名。
-5. 执行：
+1. 优先使用 `Full (strict)`。
+2. 源站证书可以使用 Cloudflare Origin Certificate，也可以使用 Let's Encrypt 证书。
+3. 证书和私钥放到服务器 `/opt/translation/nginx/cert/`，当前 Nginx 配置使用：
+   - `/etc/nginx/cert/origin-fullchain.pem`
+   - `/etc/nginx/cert/origin-privkey.pem`
+4. 执行：
 
 ```bash
 cd /opt/translation
 docker compose --env-file .env restart nginx
 ```
 
-Cloudflare 使用橙色云代理时，源站 Nginx 仍需要可接受 80/443 访问。
+如果 Cloudflare 到源站 443 出现 `525 SSL handshake failed`，但源站本机和其它外部服务器直连 443 都正常，优先检查是否存在运营商或机房链路对特定 SNI 的 TLS reset。本服务器最终采用 Cloudflare Tunnel 绕过入站 443 回源：
+
+```bash
+cd /opt/translation
+# 服务器 .env 中设置真实 CLOUDFLARED_TOKEN 后，部署脚本会自动启用 tunnel profile
+docker compose --env-file .env --profile tunnel up -d cloudflared
+docker compose --env-file .env --profile tunnel ps
+```
+
+Cloudflare DNS 中 `translation.superpowersai.cn` 和 `git.superpowersai.cn` 应指向 Tunnel 的 `*.cfargotunnel.com` CNAME，并保持 Proxied。Tunnel 使用内网访问 `http://nginx:80`，公网用户仍访问 `https://translation.superpowersai.cn`。

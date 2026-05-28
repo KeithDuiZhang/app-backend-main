@@ -29,6 +29,14 @@ if [ ! -f ".env" ]; then
   exit 1
 fi
 
+COMPOSE_ARGS=(--env-file .env)
+if awk -F= '/^[[:space:]]*CLOUDFLARED_TOKEN[[:space:]]*=/{gsub(/^[[:space:]]+|[[:space:]]+$/, "", $2); if ($2 != "" && $2 != "please_change_me") found=1} END{exit found ? 0 : 1}' .env; then
+  echo "[deploy] Cloudflare Tunnel token detected; enabling tunnel profile"
+  COMPOSE_ARGS+=(--profile tunnel)
+else
+  echo "[deploy] Cloudflare Tunnel token not set; tunnel profile disabled"
+fi
+
 if [ ! -f "${JAR_SOURCE}" ]; then
   echo "[deploy] ERROR: backend jar not found: ${JAR_SOURCE}" >&2
   exit 1
@@ -86,18 +94,18 @@ rm -rf nginx/html/admin
 mv nginx/html/admin.tmp nginx/html/admin
 
 echo "[deploy] Starting Docker services"
-docker compose --env-file .env up -d --build
+docker compose "${COMPOSE_ARGS[@]}" up -d --build
 
 echo "[deploy] Restarting nginx to refresh upstream Docker DNS"
-docker compose --env-file .env restart nginx
+docker compose "${COMPOSE_ARGS[@]}" restart nginx
 
 echo "[deploy] Docker service status"
-docker compose --env-file .env ps
+docker compose "${COMPOSE_ARGS[@]}" ps
 
 echo "[deploy] Recent yudao-server logs"
-docker compose --env-file .env logs --tail=100 yudao-server
+docker compose "${COMPOSE_ARGS[@]}" logs --tail=100 yudao-server
 
-if ! docker compose --env-file .env ps --status running --services | grep -qx "yudao-server"; then
+if ! docker compose "${COMPOSE_ARGS[@]}" ps --status running --services | grep -qx "yudao-server"; then
   echo "[deploy] ERROR: yudao-server is not running" >&2
   exit 1
 fi

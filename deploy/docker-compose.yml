@@ -84,6 +84,22 @@ services:
     networks:
       - translation-net
 
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    restart: always
+    profiles:
+      - tunnel
+    depends_on:
+      - nginx
+    command:
+      - tunnel
+      - --no-autoupdate
+      - run
+      - --token
+      - ${CLOUDFLARED_TOKEN}
+    networks:
+      - translation-net
+
 networks:
   translation-net:
     name: translation-net
