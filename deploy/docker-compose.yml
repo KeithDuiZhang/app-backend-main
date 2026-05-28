@@ -1,0 +1,90 @@
+name: translation-self-server
+
+services:
+  mysql:
+    image: mysql:8.0
+    restart: always
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --default-time-zone=+08:00
+    volumes:
+      - ./mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -uroot -p$${MYSQL_ROOT_PASSWORD} --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+    networks:
+      - translation-net
+
+  redis:
+    image: redis:7
+    restart: always
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    command: sh -c 'redis-server --appendonly yes --requirepass "$${REDIS_PASSWORD}"'
+    volumes:
+      - ./redis:/data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a \"$${REDIS_PASSWORD}\" ping | grep PONG"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+    networks:
+      - translation-net
+
+  yudao-server:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: translation-yudao-server:latest
+    restart: always
+    environment:
+      TZ: Asia/Shanghai
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-prod}
+      SERVER_PORT: 48080
+      SERVER_DOMAIN: ${SERVER_DOMAIN}
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      JAVA_OPTS: ${JAVA_OPTS:--Xms512m -Xmx1024m -Djava.security.egd=file:/dev/./urandom}
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    expose:
+      - "48080"
+    volumes:
+      - ./logs/yudao-server:/app/logs
+    networks:
+      - translation-net
+
+  nginx:
+    image: nginx:1.25
+    restart: always
+    depends_on:
+      - yudao-server
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/html/admin:/usr/share/nginx/html/admin:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/cert:/etc/nginx/cert:ro
+    networks:
+      - translation-net
+
+networks:
+  translation-net:
+    name: translation-net
+    external: true

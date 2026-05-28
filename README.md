@@ -4,6 +4,12 @@
  <img src="https://img.shields.io/github/license/YunaiV/ruoyi-vue-pro" alt="Downloads" />
 </p>
 
+## 个人服务器自动部署
+
+本仓库已经补齐面向个人服务器的 Docker Compose 部署、Nginx 反向代理、GitHub Actions 和 Gitea Actions 配置。正式访问域名为 `https://translation.superpowersai.cn`，生产 API 统一走 `/admin-api` 和 `/app-api`，生产配置不得写入本地内网穿透地址。
+
+完整部署说明、首次初始化命令、CI/CD Secrets、回滚和验收方式见：[docs/deployment-self-server.md](docs/deployment-self-server.md)。
+
 **严肃声明：现在、未来都不会有商业版本，所有代码全部开源!！**
 
 **「我喜欢写代码，乐此不疲」**  
@@ -16,7 +22,12 @@
 ## 🐶 新手必读
 
 * 演示地址【Vue3 + element-plus】：<http://dashboard-vue3.yudao.iocoder.cn>
-* 演示地址【Vue3 + vben(ant-design-vue)】：<http://dashboard-vben.yudao.iocoder.cn>
+* 演示地址【Vue3 + vben(ant-design-vue)】：<http://dashboard-vben.yudao.iocoder.cn>   
+* 
+* ```bash
+  npm run dev:antd
+  ```
+
 * 演示地址【Vue2 + element-ui】：<http://dashboard.yudao.iocoder.cn>
 * 启动文档：<https://doc.iocoder.cn/quick-start/>
 * 视频教程：<https://doc.iocoder.cn/video/>

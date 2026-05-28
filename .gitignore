@@ -53,3 +53,17 @@ application-my.yaml
 /yudao-ui-app/unpackage/
 **/.DS_Store
 .worktrees/
+
+######################################################################
+# Local agent and deployment runtime state
+
+memory/
+/deploy/.env
+/deploy/backend/yudao-server.jar
+/deploy/backend/yudao-server.jar.*
+/deploy/nginx/html/
+/deploy/mysql/
+/deploy/redis/
+/deploy/logs/
+/deploy/backups/
+/deploy/release/

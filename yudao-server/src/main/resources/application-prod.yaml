@@ -1,0 +1,145 @@
+server:
+  port: ${SERVER_PORT:48080}
+
+spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.ai.vectorstore.qdrant.autoconfigure.QdrantVectorStoreAutoConfiguration
+      - org.springframework.ai.vectorstore.milvus.autoconfigure.MilvusVectorStoreAutoConfiguration
+  datasource:
+    druid:
+      web-stat-filter:
+        enabled: true
+      stat-view-servlet:
+        enabled: true
+        allow:
+        url-pattern: /druid/*
+        login-username:
+        login-password:
+      filter:
+        stat:
+          enabled: true
+          log-slow-sql: true
+          slow-sql-millis: 500
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
+    dynamic:
+      druid:
+        initial-size: 2
+        min-idle: 2
+        max-active: 20
+        max-wait: 60000
+        time-between-eviction-runs-millis: 60000
+        min-evictable-idle-time-millis: 600000
+        max-evictable-idle-time-millis: 1800000
+        validation-query: SELECT 1 FROM DUAL
+        test-while-idle: true
+        test-on-borrow: false
+        test-on-return: false
+        pool-prepared-statements: true
+        max-pool-prepared-statement-per-connection-size: 20
+      primary: master
+      datasource:
+        master:
+          url: jdbc:mysql://${MYSQL_HOST:mysql}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:ruoyi-vue-pro}?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true&rewriteBatchedStatements=true
+          username: ${MYSQL_USERNAME:root}
+          password: ${MYSQL_ROOT_PASSWORD}
+        slave:
+          lazy: true
+          url: jdbc:mysql://${MYSQL_HOST:mysql}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:ruoyi-vue-pro}?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true&rewriteBatchedStatements=true
+          username: ${MYSQL_USERNAME:root}
+          password: ${MYSQL_ROOT_PASSWORD}
+  data:
+    redis:
+      host: ${REDIS_HOST:redis}
+      port: ${REDIS_PORT:6379}
+      database: ${REDIS_DATABASE:0}
+      password: ${REDIS_PASSWORD}
+  quartz:
+    auto-startup: true
+    scheduler-name: schedulerName
+    job-store-type: jdbc
+    wait-for-jobs-to-complete-on-shutdown: true
+    jdbc:
+      initialize-schema: NEVER
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName: schedulerName
+            instanceId: AUTO
+          jobStore:
+            class: org.springframework.scheduling.quartz.LocalDataSourceJobStore
+            isClustered: true
+            clusterCheckinInterval: 15000
+            misfireThreshold: 60000
+          threadPool:
+            threadCount: 10
+            threadPriority: 5
+            class: org.quartz.simpl.SimpleThreadPool
+  boot:
+    admin:
+      client:
+        enabled: false
+      context-path: /admin
+
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: health,info
+
+logging:
+  file:
+    name: /app/logs/yudao-server.log
+  level:
+    cn.iocoder.yudao.module.infra.dal.mysql.logger.ApiErrorLogMapper: INFO
+    cn.iocoder.yudao.module.infra.dal.mysql.job.JobLogMapper: INFO
+    cn.iocoder.yudao.module.infra.dal.mysql.file.FileConfigMapper: INFO
+    cn.iocoder.yudao.module.pay.dal.mysql.notify.PayNotifyTaskMapper: INFO
+    cn.iocoder.yudao.module.system.dal.mysql.sms.SmsChannelMapper: INFO
+    org.springframework.context.support.PostProcessorRegistrationDelegate: ERROR
+
+yudao:
+  web:
+    admin-ui:
+      url: https://${SERVER_DOMAIN:translation.superpowersai.cn}
+  captcha:
+    enable: true
+  security:
+    mock-enable: false
+  api-encrypt:
+    enable: false
+  pay:
+    order-notify-url: https://${SERVER_DOMAIN:translation.superpowersai.cn}/app-api/pay/notify/order
+    refund-notify-url: https://${SERVER_DOMAIN:translation.superpowersai.cn}/app-api/pay/notify/refund
+    transfer-notify-url: https://${SERVER_DOMAIN:translation.superpowersai.cn}/app-api/pay/notify/transfer
+  demo: false
+
+justauth:
+  enabled: false
+  cache:
+    type: REDIS
+    prefix: 'social_auth_state:'
+    timeout: 24h
+
+wx:
+  mp:
+    app-id:
+    secret:
+    config-storage:
+      type: RedisTemplate
+      key-prefix: wx
+      http-client-type: HttpClient
+  miniapp:
+    appid:
+    secret:
+    config-storage:
+      type: RedisTemplate
+      key-prefix: wa
+      http-client-type: HttpClient
+
+debug: false
