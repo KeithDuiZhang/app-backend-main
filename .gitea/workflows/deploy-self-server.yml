@@ -86,9 +86,11 @@ jobs:
         env:
           VITE_BASE_URL: ''
           VITE_GLOB_API_URL: /admin-api
+          NODE_OPTIONS: --max-old-space-size=3072
+          TURBO_TELEMETRY_DISABLED: '1'
         run: |
           pnpm install --frozen-lockfile
-          pnpm run build:antd
+          pnpm exec turbo build --filter=@vben/web-antd --concurrency=1
           mkdir -p ../release/frontend
           rm -rf ../release/frontend/*
           if [ -f apps/web-antd/dist.zip ]; then
