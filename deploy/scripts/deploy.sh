@@ -88,6 +88,9 @@ mv nginx/html/admin.tmp nginx/html/admin
 echo "[deploy] Starting Docker services"
 docker compose --env-file .env up -d --build
 
+echo "[deploy] Restarting nginx to refresh upstream Docker DNS"
+docker compose --env-file .env restart nginx
+
 echo "[deploy] Docker service status"
 docker compose --env-file .env ps
 
