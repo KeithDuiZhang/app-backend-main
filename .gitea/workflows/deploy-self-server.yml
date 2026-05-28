@@ -122,13 +122,16 @@ jobs:
           SSH_OPTS="-i ~/.ssh/deploy_key -o IdentitiesOnly=yes -p ${SERVER_PORT}"
 
           ssh ${SSH_OPTS} "${SERVER_USER}@${SERVER_HOST}" "mkdir -p '${DEPLOY_DIR}'"
-          rsync -az --delete \
+          rsync -a --delete \
             --exclude='.env' \
             --exclude='mysql/' \
             --exclude='redis/' \
             --exclude='logs/' \
+            --exclude='backups/' \
+            --exclude='backend/yudao-server.jar' \
+            --exclude='nginx/html/admin/' \
             --exclude='nginx/cert/' \
             -e "ssh ${SSH_OPTS}" \
             backend/deploy/ "${SERVER_USER}@${SERVER_HOST}:${DEPLOY_DIR}/"
-          rsync -az --delete -e "ssh ${SSH_OPTS}" release/ "${SERVER_USER}@${SERVER_HOST}:${DEPLOY_DIR}/release/"
+          rsync -a --delete -e "ssh ${SSH_OPTS}" release/ "${SERVER_USER}@${SERVER_HOST}:${DEPLOY_DIR}/release/"
           ssh ${SSH_OPTS} "${SERVER_USER}@${SERVER_HOST}" "cd '${DEPLOY_DIR}' && chmod +x scripts/*.sh && ./scripts/deploy.sh"

@@ -94,6 +94,16 @@ jobs:
           printf '%s\n' "${SERVER_SSH_KEY}" | tr -d '\r' | ssh-add -
 
           ssh -p "${SERVER_PORT}" "${SERVER_USER}@${SERVER_HOST}" "mkdir -p '${DEPLOY_DIR}'"
-          rsync -az --delete -e "ssh -p ${SERVER_PORT}" backend/deploy/ "${SERVER_USER}@${SERVER_HOST}:${DEPLOY_DIR}/"
-          rsync -az --delete -e "ssh -p ${SERVER_PORT}" release/ "${SERVER_USER}@${SERVER_HOST}:${DEPLOY_DIR}/release/"
+          rsync -a --delete \
+            --exclude='.env' \
+            --exclude='mysql/' \
+            --exclude='redis/' \
+            --exclude='logs/' \
+            --exclude='backups/' \
+            --exclude='backend/yudao-server.jar' \
+            --exclude='nginx/html/admin/' \
+            --exclude='nginx/cert/' \
+            -e "ssh -p ${SERVER_PORT}" \
+            backend/deploy/ "${SERVER_USER}@${SERVER_HOST}:${DEPLOY_DIR}/"
+          rsync -a --delete -e "ssh -p ${SERVER_PORT}" release/ "${SERVER_USER}@${SERVER_HOST}:${DEPLOY_DIR}/release/"
           ssh -p "${SERVER_PORT}" "${SERVER_USER}@${SERVER_HOST}" "cd '${DEPLOY_DIR}' && chmod +x scripts/*.sh && ./scripts/deploy.sh"
