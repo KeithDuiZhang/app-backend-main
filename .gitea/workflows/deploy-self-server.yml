@@ -22,6 +22,7 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
+          rm -f /etc/apt/sources.list.d/*.sources /etc/apt/sources.list.d/*.list
           cat > /etc/apt/sources.list <<'EOF'
           deb http://mirrors.cloud.tencent.com/debian bookworm main contrib non-free non-free-firmware
           deb http://mirrors.cloud.tencent.com/debian bookworm-updates main contrib non-free non-free-firmware
