@@ -105,22 +105,30 @@ jobs:
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
           SERVER_PORT: ${{ secrets.SERVER_PORT }}
           SERVER_USER: ${{ secrets.SERVER_USER }}
-          SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          SERVER_SSH_KEY_B64: ${{ secrets.SERVER_SSH_KEY_B64 }}
           DEPLOY_DIR: ${{ secrets.DEPLOY_DIR }}
         run: |
           test -n "${SERVER_HOST}"
           test -n "${SERVER_PORT}"
           test -n "${SERVER_USER}"
-          test -n "${SERVER_SSH_KEY}"
+          test -n "${SERVER_SSH_KEY_B64}"
           test -n "${DEPLOY_DIR}"
 
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
           ssh-keyscan -p "${SERVER_PORT}" "${SERVER_HOST}" >> ~/.ssh/known_hosts
-          eval "$(ssh-agent -s)"
-          printf '%s\n' "${SERVER_SSH_KEY}" | tr -d '\r' | ssh-add -
+          printf '%s' "${SERVER_SSH_KEY_B64}" | base64 -d > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          SSH_OPTS="-i ~/.ssh/deploy_key -o IdentitiesOnly=yes -p ${SERVER_PORT}"
 
-          ssh -p "${SERVER_PORT}" "${SERVER_USER}@${SERVER_HOST}" "mkdir -p '${DEPLOY_DIR}'"
-          rsync -az --delete -e "ssh -p ${SERVER_PORT}" backend/deploy/ "${SERVER_USER}@${SERVER_HOST}:${DEPLOY_DIR}/"
-          rsync -az --delete -e "ssh -p ${SERVER_PORT}" release/ "${SERVER_USER}@${SERVER_HOST}:${DEPLOY_DIR}/release/"
-          ssh -p "${SERVER_PORT}" "${SERVER_USER}@${SERVER_HOST}" "cd '${DEPLOY_DIR}' && chmod +x scripts/*.sh && ./scripts/deploy.sh"
+          ssh ${SSH_OPTS} "${SERVER_USER}@${SERVER_HOST}" "mkdir -p '${DEPLOY_DIR}'"
+          rsync -az --delete \
+            --exclude='.env' \
+            --exclude='mysql/' \
+            --exclude='redis/' \
+            --exclude='logs/' \
+            --exclude='nginx/cert/' \
+            -e "ssh ${SSH_OPTS}" \
+            backend/deploy/ "${SERVER_USER}@${SERVER_HOST}:${DEPLOY_DIR}/"
+          rsync -az --delete -e "ssh ${SSH_OPTS}" release/ "${SERVER_USER}@${SERVER_HOST}:${DEPLOY_DIR}/release/"
+          ssh ${SSH_OPTS} "${SERVER_USER}@${SERVER_HOST}" "cd '${DEPLOY_DIR}' && chmod +x scripts/*.sh && ./scripts/deploy.sh"
