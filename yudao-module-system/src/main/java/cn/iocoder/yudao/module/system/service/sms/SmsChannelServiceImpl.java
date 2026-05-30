@@ -2,6 +2,7 @@ package cn.iocoder.yudao.module.system.service.sms;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
+import cn.iocoder.yudao.framework.mybatis.core.type.EncryptTypeHandler;
 import cn.iocoder.yudao.module.system.controller.admin.sms.vo.channel.SmsChannelPageReqVO;
 import cn.iocoder.yudao.module.system.controller.admin.sms.vo.channel.SmsChannelSaveReqVO;
 import cn.iocoder.yudao.module.system.dal.dataobject.sms.SmsChannelDO;
@@ -105,12 +106,25 @@ public class SmsChannelServiceImpl implements SmsChannelService {
     public SmsClient getSmsClient(Long id) {
         SmsChannelDO channel = smsChannelMapper.selectById(id);
         SmsChannelProperties properties = BeanUtils.toBean(channel, SmsChannelProperties.class);
+        decryptSecretValue(properties);
         return smsClientFactory.createOrUpdateSmsClient(properties);
     }
 
     @Override
     public SmsClient getSmsClient(String code) {
         return smsClientFactory.getSmsClient(code);
+    }
+
+    private void decryptSecretValue(SmsChannelProperties properties) {
+        properties.setApiKey(decryptSecretValue(properties.getApiKey()));
+        properties.setApiSecret(decryptSecretValue(properties.getApiSecret()));
+    }
+
+    private String decryptSecretValue(String value) {
+        if (value == null || !value.startsWith("ENC:")) {
+            return value;
+        }
+        return EncryptTypeHandler.decrypt(value.substring("ENC:".length()));
     }
 
 }

@@ -2,10 +2,7 @@ package cn.iocoder.yudao.module.system.framework.sms.core.client.impl;
 
 import cn.hutool.core.date.format.FastDateFormat;
 import cn.hutool.core.lang.Assert;
-import cn.hutool.core.util.HexUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.crypto.digest.DigestUtil;
-import cn.hutool.crypto.digest.HmacAlgorithm;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
@@ -19,10 +16,12 @@ import cn.iocoder.yudao.module.system.framework.sms.core.enums.SmsTemplateAuditS
 import cn.iocoder.yudao.module.system.framework.sms.core.property.SmsChannelProperties;
 import com.google.common.annotations.VisibleForTesting;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.util.*;
 
-import static cn.hutool.crypto.digest.DigestUtil.sha256Hex;
 import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertList;
 
 /**
@@ -186,7 +185,7 @@ public class TencentSmsClient extends AbstractSmsClient {
         String stringToSign = "TC3-HMAC-SHA256" + "\n" + now.getTime() / 1000 + "\n" + credentialScope + "\n" +
                 sha256Hex(canonicalRequest);
         byte[] secretService = hmac256(hmac256(("TC3" + properties.getApiSecret()).getBytes(StandardCharsets.UTF_8), nowStr), "sms");
-        String signature = HexUtil.encodeHexStr(hmac256(hmac256(secretService, "tc3_request"), stringToSign));
+        String signature = hex(hmac256(hmac256(secretService, "tc3_request"), stringToSign));
         headers.put("Authorization", "TC3-HMAC-SHA256" + " " + "Credential=" + getApiKey() + "/" + credentialScope + ", "
                 + "SignedHeaders=" + signedHeaders + ", " + "Signature=" + signature);
 
@@ -196,7 +195,32 @@ public class TencentSmsClient extends AbstractSmsClient {
     }
 
     private static byte[] hmac256(byte[] key, String msg) {
-        return DigestUtil.hmac(HmacAlgorithm.HmacSHA256, key).digest(msg);
+        try {
+            Mac mac = Mac.getInstance("HmacSHA256");
+            mac.init(new SecretKeySpec(key, "HmacSHA256"));
+            return mac.doFinal(msg.getBytes(StandardCharsets.UTF_8));
+        } catch (Exception ex) {
+            throw new IllegalStateException("Failed to sign Tencent SMS request", ex);
+        }
+    }
+
+    private static String sha256Hex(String value) {
+        try {
+            return hex(MessageDigest.getInstance("SHA-256").digest(value.getBytes(StandardCharsets.UTF_8)));
+        } catch (Exception ex) {
+            throw new IllegalStateException("Failed to hash Tencent SMS request", ex);
+        }
+    }
+
+    private static String hex(byte[] bytes) {
+        char[] chars = new char[bytes.length * 2];
+        char[] digits = "0123456789abcdef".toCharArray();
+        for (int i = 0; i < bytes.length; i++) {
+            int value = bytes[i] & 0xff;
+            chars[i * 2] = digits[value >>> 4];
+            chars[i * 2 + 1] = digits[value & 0x0f];
+        }
+        return new String(chars);
     }
 
 }

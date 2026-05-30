@@ -31,7 +31,6 @@ public class SmsCodeSendReqDTO {
     /**
      * 发送 IP
      */
-    @NotEmpty(message = "发送 IP 不能为空")
     private String createIp;
 
 }

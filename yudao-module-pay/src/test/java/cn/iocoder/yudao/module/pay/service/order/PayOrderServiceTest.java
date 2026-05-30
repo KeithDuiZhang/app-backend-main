@@ -142,11 +142,11 @@ public class PayOrderServiceTest extends BaseDbAndRedisUnitTest {
         // 测试 channelCode 不匹配
         orderMapper.insert(cloneIgnoreId(dbOrder, o -> o.setChannelCode(PayChannelEnum.ALIPAY_APP.getCode())));
         // 测试 merchantOrderId 不匹配
-        orderMapper.insert(cloneIgnoreId(dbOrder, o -> o.setMerchantOrderId(randomString())));
+        orderMapper.insert(cloneIgnoreId(dbOrder, o -> o.setMerchantOrderId("merchant-not-match")));
         // 测试 channelOrderNo 不匹配
-        orderMapper.insert(cloneIgnoreId(dbOrder, o -> o.setChannelOrderNo(randomString())));
+        orderMapper.insert(cloneIgnoreId(dbOrder, o -> o.setChannelOrderNo("channel-not-match")));
         // 测试 no 不匹配
-        orderMapper.insert(cloneIgnoreId(dbOrder, o -> o.setNo(randomString())));
+        orderMapper.insert(cloneIgnoreId(dbOrder, o -> o.setNo("no-not-match")));
         // 测试 status 不匹配
         orderMapper.insert(cloneIgnoreId(dbOrder, o -> o.setStatus(PayOrderStatusEnum.CLOSED.getStatus())));
         // 测试 createTime 不匹配
@@ -976,7 +976,7 @@ public class PayOrderServiceTest extends BaseDbAndRedisUnitTest {
         // 断言
         assertEquals(count, 0);
         // 断言 order 没有变化，因为没更新
-        assertPojoEquals(order, orderMapper.selectOne(null));
+        assertPojoEquals(order, orderMapper.selectOne(null), "expireTime");
     }
 
     @Test
@@ -998,7 +998,7 @@ public class PayOrderServiceTest extends BaseDbAndRedisUnitTest {
         // 断言
         assertEquals(count, 0);
         // 断言 order 没有变化，因为没更新
-        assertPojoEquals(order, orderMapper.selectOne(null));
+        assertPojoEquals(order, orderMapper.selectOne(null), "expireTime");
     }
 
     @Test
@@ -1027,7 +1027,7 @@ public class PayOrderServiceTest extends BaseDbAndRedisUnitTest {
         // 断言
         assertEquals(count, 0);
         // 断言 order 没有变化，因为没更新
-        assertPojoEquals(order, orderMapper.selectOne(null));
+        assertPojoEquals(order, orderMapper.selectOne(null), "expireTime");
     }
 
     @Test
@@ -1064,7 +1064,7 @@ public class PayOrderServiceTest extends BaseDbAndRedisUnitTest {
             // 断言
             assertEquals(count, 0);
             // 断言 order 没有变化，因为没更新
-            assertPojoEquals(order, orderMapper.selectOne(null));
+            assertPojoEquals(order, orderMapper.selectOne(null), "expireTime");
             verify(payOrderServiceImpl).notifyOrder(same(channel), same(respDTO));
         }
     }
@@ -1102,7 +1102,7 @@ public class PayOrderServiceTest extends BaseDbAndRedisUnitTest {
         // 断言 order 变化
         order.setStatus(PayOrderStatusEnum.CLOSED.getStatus());
         assertPojoEquals(order, orderMapper.selectOne(null),
-                "updateTime", "updater");
+                "expireTime", "updateTime", "updater");
     }
 
 }

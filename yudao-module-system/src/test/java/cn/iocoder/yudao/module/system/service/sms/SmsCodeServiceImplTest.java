@@ -2,6 +2,7 @@ package cn.iocoder.yudao.module.system.service.sms;
 
 import cn.hutool.core.map.MapUtil;
 import cn.iocoder.yudao.framework.test.core.ut.BaseDbUnitTest;
+import cn.iocoder.yudao.module.infra.api.config.ConfigApi;
 import cn.iocoder.yudao.module.system.api.sms.dto.code.SmsCodeSendReqDTO;
 import cn.iocoder.yudao.module.system.api.sms.dto.code.SmsCodeUseReqDTO;
 import cn.iocoder.yudao.module.system.api.sms.dto.code.SmsCodeValidateReqDTO;
@@ -41,6 +42,8 @@ public class SmsCodeServiceImplTest extends BaseDbUnitTest {
     @MockitoBean
     private SmsCodeProperties smsCodeProperties;
     @MockitoBean
+    private ConfigApi configApi;
+    @MockitoBean
     private SmsSendService smsSendService;
 
     @BeforeEach
@@ -50,6 +53,7 @@ public class SmsCodeServiceImplTest extends BaseDbUnitTest {
         when(smsCodeProperties.getSendMaximumQuantityPerDay()).thenReturn(10);
         when(smsCodeProperties.getBeginCode()).thenReturn(9999);
         when(smsCodeProperties.getEndCode()).thenReturn(9999);
+        when(configApi.getConfigValueByKey("yudao.sms-code.send-maximum-quantity-per-day")).thenReturn(null);
     }
 
     @Test
@@ -106,6 +110,29 @@ public class SmsCodeServiceImplTest extends BaseDbUnitTest {
         // 调用，并断言异常
         assertServiceException(() -> smsCodeService.sendSmsCode(reqDTO),
                 SMS_CODE_EXCEED_SEND_MAXIMUM_QUANTITY_PER_DAY);
+    }
+
+    @Test
+    public void sendSmsCode_dynamicDailyLimit() {
+        // mock 数据
+        SmsCodeDO smsCodeDO = randomPojo(SmsCodeDO.class,
+                o -> o.setMobile("15601691300").setTodayIndex(10).setCreateTime(LocalDateTime.now()));
+        smsCodeMapper.insert(smsCodeDO);
+        // 准备参数
+        SmsCodeSendReqDTO reqDTO = randomPojo(SmsCodeSendReqDTO.class, o -> {
+            o.setMobile("15601691300");
+            o.setScene(SmsSceneEnum.MEMBER_LOGIN.getScene());
+        });
+        when(smsCodeProperties.getSendFrequency()).thenReturn(Duration.ofMillis(0));
+        when(configApi.getConfigValueByKey("yudao.sms-code.send-maximum-quantity-per-day")).thenReturn("30");
+
+        // 调用
+        smsCodeService.sendSmsCode(reqDTO);
+        // 断言
+        SmsCodeDO newSmsCode = smsCodeMapper.selectLastByMobile(reqDTO.getMobile(), null, null);
+        assertEquals(11, newSmsCode.getTodayIndex());
+        verify(smsSendService).sendSingleSms(eq(reqDTO.getMobile()), isNull(), isNull(),
+                eq("user-sms-login"), eq(MapUtil.of("code", "9999")));
     }
 
     @Test

@@ -1,0 +1,42 @@
+[
+    {
+        "packId":  "offline-text-translation-full",
+        "displayNameZh":  "文本翻译离线包",
+        "summaryZh":  "下载后可在离线模式进行文本翻译。",
+        "version":  "1.0.0",
+        "releaseStatus":  "test",
+        "components":  [
+                           "text-hymt-core"
+                       ],
+        "sizeBytes":  594648072,
+        "dependencyModel":  "component-progress"
+    },
+    {
+        "packId":  "offline-image-translation-full",
+        "displayNameZh":  "拍照翻译离线包",
+        "summaryZh":  "包含文本翻译基础包和拍照文字识别扩展包。文本包已下载时会继承进度。",
+        "version":  "1.0.0",
+        "releaseStatus":  "test",
+        "components":  [
+                           "text-hymt-core",
+                           "ocr-tesseract-core"
+                       ],
+        "sizeBytes":  611076972,
+        "dependencyModel":  "component-progress"
+    },
+    {
+        "packId":  "offline-conversation-translation-full",
+        "displayNameZh":  "实时对话离线包",
+        "summaryZh":  "包含文本翻译、语音识别增强和离线朗读能力。文本包已下载时会继承进度。",
+        "version":  "1.0.0",
+        "releaseStatus":  "test",
+        "components":  [
+                           "text-hymt-core",
+                           "asr-sensevoice-core",
+                           "asr-whisper-wide",
+                           "tts-sherpa-core"
+                       ],
+        "sizeBytes":  1287026422,
+        "dependencyModel":  "component-progress"
+    }
+]

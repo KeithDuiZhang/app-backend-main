@@ -2,7 +2,6 @@ package cn.iocoder.yudao.module.infra.service.db;
 
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ReflectUtil;
-import cn.hutool.crypto.symmetric.AES;
 import cn.iocoder.yudao.framework.mybatis.core.type.EncryptTypeHandler;
 import cn.iocoder.yudao.framework.mybatis.core.util.JdbcUtils;
 import cn.iocoder.yudao.framework.test.core.ut.BaseDbUnitTest;
@@ -15,10 +14,10 @@ import jakarta.annotation.Resource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
-import org.mockito.stubbing.Answer;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static cn.iocoder.yudao.framework.test.core.util.AssertUtils.assertPojoEquals;
@@ -27,7 +26,6 @@ import static cn.iocoder.yudao.framework.test.core.util.RandomUtils.randomLongId
 import static cn.iocoder.yudao.framework.test.core.util.RandomUtils.randomPojo;
 import static cn.iocoder.yudao.module.infra.enums.ErrorCodeConstants.DATA_SOURCE_CONFIG_NOT_EXISTS;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
@@ -47,17 +45,13 @@ public class DataSourceConfigServiceImplTest extends BaseDbUnitTest {
     private DataSourceConfigMapper dataSourceConfigMapper;
 
     @MockitoBean
-    private AES aes;
-
-    @MockitoBean
     private DynamicDataSourceProperties dynamicDataSourceProperties;
 
     @BeforeEach
     public void setUp() {
         // mock 一个空实现的 StringEncryptor，避免 EncryptTypeHandler 报错
-        ReflectUtil.setFieldValue(EncryptTypeHandler.class, "aes", aes);
-        when(aes.encryptBase64(anyString())).then((Answer<String>) invocation -> invocation.getArgument(0));
-        when(aes.decryptStr(anyString())).then((Answer<String>) invocation -> invocation.getArgument(0));
+        ReflectUtil.setFieldValue(EncryptTypeHandler.class, "aesKey",
+                "1234567890abcdef".getBytes(StandardCharsets.UTF_8));
 
         // mock DynamicDataSourceProperties
         when(dynamicDataSourceProperties.getPrimary()).thenReturn("primary");

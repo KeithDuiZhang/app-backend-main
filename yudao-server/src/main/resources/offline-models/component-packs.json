@@ -1,0 +1,407 @@
+[
+    {
+        "packId":  "text-hymt-core",
+        "type":  "translation",
+        "engine":  "HY-MT",
+        "version":  "1.0.0",
+        "displayNameZh":  "HY-MT 离线文本翻译核心包（2bit）",
+        "summaryZh":  "文本翻译离线能力基础包",
+        "releaseStatus":  "test",
+        "minRamGb":  6,
+        "installPath":  "translation/text-hymt-core/1.0.0",
+        "sourceBytes":  600536716,
+        "sizeBytes":  594648072,
+        "sha256":  "01abd49939e4c359a46d408614ecc6eabee9ff9e48678088354974ed5652d604",
+        "url":  "packs/translation/text-hymt-core/1.0.0/text-hymt-core-1.0.0.zip",
+        "objectKey":  "model-repo/cn/1.0.0/packs/translation/text-hymt-core/1.0.0/text-hymt-core-1.0.0.zip",
+        "manifestUrl":  "packs/translation/text-hymt-core/1.0.0/manifest.json",
+        "manifestObjectKey":  "model-repo/cn/1.0.0/packs/translation/text-hymt-core/1.0.0/manifest.json",
+        "requiredFiles":  [
+                              {
+                                  "path":  "Hy-MT1.5-1.8B-2bit.gguf",
+                                  "sizeBytes":  600534880,
+                                  "sha256":  "2603ca8063c77328b544f8f6414b398d95893deafb60a9c1f11c2d2af4a20bfe"
+                              }
+                          ]
+    },
+    {
+        "packId":  "ocr-tesseract-core",
+        "type":  "ocr",
+        "engine":  "Tesseract4Android",
+        "version":  "1.0.0",
+        "displayNameZh":  "Tesseract 多语种 OCR 扩展包",
+        "summaryZh":  "拍照翻译扩展文字识别包",
+        "releaseStatus":  "test",
+        "minRamGb":  3,
+        "installPath":  "ocr/ocr-tesseract-core/1.0.0",
+        "sourceBytes":  29512671,
+        "sizeBytes":  16428900,
+        "sha256":  "f38374cdf492dcb7401bc5257d4c657c1e933623337e13e473d47b7bb08c977e",
+        "url":  "packs/ocr/ocr-tesseract-core/1.0.0/ocr-tesseract-core-1.0.0.zip",
+        "objectKey":  "model-repo/cn/1.0.0/packs/ocr/ocr-tesseract-core/1.0.0/ocr-tesseract-core-1.0.0.zip",
+        "manifestUrl":  "packs/ocr/ocr-tesseract-core/1.0.0/manifest.json",
+        "manifestObjectKey":  "model-repo/cn/1.0.0/packs/ocr/ocr-tesseract-core/1.0.0/manifest.json",
+        "requiredFiles":  [
+                              {
+                                  "path":  "tessdata/ara.traineddata",
+                                  "sizeBytes":  1432056,
+                                  "sha256":  "e3206d3dc87fd50c24a0fb9f01838615911d25168f4e64415244b67d2bb3e729"
+                              },
+                              {
+                                  "path":  "tessdata/chi_sim.traineddata",
+                                  "sizeBytes":  2469156,
+                                  "sha256":  "a5fcb6f0db1e1d6d8522f39db4e848f05984669172e584e8d76b6b3141e1f730"
+                              },
+                              {
+                                  "path":  "tessdata/deu.traineddata",
+                                  "sizeBytes":  1525436,
+                                  "sha256":  "19d219bbb6672c869d20a9636c6816a81eb9a71796cb93ebe0cb1530e2cdb22d"
+                              },
+                              {
+                                  "path":  "tessdata/eng.traineddata",
+                                  "sizeBytes":  4113088,
+                                  "sha256":  "7d4322bd2a7749724879683fc3912cb542f19906c83bcc1a52132556427170b2"
+                              },
+                              {
+                                  "path":  "tessdata/fra.traineddata",
+                                  "sizeBytes":  1130365,
+                                  "sha256":  "ced037562e8c80c13122dece28dd477d399af80911a28791a66a63ac1e3445ca"
+                              },
+                              {
+                                  "path":  "tessdata/hin.traineddata",
+                                  "sizeBytes":  1122751,
+                                  "sha256":  "4c73ffc59d497c186b19d1e90f5d721d678ea6b2e277b719bee4e2af12271825"
+                              },
+                              {
+                                  "path":  "tessdata/ind.traineddata",
+                                  "sizeBytes":  1122661,
+                                  "sha256":  "69786901da87ab8766c1ea7fbb10b28f2110c14da3f6c8f2735df131fba95d88"
+                              },
+                              {
+                                  "path":  "tessdata/ita.traineddata",
+                                  "sizeBytes":  2701314,
+                                  "sha256":  "b8f89e1e785118dac4d51ae042c029a64edb5c3ee42ef73027a6d412748d8827"
+                              },
+                              {
+                                  "path":  "tessdata/jpn.traineddata",
+                                  "sizeBytes":  2471260,
+                                  "sha256":  "1f5de9236d2e85f5fdf4b3c500f2d4926f8d9449f28f5394472d9e8d83b91b4d"
+                              },
+                              {
+                                  "path":  "tessdata/kor.traineddata",
+                                  "sizeBytes":  1677415,
+                                  "sha256":  "6b85e11d9bbf07863b97b3523b1b112844c43e713df8b66418a081fd1060b3b2"
+                              },
+                              {
+                                  "path":  "tessdata/por.traineddata",
+                                  "sizeBytes":  1982756,
+                                  "sha256":  "c4932b937207a9514b7514d518b931a99938c02a28a5a5a553f8599ed58b7deb"
+                              },
+                              {
+                                  "path":  "tessdata/rus.traineddata",
+                                  "sizeBytes":  3861738,
+                                  "sha256":  "e16e5e036cce1d9ec2b00063cf8b54472625b9e14d893a169e2b0dedeb4df225"
+                              },
+                              {
+                                  "path":  "tessdata/spa.traineddata",
+                                  "sizeBytes":  2294433,
+                                  "sha256":  "6f2e04d02774a18f01bed44b1111f2cd7f3ba7ac9dc4373cd3f898a40ea6b464"
+                              },
+                              {
+                                  "path":  "tessdata/tha.traineddata",
+                                  "sizeBytes":  1072600,
+                                  "sha256":  "294227cc2d1292b0acb28d61d4115c88252b96d466ca90b417cf4cf0c67bf07c"
+                              },
+                              {
+                                  "path":  "tessdata/vie.traineddata",
+                                  "sizeBytes":  531275,
+                                  "sha256":  "79df64caf7bcfb2a27df5042ecb6121e196eada34da774956995747636d5bfa1"
+                              }
+                          ]
+    },
+    {
+        "packId":  "asr-sensevoice-core",
+        "type":  "asr",
+        "engine":  "SenseVoice",
+        "version":  "1.0.0",
+        "displayNameZh":  "SenseVoice 默认语音识别包",
+        "summaryZh":  "实时对话基础语音识别包",
+        "releaseStatus":  "test",
+        "minRamGb":  4,
+        "installPath":  "asr/asr-sensevoice-core/1.0.0",
+        "sourceBytes":  240510372,
+        "sizeBytes":  161050741,
+        "sha256":  "bf7585c6b0cca6fa5b7cf73af230f1ce48945ee408d19a6e0181e03cec0c447c",
+        "url":  "packs/asr/asr-sensevoice-core/1.0.0/asr-sensevoice-core-1.0.0.zip",
+        "objectKey":  "model-repo/cn/1.0.0/packs/asr/asr-sensevoice-core/1.0.0/asr-sensevoice-core-1.0.0.zip",
+        "manifestUrl":  "packs/asr/asr-sensevoice-core/1.0.0/manifest.json",
+        "manifestObjectKey":  "model-repo/cn/1.0.0/packs/asr/asr-sensevoice-core/1.0.0/manifest.json",
+        "requiredFiles":  [
+                              {
+                                  "path":  "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/export-onnx.py",
+                                  "sizeBytes":  5905,
+                                  "sha256":  "c97f6a33f9d7135efd4d55b3e24e288c47d925f3b4f04b8b3418c2821c0a89ce"
+                              },
+                              {
+                                  "path":  "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/LICENSE",
+                                  "sizeBytes":  71,
+                                  "sha256":  "221c6df10b0931a5629adad671ea48fb7747e034c414b6d2bfa275bc3dd4ea17"
+                              },
+                              {
+                                  "path":  "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/model.int8.onnx",
+                                  "sizeBytes":  239233841,
+                                  "sha256":  "c71f0ce00bec95b07744e116345e33d8cbbe08cef896382cf907bf4b51a2cd51"
+                              },
+                              {
+                                  "path":  "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/README.md",
+                                  "sizeBytes":  104,
+                                  "sha256":  "763991a00edaea534ab36bf1b7cf89e61e911666dcfabbba71f91f9f7c593a63"
+                              },
+                              {
+                                  "path":  "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/test_wavs/en.wav",
+                                  "sizeBytes":  228908,
+                                  "sha256":  "eb1eb008904465b74c304aad8342e8c7d3c6e61ffe9f66adcaca9cf0f76a93f4"
+                              },
+                              {
+                                  "path":  "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/test_wavs/ja.wav",
+                                  "sizeBytes":  230444,
+                                  "sha256":  "460bd8dccb0d2a5f4e29c628f837be4082d13defc64c3fc21dd1b6bb0e119095"
+                              },
+                              {
+                                  "path":  "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/test_wavs/ko.wav",
+                                  "sizeBytes":  147500,
+                                  "sha256":  "0dc797a5c81ed30fc339d91f3da718ab02854e17ffa37cb93c4c039ac5c6bb9c"
+                              },
+                              {
+                                  "path":  "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/test_wavs/yue.wav",
+                                  "sizeBytes":  164780,
+                                  "sha256":  "0960b2db54ae202071d250e6462fbf74a3c863f0e3e7f01273e4939c996875a0"
+                              },
+                              {
+                                  "path":  "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/test_wavs/zh.wav",
+                                  "sizeBytes":  178988,
+                                  "sha256":  "b77f1794fe374a0ba1ee1dc458bfaf9349496cbbfc32780c50ba3c5a7ad8e373"
+                              },
+                              {
+                                  "path":  "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/tokens.txt",
+                                  "sizeBytes":  315894,
+                                  "sha256":  "f449eb28dc567533d7fa59be34e2abca8784f771850c78a47fb731a31429a1dc"
+                              }
+                          ]
+    },
+    {
+        "packId":  "asr-whisper-wide",
+        "type":  "asr",
+        "engine":  "Whisper",
+        "version":  "1.0.0",
+        "displayNameZh":  "Whisper 增强离线语音识别包",
+        "summaryZh":  "实时对话增强语音识别包",
+        "releaseStatus":  "test",
+        "minRamGb":  6,
+        "installPath":  "asr/asr-whisper-wide/1.0.0",
+        "sourceBytes":  303406962,
+        "sizeBytes":  242800126,
+        "sha256":  "3dc4938c0d949a68c6cc68342b17dd95d2be6223e2d675e88fcdb0b3e740258f",
+        "url":  "packs/asr/asr-whisper-wide/1.0.0/asr-whisper-wide-1.0.0.zip",
+        "objectKey":  "model-repo/cn/1.0.0/packs/asr/asr-whisper-wide/1.0.0/asr-whisper-wide-1.0.0.zip",
+        "manifestUrl":  "packs/asr/asr-whisper-wide/1.0.0/manifest.json",
+        "manifestObjectKey":  "model-repo/cn/1.0.0/packs/asr/asr-whisper-wide/1.0.0/manifest.json",
+        "requiredFiles":  [
+                              {
+                                  "path":  "Whisper_initializer.onnx",
+                                  "sizeBytes":  71378,
+                                  "sha256":  "dbf3281f2399b46527afbf0401a91174596222b79fa4e6646b0f2d49fb397d85"
+                              },
+                              {
+                                  "path":  "Whisper_encoder.onnx",
+                                  "sizeBytes":  92487048,
+                                  "sha256":  "0171be36c908738326f70c8a7f58049ba4786a07d7ea79c0e0f9e26550cdfb50"
+                              },
+                              {
+                                  "path":  "Whisper_decoder.onnx",
+                                  "sizeBytes":  181741988,
+                                  "sha256":  "704de24c96a812779f3d0d7ed2a47a37b070f44abb0d92ca5e19d31c727718df"
+                              },
+                              {
+                                  "path":  "Whisper_cache_initializer.onnx",
+                                  "sizeBytes":  14315416,
+                                  "sha256":  "6e303b22e38ea5a2f6c1e4c29ddbf11b047f77d8e7a99841182e709ee6b2d9d1"
+                              },
+                              {
+                                  "path":  "Whisper_cache_initializer_batch.onnx",
+                                  "sizeBytes":  14314991,
+                                  "sha256":  "6da66ede8430347e314a7341fa05481778ac945d5b028106a8340361fdc99986"
+                              },
+                              {
+                                  "path":  "Whisper_detokenizer.onnx",
+                                  "sizeBytes":  472377,
+                                  "sha256":  "713447d18dc0f4cae0759f616aba98a909100185941f80844bf954ef12888e12"
+                              }
+                          ]
+    },
+    {
+        "packId":  "tts-sherpa-core",
+        "type":  "tts",
+        "engine":  "sherpa-onnx",
+        "version":  "1.0.0",
+        "displayNameZh":  "sherpa-onnx 离线神经 TTS 包",
+        "summaryZh":  "实时对话离线朗读包",
+        "releaseStatus":  "test",
+        "minRamGb":  4,
+        "installPath":  "tts/tts-sherpa-core/1.0.0",
+        "sourceBytes":  336572939,
+        "sizeBytes":  288527483,
+        "sha256":  "ff259c70094d8cbc6c2fa376664d688fc260a8a4d48bcc691a412e3174ba5f2b",
+        "url":  "packs/tts/tts-sherpa-core/1.0.0/tts-sherpa-core-1.0.0.zip",
+        "objectKey":  "model-repo/cn/1.0.0/packs/tts/tts-sherpa-core/1.0.0/tts-sherpa-core-1.0.0.zip",
+        "manifestUrl":  "packs/tts/tts-sherpa-core/1.0.0/manifest.json",
+        "manifestObjectKey":  "model-repo/cn/1.0.0/packs/tts/tts-sherpa-core/1.0.0/manifest.json",
+        "requiredFiles":  [
+                              {
+                                  "path":  "vits-melo-tts-zh_en/date.fst",
+                                  "sizeBytes":  59154,
+                                  "sha256":  "eb8aa079ae3cb81d8f4404992f39d61a0cb990947512b5b8d1e54d1f6980e718"
+                              },
+                              {
+                                  "path":  "vits-melo-tts-zh_en/lexicon.txt",
+                                  "sizeBytes":  6837671,
+                                  "sha256":  "7236884b02435ac5d10cf69b4be40a61b45aa676b5300f0e412f185748fee528"
+                              },
+                              {
+                                  "path":  "vits-melo-tts-zh_en/LICENSE",
+                                  "sizeBytes":  1053,
+                                  "sha256":  "88a50e5a02bbc2a5c2f084dc19da751aa97b1690f5fda76cd8005c8634d1ca70"
+                              },
+                              {
+                                  "path":  "vits-melo-tts-zh_en/model.int8.onnx",
+                                  "sizeBytes":  133,
+                                  "sha256":  "0a1462eef98f05c15a6f57569bf2fb57a6b3995891bb17956187ff5e2694273e"
+                              },
+                              {
+                                  "path":  "vits-melo-tts-zh_en/model.onnx",
+                                  "sizeBytes":  170429550,
+                                  "sha256":  "bf30582eb1b012250a35b1a4a80e7dfbcf8485e7bb9de0d95efbbeef0e4ad86d"
+                              },
+                              {
+                                  "path":  "vits-melo-tts-zh_en/new_heteronym.fst",
+                                  "sizeBytes":  21974,
+                                  "sha256":  "ca14b2127e27baa571664e4bb791e143e7425f56a6bc29db08d74f97e6aa4e29"
+                              },
+                              {
+                                  "path":  "vits-melo-tts-zh_en/number.fst",
+                                  "sizeBytes":  64482,
+                                  "sha256":  "743f402181fcfebf76cc2f0546b71fa26476e626fbe4e460fb7b4c3a7a8bd5bd"
+                              },
+                              {
+                                  "path":  "vits-melo-tts-zh_en/phone.fst",
+                                  "sizeBytes":  88630,
+                                  "sha256":  "1ac2b6fa56b1442320c4de7db08353bab8963a2b57f365eebcdd3a2d3562f8d7"
+                              },
+                              {
+                                  "path":  "vits-melo-tts-zh_en/README.md",
+                                  "sizeBytes":  257,
+                                  "sha256":  "ae6e44dead53dfdbd5b4a77106226f3118eb910222b46cb5533a3860773fc6c7"
+                              },
+                              {
+                                  "path":  "vits-melo-tts-zh_en/tokens.txt",
+                                  "sizeBytes":  655,
+                                  "sha256":  "d18664a7e12bd7ea1022ddaf951e534e136815016c5a809d6b64156bffb4369d"
+                              },
+                              {
+                                  "path":  "vits-melo-tts-zh_en/dict/hmm_model.utf8",
+                                  "sizeBytes":  519739,
+                                  "sha256":  "f17790586ac86dd048c8adffed052c4bd2b28ed0682972c1275e59040c0589a7"
+                              },
+                              {
+                                  "path":  "vits-melo-tts-zh_en/dict/idf.utf8",
+                                  "sizeBytes":  5998717,
+                                  "sha256":  "dbd1e03d72b2263cc8d84a4304ed77677eed9e7deaf43a1a5133bbba9733b535"
+                              },
+                              {
+                                  "path":  "vits-melo-tts-zh_en/dict/jieba.dict.utf8",
+                                  "sizeBytes":  5071204,
+                                  "sha256":  "3043b77068e09c9904f27cad82f12b6ebe9dbdb5aeff3b25e45ab7f9c1122b55"
+                              },
+                              {
+                                  "path":  "vits-melo-tts-zh_en/dict/README.md",
+                                  "sizeBytes":  683,
+                                  "sha256":  "8bcc7c2ed7dff082d9a99c09de0bfd72249bf3b5c4298a3af328da40cbd8cfd1"
+                              },
+                              {
+                                  "path":  "vits-melo-tts-zh_en/dict/stop_words.utf8",
+                                  "sizeBytes":  8974,
+                                  "sha256":  "b788b8a939d2e2fe079abd579ea98f12f9fb84370bfd0dddd81bb9381f7ab42c"
+                              },
+                              {
+                                  "path":  "vits-melo-tts-zh_en/dict/user.dict.utf8",
+                                  "sizeBytes":  49,
+                                  "sha256":  "495bbf49270408a1234690e1e6a97328f30a482a7a72aa769e8a12e8714b0c62"
+                              },
+                              {
+                                  "path":  "vits-melo-tts-zh_en/dict/pos_dict/char_state_tab.utf8",
+                                  "sizeBytes":  327139,
+                                  "sha256":  "28b7be1dd7369766a51445af4d42e9a2ba4bf374c13be5bc1ca7721e27271dbb"
+                              },
+                              {
+                                  "path":  "vits-melo-tts-zh_en/dict/pos_dict/prob_emit.utf8",
+                                  "sizeBytes":  1687686,
+                                  "sha256":  "c33c4cb7edf3b3a5947df7209b6e9f267eae1f21335d9e2bd2521ea07105457a"
+                              },
+                              {
+                                  "path":  "vits-melo-tts-zh_en/dict/pos_dict/prob_start.utf8",
+                                  "sizeBytes":  4347,
+                                  "sha256":  "13623ea0e9300bdb597cb2da28770b7b385d6c0098d66e516083fb01b6bd5d96"
+                              },
+                              {
+                                  "path":  "vits-melo-tts-zh_en/dict/pos_dict/prob_trans.utf8",
+                                  "sizeBytes":  124159,
+                                  "sha256":  "f22363e2307408293d180c6f9f6b5cb75879d52f722f7764fa2d3d0ae2400236"
+                              },
+                              {
+                                  "path":  "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/duration_predictor.int8.onnx",
+                                  "sizeBytes":  3700147,
+                                  "sha256":  "c3eb91414d5ff8a7a239b7fe9e34e7e2bf8a8140d8375ffb14718b1c639325db"
+                              },
+                              {
+                                  "path":  "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/LICENSE",
+                                  "sizeBytes":  1070,
+                                  "sha256":  "0dfe0d0ba84416fe3879d9a34f4909d8d0137c78d1e95834177b0414ac096fa2"
+                              },
+                              {
+                                  "path":  "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/README.md",
+                                  "sizeBytes":  19518,
+                                  "sha256":  "a96c347945f7c8bc1673bea3525b1ac8d36fdde556e1e0a6a186052429caf863"
+                              },
+                              {
+                                  "path":  "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/text_encoder.int8.onnx",
+                                  "sizeBytes":  36416150,
+                                  "sha256":  "c7befd5ea8c3119769e8a6c1486c4edc6a3bc8365c67621c881bbb774b9902ff"
+                              },
+                              {
+                                  "path":  "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/tts.json",
+                                  "sizeBytes":  8253,
+                                  "sha256":  "42078d3aef1cd43ab43021f3c54f47d2d75ceb4e75f627f118890128b06a0d09"
+                              },
+                              {
+                                  "path":  "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/unicode_indexer.bin",
+                                  "sizeBytes":  262144,
+                                  "sha256":  "8402ca48e5189a8950138580b0fff64db6f072f24ac07cd54ba8b2fbb9883b30"
+                              },
+                              {
+                                  "path":  "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/vector_estimator.int8.onnx",
+                                  "sizeBytes":  78400833,
+                                  "sha256":  "20cd86fa5c6effedfda0e7cffe5b0569ca401c440a0c3a1d72bf39286c0db3fd"
+                              },
+                              {
+                                  "path":  "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/vocoder.int8.onnx",
+                                  "sizeBytes":  25991073,
+                                  "sha256":  "e923d60f53f95eb1ce235f1dc33ec56d9c057823c96fa6f8acf98f32b0da6152"
+                              },
+                              {
+                                  "path":  "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/voice.bin",
+                                  "sizeBytes":  517168,
+                                  "sha256":  "67d5209b0ee8ce6c74105ffbe12fe6a7628aea3b4ba2fcb308a4a67938a93ce8"
+                              }
+                          ]
+    }
+]

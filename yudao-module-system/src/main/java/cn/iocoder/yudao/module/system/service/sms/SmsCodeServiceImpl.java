@@ -3,6 +3,7 @@ package cn.iocoder.yudao.module.system.service.sms;
 import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.iocoder.yudao.module.system.api.sms.dto.code.SmsCodeSendReqDTO;
 import cn.iocoder.yudao.module.system.api.sms.dto.code.SmsCodeUseReqDTO;
 import cn.iocoder.yudao.module.system.api.sms.dto.code.SmsCodeValidateReqDTO;
@@ -10,6 +11,8 @@ import cn.iocoder.yudao.module.system.dal.dataobject.sms.SmsCodeDO;
 import cn.iocoder.yudao.module.system.dal.mysql.sms.SmsCodeMapper;
 import cn.iocoder.yudao.module.system.enums.sms.SmsSceneEnum;
 import cn.iocoder.yudao.module.system.framework.sms.config.SmsCodeProperties;
+import cn.iocoder.yudao.module.infra.api.config.ConfigApi;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -28,10 +31,15 @@ import static cn.iocoder.yudao.module.system.enums.ErrorCodeConstants.*;
  */
 @Service
 @Validated
+@Slf4j
 public class SmsCodeServiceImpl implements SmsCodeService {
+
+    private static final String SMS_DAILY_LIMIT_CONFIG_KEY = "yudao.sms-code.send-maximum-quantity-per-day";
 
     @Resource
     private SmsCodeProperties smsCodeProperties;
+    @Resource
+    private ConfigApi configApi;
 
     @Resource
     private SmsCodeMapper smsCodeMapper;
@@ -59,7 +67,7 @@ public class SmsCodeServiceImpl implements SmsCodeService {
                 throw exception(SMS_CODE_SEND_TOO_FAST);
             }
             if (isToday(lastSmsCode.getCreateTime()) && // 必须是今天，才能计算超过当天的上限
-                    lastSmsCode.getTodayIndex() >= smsCodeProperties.getSendMaximumQuantityPerDay()) { // 超过当天发送的上限。
+                    lastSmsCode.getTodayIndex() >= getSendMaximumQuantityPerDay()) { // 超过当天发送的上限。
                 throw exception(SMS_CODE_EXCEED_SEND_MAXIMUM_QUANTITY_PER_DAY);
             }
             // TODO 芋艿：提升，每个 IP 每天可发送数量
@@ -74,6 +82,20 @@ public class SmsCodeServiceImpl implements SmsCodeService {
                 .createIp(ip).used(false).build();
         smsCodeMapper.insert(newSmsCode);
         return code;
+    }
+
+    private int getSendMaximumQuantityPerDay() {
+        String configValue = configApi.getConfigValueByKey(SMS_DAILY_LIMIT_CONFIG_KEY);
+        if (StrUtil.isBlank(configValue)) {
+            return smsCodeProperties.getSendMaximumQuantityPerDay();
+        }
+        try {
+            int limit = Integer.parseInt(configValue.trim());
+            return limit > 0 ? limit : smsCodeProperties.getSendMaximumQuantityPerDay();
+        } catch (NumberFormatException ex) {
+            log.warn("短信每日发送次数配置无效，使用默认配置：key={}, value={}", SMS_DAILY_LIMIT_CONFIG_KEY, configValue);
+            return smsCodeProperties.getSendMaximumQuantityPerDay();
+        }
     }
 
     @Override
