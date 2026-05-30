@@ -5,6 +5,7 @@ import cn.iocoder.yudao.server.config.ImageTranslationProperties;
 import cn.iocoder.yudao.server.service.image.ImageTranslationModels.ProviderRateLimit;
 import cn.iocoder.yudao.server.service.image.ImageTranslationModels.ProviderRequest;
 import cn.iocoder.yudao.server.service.image.ImageTranslationModels.ProviderResult;
+import cn.iocoder.yudao.server.service.integration.AppIntegrationConfigService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,8 @@ public class QwenMtImageProvider implements ImageTranslationProvider {
     private ImageTranslationProperties properties;
     @Resource
     private ProviderRateLimiter rateLimiter;
+    @Resource
+    private AppIntegrationConfigService integrationConfigService;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -181,7 +184,11 @@ public class QwenMtImageProvider implements ImageTranslationProvider {
     }
 
     private String apiKey() {
-        return properties.getBailianImageTranslate().getApiKey();
+        String configured = properties.getBailianImageTranslate().getApiKey();
+        if (StrUtil.isNotBlank(configured)) {
+            return configured;
+        }
+        return integrationConfigService.getPlain(AppIntegrationConfigService.ALIYUN_DASHSCOPE_API_KEY);
     }
 
     private boolean isQwenProvider(String providerType) {

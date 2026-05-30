@@ -58,6 +58,7 @@ public class AppIntegrationConfigService {
     public static final String ALIYUN_TTS_APP_KEY = "aliyun.tts.app-key";
     public static final String ALIYUN_IMAGE_TRANSLATE_SCENE = "aliyun.image-translate.scene";
     public static final String ALIYUN_ENDPOINT = "aliyun.endpoint";
+    public static final String ALIYUN_DASHSCOPE_API_KEY = "aliyun.dashscope.api-key";
 
     private static final String DEFAULT_COS_BUCKET = "kqtranslate-1300276385";
     private static final String DEFAULT_COS_REGION = "ap-shanghai";
@@ -123,7 +124,9 @@ public class AppIntegrationConfigService {
         respVO.getAliyun().setImageTranslateScene(StrUtil.blankToDefault(
                 getPlain(ALIYUN_IMAGE_TRANSLATE_SCENE), DEFAULT_ALIYUN_IMAGE_TRANSLATE_SCENE));
         respVO.getAliyun().setEndpoint(getPlain(ALIYUN_ENDPOINT));
+        respVO.getAliyun().setDashscopeApiKey(getPlain(ALIYUN_DASHSCOPE_API_KEY));
         respVO.getAliyun().setAccessKeySecretConfigured(StrUtil.isNotBlank(getPlain(ALIYUN_ACCESS_KEY_SECRET)));
+        respVO.getAliyun().setDashscopeApiKeyConfigured(StrUtil.isNotBlank(getPlain(ALIYUN_DASHSCOPE_API_KEY)));
         return respVO;
     }
 
@@ -183,6 +186,7 @@ public class AppIntegrationConfigService {
                 StrUtil.blankToDefault(aliyunConfig.getImageTranslateScene(), DEFAULT_ALIYUN_IMAGE_TRANSLATE_SCENE),
                 "Aliyun image translate scene", false);
         upsertPlain(ALIYUN_ENDPOINT, aliyunConfig.getEndpoint(), "Aliyun API endpoint", false);
+        upsertSecret(ALIYUN_DASHSCOPE_API_KEY, aliyunConfig.getDashscopeApiKey(), "Aliyun DashScope API key");
         syncTencentSmsChannel();
     }
 
@@ -489,6 +493,7 @@ public class AppIntegrationConfigService {
         private String ttsAppKey;
         private String imageTranslateScene;
         private String endpoint;
+        private String dashscopeApiKey;
     }
 
     @Data
@@ -544,5 +549,7 @@ public class AppIntegrationConfigService {
         private String ttsAppKey;
         private String imageTranslateScene;
         private String endpoint;
+        private String dashscopeApiKey;
+        private boolean dashscopeApiKeyConfigured;
     }
 }
