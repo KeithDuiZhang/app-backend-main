@@ -24,11 +24,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
@@ -121,10 +123,46 @@ public class AppPaymentController {
         return success(appPaymentService.getOrderStatus(userId, orderNo));
     }
 
+    @GetMapping("/orders")
+    @PermitAll
+    @Operation(summary = "List current app user payment orders")
+    public CommonResult<List<OrderStatusRespVO>> listOrders(@RequestParam(value = "range", required = false, defaultValue = "30d") String range,
+                                                            @RequestParam(value = "status", required = false) String status,
+                                                            @RequestParam(value = "productType", required = false) String productType,
+                                                            HttpServletRequest request) {
+        Long userId = appAuthService.requireUserId(request);
+        return success(appPaymentService.listUserOrders(userId, range, status, productType));
+    }
+
+    @PostMapping("/orders/query")
+    @PermitAll
+    @Operation(summary = "Query current app user payment order")
+    public CommonResult<OrderStatusRespVO> queryOrder(@RequestBody Map<String, String> body,
+                                                      HttpServletRequest request) {
+        Long userId = appAuthService.requireUserId(request);
+        return success(appPaymentService.getOrderStatus(userId, body.get("orderNo")));
+    }
+
     @GetMapping("/me/entitlement")
     @PermitAll
     @Operation(summary = "Get current app user entitlement")
     public CommonResult<UserEntitlementRespVO> getMyEntitlement(HttpServletRequest request) {
+        Long userId = appAuthService.requireUserId(request);
+        return success(appPaymentService.getUserEntitlement(userId));
+    }
+
+    @GetMapping("/me/entitlements")
+    @PermitAll
+    @Operation(summary = "Get current app user entitlements")
+    public CommonResult<UserEntitlementRespVO> getMyEntitlements(HttpServletRequest request) {
+        Long userId = appAuthService.requireUserId(request);
+        return success(appPaymentService.getUserEntitlement(userId));
+    }
+
+    @GetMapping("/me/quota")
+    @PermitAll
+    @Operation(summary = "Get current app user quota")
+    public CommonResult<UserEntitlementRespVO> getMyQuota(HttpServletRequest request) {
         Long userId = appAuthService.requireUserId(request);
         return success(appPaymentService.getUserEntitlement(userId));
     }

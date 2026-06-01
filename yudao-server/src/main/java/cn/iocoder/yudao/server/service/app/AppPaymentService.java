@@ -220,30 +220,88 @@ public class AppPaymentService {
         Map<String, Object> row;
         try {
             row = jdbcTemplate.queryForMap("""
-                    SELECT o.order_no, o.product_type, o.status, o.amount_cent, o.provider_trade_no,
-                           o.paid_at, o.expire_time,
-                           COALESCE(tp.name, mp.name, '') AS product_name
+                    SELECT o.order_no, o.user_id, o.product_type, o.product_id, o.pay_channel, o.status,
+                           o.amount_cent, o.provider_trade_no, o.create_time, o.paid_at, o.expire_time,
+                           COALESCE(tp.name, mp.name, '') AS product_name,
+                           COALESCE(a.text_chars_remaining, 0) AS remaining_text_count,
+                           COALESCE(a.image_translate_remaining, 0) AS remaining_image_count,
+                           COALESCE(a.asr_seconds_remaining, 0) AS remaining_voice_seconds,
+                           CASE WHEN m.id IS NULL THEN 'none' ELSE m.status END AS offline_entitlement
                     FROM app_payment_order o
                     LEFT JOIN app_token_product tp
                       ON o.product_type IN ('online_package', 'token') AND tp.id = o.product_id AND tp.deleted = 0
                     LEFT JOIN app_offline_membership_product mp
                       ON o.product_type IN ('offline_membership', 'offline_vip') AND mp.id = o.product_id AND mp.deleted = 0
+                    LEFT JOIN app_token_account a ON a.user_id = o.user_id AND a.deleted = 0
+                    LEFT JOIN app_offline_membership m
+                      ON m.user_id = o.user_id AND m.status = 'active' AND m.deleted = 0
+                     AND (m.expired_at IS NULL OR m.expired_at > NOW())
                     WHERE o.order_no = ? AND o.user_id = ? AND o.deleted = 0
                     LIMIT 1
                     """, orderNo, userId);
         } catch (EmptyResultDataAccessException ex) {
             throw ServiceExceptionUtil.invalidParamException("订单不存在");
         }
-        OrderStatusRespVO respVO = new OrderStatusRespVO();
-        respVO.setOrderNo(String.valueOf(row.get("order_no")));
-        respVO.setProductType(String.valueOf(row.get("product_type")));
-        respVO.setStatus(String.valueOf(row.get("status")));
-        respVO.setAmountCent(((Number) row.get("amount_cent")).intValue());
-        respVO.setProviderTradeNo(StrUtil.nullToDefault((String) row.get("provider_trade_no"), ""));
-        respVO.setProductName(StrUtil.nullToDefault((String) row.get("product_name"), ""));
-        respVO.setPaidAt(toLocalDateTime(row.get("paid_at")));
-        respVO.setExpireTime(toLocalDateTime(row.get("expire_time")));
-        return respVO;
+        return buildOrderStatus(row);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public List<OrderStatusRespVO> listUserOrders(Long userId, String range, String status, String productType) {
+        closeExpiredOrders(userId);
+        ArrayList<Object> args = new ArrayList<>();
+        args.add(userId);
+        StringBuilder sql = new StringBuilder("""
+                SELECT o.order_no, o.user_id, o.product_type, o.product_id, o.pay_channel, o.status,
+                       o.amount_cent, o.provider_trade_no, o.create_time, o.paid_at, o.expire_time,
+                       COALESCE(tp.name, mp.name, '') AS product_name,
+                       COALESCE(a.text_chars_remaining, 0) AS remaining_text_count,
+                       COALESCE(a.image_translate_remaining, 0) AS remaining_image_count,
+                       COALESCE(a.asr_seconds_remaining, 0) AS remaining_voice_seconds,
+                       CASE WHEN m.id IS NULL THEN 'none' ELSE m.status END AS offline_entitlement
+                FROM app_payment_order o
+                LEFT JOIN app_token_product tp
+                  ON o.product_type IN ('online_package', 'token') AND tp.id = o.product_id AND tp.deleted = 0
+                LEFT JOIN app_offline_membership_product mp
+                  ON o.product_type IN ('offline_membership', 'offline_vip') AND mp.id = o.product_id AND mp.deleted = 0
+                LEFT JOIN app_token_account a ON a.user_id = o.user_id AND a.deleted = 0
+                LEFT JOIN app_offline_membership m
+                  ON m.user_id = o.user_id AND m.status = 'active' AND m.deleted = 0
+                 AND (m.expired_at IS NULL OR m.expired_at > NOW())
+                WHERE o.user_id = ? AND o.deleted = 0
+                """);
+        if (StrUtil.isBlank(range) || Objects.equals("30d", range)) {
+            sql.append(" AND o.create_time >= DATE_SUB(NOW(), INTERVAL 30 DAY)");
+        }
+        if (StrUtil.isNotBlank(status)) {
+            sql.append(" AND o.status = ?");
+            args.add(status.trim());
+        }
+        String normalizedProductType = StrUtil.isNotBlank(productType) ? normalizeStoredProductType(productType.trim()) : "";
+        if (StrUtil.isNotBlank(normalizedProductType)) {
+            sql.append(" AND o.product_type = ?");
+            args.add(normalizedProductType);
+        }
+        sql.append(" ORDER BY o.create_time DESC, o.id DESC LIMIT 100");
+        return jdbcTemplate.query(sql.toString(), (rs, rowNum) -> {
+            Map<String, Object> row = new java.util.HashMap<>();
+            row.put("order_no", rs.getString("order_no"));
+            row.put("user_id", rs.getLong("user_id"));
+            row.put("product_type", rs.getString("product_type"));
+            row.put("product_id", rs.getLong("product_id"));
+            row.put("pay_channel", rs.getString("pay_channel"));
+            row.put("status", rs.getString("status"));
+            row.put("amount_cent", rs.getInt("amount_cent"));
+            row.put("provider_trade_no", rs.getString("provider_trade_no"));
+            row.put("create_time", rs.getTimestamp("create_time"));
+            row.put("paid_at", rs.getTimestamp("paid_at"));
+            row.put("expire_time", rs.getTimestamp("expire_time"));
+            row.put("product_name", rs.getString("product_name"));
+            row.put("remaining_text_count", rs.getInt("remaining_text_count"));
+            row.put("remaining_image_count", rs.getInt("remaining_image_count"));
+            row.put("remaining_voice_seconds", rs.getInt("remaining_voice_seconds"));
+            row.put("offline_entitlement", rs.getString("offline_entitlement"));
+            return buildOrderStatus(row);
+        }, args.toArray());
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -849,6 +907,15 @@ public class AppPaymentService {
                 """, STATUS_CLOSED, orderNo);
     }
 
+    private void closeExpiredOrders(Long userId) {
+        jdbcTemplate.update("""
+                UPDATE app_payment_order
+                SET status = ?, closed_at = NOW(), fail_reason = 'payment expired',
+                    updater = 'system', update_time = NOW()
+                WHERE user_id = ? AND status IN ('created', 'paying') AND expire_time < NOW() AND deleted = 0
+                """, STATUS_CLOSED, userId);
+    }
+
     private String resolveReturnUrl(String returnUrl) {
         String resolvedReturnUrl = StrUtil.blankToDefault(returnUrl,
                 integrationConfigService.getPlain(AppIntegrationConfigService.ALIPAY_RETURN_URL));
@@ -899,6 +966,28 @@ public class AppPaymentService {
     private String generateOrderNo() {
         return "AP" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
                 + IdUtil.fastSimpleUUID().substring(0, 10).toUpperCase();
+    }
+
+    private OrderStatusRespVO buildOrderStatus(Map<String, Object> row) {
+        OrderStatusRespVO respVO = new OrderStatusRespVO();
+        respVO.setOrderNo(String.valueOf(row.get("order_no")));
+        respVO.setUserId(((Number) row.getOrDefault("user_id", 0L)).longValue());
+        respVO.setProductId(((Number) row.getOrDefault("product_id", 0L)).longValue());
+        respVO.setProductType(normalizeStoredProductType(String.valueOf(row.get("product_type"))));
+        respVO.setStatus(String.valueOf(row.get("status")));
+        respVO.setAmountCent(((Number) row.getOrDefault("amount_cent", 0)).intValue());
+        respVO.setPayChannel(StrUtil.nullToDefault((String) row.get("pay_channel"), ""));
+        respVO.setProviderTradeNo(StrUtil.nullToDefault((String) row.get("provider_trade_no"), ""));
+        respVO.setProductName(StrUtil.nullToDefault((String) row.get("product_name"), ""));
+        respVO.setCreateTime(toLocalDateTime(row.get("create_time")));
+        respVO.setPaidAt(toLocalDateTime(row.get("paid_at")));
+        respVO.setExpireTime(toLocalDateTime(row.get("expire_time")));
+        respVO.setRemainingTextCount(((Number) row.getOrDefault("remaining_text_count", 0)).intValue());
+        respVO.setRemainingImageCount(((Number) row.getOrDefault("remaining_image_count", 0)).intValue());
+        int remainingVoiceSeconds = ((Number) row.getOrDefault("remaining_voice_seconds", 0)).intValue();
+        respVO.setRemainingVoiceMinutes((int) Math.ceil(Math.max(0, remainingVoiceSeconds) / 60.0));
+        respVO.setOfflineEntitlement(StrUtil.nullToDefault((String) row.get("offline_entitlement"), "none"));
+        return respVO;
     }
 
     private LocalDateTime toLocalDateTime(Object value) {
@@ -962,13 +1051,21 @@ public class AppPaymentService {
     @Data
     public static class OrderStatusRespVO {
         private String orderNo;
+        private Long userId;
+        private Long productId;
         private String productType;
         private String status;
         private Integer amountCent;
+        private String payChannel;
         private String providerTradeNo;
         private String productName;
+        private LocalDateTime createTime;
         private LocalDateTime paidAt;
         private LocalDateTime expireTime;
+        private Integer remainingTextCount;
+        private Integer remainingImageCount;
+        private Integer remainingVoiceMinutes;
+        private String offlineEntitlement;
     }
 
     @Data

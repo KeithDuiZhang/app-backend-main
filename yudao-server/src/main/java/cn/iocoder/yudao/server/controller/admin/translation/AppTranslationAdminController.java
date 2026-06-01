@@ -677,11 +677,18 @@ public class AppTranslationAdminController {
                 SELECT o.id, o.order_no, o.user_id, u.nickname, o.product_type, o.product_id,
                        COALESCE(tp.name, mp.name, '') AS product_name,
                        o.pay_channel, o.status, o.amount_cent, o.provider_trade_no,
-                       o.paid_at, o.create_time, o.update_time
+                       o.paid_at, o.expire_time, o.create_time, o.update_time,
+                       COALESCE(a.text_chars_remaining, 0) AS remaining_text_count,
+                       COALESCE(a.image_translate_remaining, 0) AS remaining_image_count,
+                       COALESCE(a.asr_seconds_remaining, 0) AS remaining_voice_seconds,
+                       CASE WHEN m.id IS NULL THEN 'none' ELSE m.status END AS offline_entitlement
                 FROM app_payment_order o
                 LEFT JOIN app_user u ON u.id = o.user_id AND u.deleted = 0
                 LEFT JOIN app_token_product tp ON o.product_type IN ('online_package', 'token') AND tp.id = o.product_id AND tp.deleted = 0
                 LEFT JOIN app_offline_membership_product mp ON o.product_type IN ('offline_membership', 'offline_vip') AND mp.id = o.product_id AND mp.deleted = 0
+                LEFT JOIN app_token_account a ON a.user_id = o.user_id AND a.deleted = 0
+                LEFT JOIN app_offline_membership m ON m.user_id = o.user_id AND m.status = 'active' AND m.deleted = 0
+                    AND (m.expired_at IS NULL OR m.expired_at > NOW())
                 """, "o.order_no LIKE ? OR u.nickname LIKE ? OR o.provider_trade_no LIKE ?", 3,
                 "o.status", false, "o.user_id", false, false));
         map.put("memberships", ResourceConfig.of("app_offline_membership", "m", """
