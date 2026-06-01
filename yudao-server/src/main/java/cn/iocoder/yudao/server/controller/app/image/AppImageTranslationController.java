@@ -3,7 +3,10 @@ package cn.iocoder.yudao.server.controller.app.image;
 import cn.iocoder.yudao.framework.apilog.core.annotation.ApiAccessLog;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.server.service.app.AppAuthService;
+import cn.iocoder.yudao.server.service.image.ImageTranslationModels.CreateTaskFromCosReqVO;
 import cn.iocoder.yudao.server.service.image.ImageTranslationModels.CreateTaskRespVO;
+import cn.iocoder.yudao.server.service.image.ImageTranslationModels.CosUploadTicketReqVO;
+import cn.iocoder.yudao.server.service.image.ImageTranslationModels.CosUploadTicketRespVO;
 import cn.iocoder.yudao.server.service.image.ImageTranslationModels.RetryReqVO;
 import cn.iocoder.yudao.server.service.image.ImageTranslationModels.TaskStatusRespVO;
 import cn.iocoder.yudao.server.service.image.ImageTranslationTaskService;
@@ -38,6 +41,16 @@ public class AppImageTranslationController {
     @Resource
     private ImageTranslationTaskService imageTranslationTaskService;
 
+    @PostMapping("/upload-tickets")
+    @PermitAll
+    @Operation(summary = "Create COS direct upload ticket")
+    @ApiAccessLog(requestEnable = false, responseEnable = false)
+    public CommonResult<CosUploadTicketRespVO> createUploadTicket(@RequestBody CosUploadTicketReqVO reqVO,
+                                                                  HttpServletRequest request) {
+        Long userId = appAuthService.requireUserId(request);
+        return success(imageTranslationTaskService.createUploadTicket(userId, reqVO));
+    }
+
     @PostMapping(value = "/tasks", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PermitAll
     @Operation(summary = "Create image translation task")
@@ -50,6 +63,16 @@ public class AppImageTranslationController {
                                                      HttpServletRequest request) throws IOException {
         Long userId = appAuthService.requireUserId(request);
         return success(imageTranslationTaskService.createTask(userId, file, sourceLang, targetLang, mode, preferProvider));
+    }
+
+    @PostMapping("/tasks/from-cos")
+    @PermitAll
+    @Operation(summary = "Create image translation task from uploaded COS object")
+    @ApiAccessLog(requestEnable = false, responseEnable = false)
+    public CommonResult<CreateTaskRespVO> createTaskFromCos(@RequestBody CreateTaskFromCosReqVO reqVO,
+                                                            HttpServletRequest request) {
+        Long userId = appAuthService.requireUserId(request);
+        return success(imageTranslationTaskService.createTaskFromCos(userId, reqVO));
     }
 
     @GetMapping("/tasks/{taskId}")

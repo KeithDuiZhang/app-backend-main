@@ -8,6 +8,9 @@ import cn.iocoder.yudao.server.config.ImageTranslationProperties;
 import cn.iocoder.yudao.server.service.app.AppPaymentService;
 import cn.iocoder.yudao.server.service.app.AppPaymentService.UsageConsumeReqVO;
 import cn.iocoder.yudao.server.service.image.ImageTranslationModels.CreateTaskRespVO;
+import cn.iocoder.yudao.server.service.image.ImageTranslationModels.CreateTaskFromCosReqVO;
+import cn.iocoder.yudao.server.service.image.ImageTranslationModels.CosUploadTicketReqVO;
+import cn.iocoder.yudao.server.service.image.ImageTranslationModels.CosUploadTicketRespVO;
 import cn.iocoder.yudao.server.service.image.ImageTranslationModels.DisplayMode;
 import cn.iocoder.yudao.server.service.image.ImageTranslationModels.ProcessedImage;
 import cn.iocoder.yudao.server.service.image.ImageTranslationModels.ProviderRequest;
@@ -113,10 +116,58 @@ public class ImageTranslationTaskService {
             throw ServiceExceptionUtil.invalidParamException("图片翻译暂未开通，请稍后再试");
         }
         validateUpload(file, sourceLang, targetLang);
+        return createTaskFromBytes(userId, file.getBytes(), file.getOriginalFilename(), file.getContentType(),
+                sourceLang, targetLang, mode, preferProvider);
+    }
+
+    public CosUploadTicketRespVO createUploadTicket(Long userId, CosUploadTicketReqVO reqVO) {
+        if (!properties.isEnabled()) {
+            throw ServiceExceptionUtil.invalidParamException("图片翻译暂未开通，请稍后再试");
+        }
+        if (reqVO == null) {
+            throw ServiceExceptionUtil.invalidParamException("请先选择图片");
+        }
+        validateImageMeta(reqVO.getSizeBytes(), reqVO.getContentType(), "", "");
+        String contentType = StrUtil.blankToDefault(reqVO.getContentType(), "image/jpeg");
+        String objectKey = storageService.directUploadKey(userId, reqVO.getFileName(), contentType);
+        CosUploadTicketRespVO respVO = new CosUploadTicketRespVO();
+        respVO.setObjectKey(objectKey);
+        respVO.setContentType(contentType);
+        respVO.setExpireMinutes(Math.min(15, storageService.presignedUrlExpireMinutes()));
+        respVO.setUploadUrl(storageService.presignPutUrl(objectKey, contentType, respVO.getExpireMinutes()));
+        return respVO;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public CreateTaskRespVO createTaskFromCos(Long userId, CreateTaskFromCosReqVO reqVO) {
+        if (!properties.isEnabled()) {
+            throw ServiceExceptionUtil.invalidParamException("图片翻译暂未开通，请稍后再试");
+        }
+        if (reqVO == null || !storageService.isDirectUploadKeyForUser(userId, reqVO.getObjectKey())) {
+            throw ServiceExceptionUtil.invalidParamException("图片上传已失效，请重新选择");
+        }
+        validateImageMeta(1, reqVO.getContentType(), reqVO.getSourceLang(), reqVO.getTargetLang());
+        byte[] originalBytes = storageService.getObjectBytes(reqVO.getObjectKey());
+        try {
+            validateImageMeta(originalBytes.length, reqVO.getContentType(), reqVO.getSourceLang(), reqVO.getTargetLang());
+            return createTaskFromBytes(userId, originalBytes, reqVO.getFileName(), reqVO.getContentType(),
+                    reqVO.getSourceLang(), reqVO.getTargetLang(), reqVO.getMode(), reqVO.getPreferProvider());
+        } finally {
+            storageService.deleteObjectQuietly(reqVO.getObjectKey());
+        }
+    }
+
+    private CreateTaskRespVO createTaskFromBytes(Long userId,
+                                                 byte[] originalBytes,
+                                                 String originalFilename,
+                                                 String contentType,
+                                                 String sourceLang,
+                                                 String targetLang,
+                                                 String mode,
+                                                 String preferProvider) {
         String source = normalizeLang(sourceLang);
         String target = normalizeLang(targetLang);
         String provider = resolveProvider(preferProvider);
-        byte[] originalBytes = file.getBytes();
         String rawSha256 = hashService.rawSha256(originalBytes);
         String cacheKey = hashService.cacheKey(rawSha256, source, target, provider);
         if (properties.isCacheEnabled()) {
@@ -139,7 +190,7 @@ public class ImageTranslationTaskService {
                 Status.PENDING.name(), null, false, rawSha256, cacheKey);
         Long taskId = queryTaskId(taskNo);
         try {
-            ProcessedImage image = preprocessor.process(originalBytes, file.getOriginalFilename(), file.getContentType());
+            ProcessedImage image = preprocessor.process(originalBytes, originalFilename, contentType);
             String originalKey = storageService.originalKey(rawSha256, image.getOriginalExt());
             String enhancedKey = storageService.enhancedKey(rawSha256, image.getEnhancedExt());
             storageService.uploadBytes(originalKey, image.getOriginalBytes(), contentType(image.getOriginalExt()));
@@ -410,15 +461,22 @@ public class ImageTranslationTaskService {
         if (file == null || file.isEmpty()) {
             throw ServiceExceptionUtil.invalidParamException("请先选择图片");
         }
+        validateImageMeta(file.getSize(), file.getContentType(), sourceLang, targetLang);
+    }
+
+    private void validateImageMeta(long sizeBytes, String contentType, String sourceLang, String targetLang) {
         long maxBytes = Math.max(1, properties.getUploadMaxSizeMb()) * 1024L * 1024L;
-        if (file.getSize() > maxBytes) {
+        if (sizeBytes <= 0) {
+            throw ServiceExceptionUtil.invalidParamException("请先选择图片");
+        }
+        if (sizeBytes > maxBytes) {
             throw ServiceExceptionUtil.invalidParamException("图片过大，请压缩后重试");
         }
-        String type = StrUtil.blankToDefault(file.getContentType(), "").toLowerCase();
+        String type = StrUtil.blankToDefault(contentType, "").toLowerCase();
         if (StrUtil.isNotBlank(type) && !type.startsWith("image/")) {
             throw ServiceExceptionUtil.invalidParamException("图片格式暂不支持，请更换图片");
         }
-        if (StrUtil.hasBlank(sourceLang, targetLang)) {
+        if (StrUtil.isNotBlank(sourceLang + targetLang) && StrUtil.hasBlank(sourceLang, targetLang)) {
             throw ServiceExceptionUtil.invalidParamException("请选择翻译语言");
         }
     }

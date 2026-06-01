@@ -38,6 +38,33 @@ public final class ImageTranslationModels {
     }
 
     @Data
+    public static class CosUploadTicketReqVO {
+        private String fileName;
+        private String contentType;
+        private long sizeBytes;
+    }
+
+    @Data
+    public static class CosUploadTicketRespVO {
+        private String objectKey;
+        private String uploadUrl;
+        private String method = "PUT";
+        private String contentType;
+        private int expireMinutes;
+    }
+
+    @Data
+    public static class CreateTaskFromCosReqVO {
+        private String objectKey;
+        private String fileName;
+        private String contentType;
+        private String sourceLang;
+        private String targetLang;
+        private String mode = "AUTO";
+        private String preferProvider = "auto";
+    }
+
+    @Data
     public static class RetryReqVO {
         private boolean forceRefreshCache;
         private String preferProvider;

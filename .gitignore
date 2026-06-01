@@ -58,6 +58,7 @@ application-my.yaml
 # Local agent and deployment runtime state
 
 memory/
+/logs/
 /deploy/.env
 /deploy/backend/yudao-server.jar
 /deploy/backend/yudao-server.jar.*

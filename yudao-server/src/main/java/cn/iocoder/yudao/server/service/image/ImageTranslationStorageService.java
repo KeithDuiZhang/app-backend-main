@@ -15,11 +15,13 @@ import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.S3Configuration;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
+import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignRequest;
 
 import java.io.IOException;
 import java.net.URI;
@@ -30,6 +32,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import java.util.UUID;
 
 @Service
 public class ImageTranslationStorageService {
@@ -67,6 +70,23 @@ public class ImageTranslationStorageService {
         return providerPath(rawSha256, provider, sourceLang, targetLang) + "/quality.json";
     }
 
+    public String directUploadKey(Long userId, String fileName, String contentType) {
+        String prefix = normalizePrefix(properties.getCos().getKeyPrefix());
+        String day = LocalDate.now().format(DAY_FORMATTER);
+        String safeUser = userId == null || userId <= 0 ? "anonymous" : String.valueOf(userId);
+        return prefix + "direct-upload/" + day + "/user-" + safeUser + "/"
+                + UUID.randomUUID().toString().replace("-", "") + "." + resolveExt(fileName, contentType);
+    }
+
+    public boolean isDirectUploadKeyForUser(Long userId, String objectKey) {
+        if (StrUtil.isBlank(objectKey) || userId == null || userId <= 0) {
+            return false;
+        }
+        String key = StrUtil.removePrefix(objectKey.trim(), "/");
+        String prefix = normalizePrefix(properties.getCos().getKeyPrefix()) + "direct-upload/";
+        return key.startsWith(prefix) && key.contains("/user-" + userId + "/");
+    }
+
     public void uploadBytes(String objectKey, byte[] bytes, String contentType) {
         RuntimeCosConfig config = runtimeConfig();
         try (S3Client client = createS3Client(config)) {
@@ -79,6 +99,22 @@ public class ImageTranslationStorageService {
                     RequestBody.fromBytes(bytes));
         } catch (Exception ex) {
             throw ServiceExceptionUtil.invalidParamException("图片存储失败，请稍后重试");
+        }
+    }
+
+    public void deleteObjectQuietly(String objectKey) {
+        if (StrUtil.isBlank(objectKey)) {
+            return;
+        }
+        try {
+            RuntimeCosConfig config = runtimeConfig();
+            try (S3Client client = createS3Client(config)) {
+            client.deleteObject(DeleteObjectRequest.builder()
+                    .bucket(config.getBucket())
+                    .key(objectKey)
+                    .build());
+            }
+        } catch (Exception ignored) {
         }
     }
 
@@ -104,6 +140,24 @@ public class ImageTranslationStorageService {
                             .getObjectRequest(GetObjectRequest.builder()
                                     .bucket(config.getBucket())
                                     .key(objectKey)
+                                    .build())
+                            .build())
+                    .url()
+                    .toString();
+        }
+    }
+
+    public String presignPutUrl(String objectKey, String contentType, int minutes) {
+        RuntimeCosConfig config = runtimeConfig();
+        int ttlMinutes = Math.max(1, Math.min(minutes, 60));
+        String safeContentType = StrUtil.blankToDefault(contentType, "image/jpeg");
+        try (S3Presigner presigner = createPresigner(config)) {
+            return presigner.presignPutObject(PutObjectPresignRequest.builder()
+                            .signatureDuration(Duration.ofMinutes(ttlMinutes))
+                            .putObjectRequest(PutObjectRequest.builder()
+                                    .bucket(config.getBucket())
+                                    .key(objectKey)
+                                    .contentType(safeContentType)
                                     .build())
                             .build())
                     .url()
@@ -200,6 +254,25 @@ public class ImageTranslationStorageService {
     private String safeExt(String ext) {
         String value = StrUtil.blankToDefault(ext, "jpg").toLowerCase(Locale.ROOT);
         return value.matches("jpg|jpeg|png|webp|bmp|json") ? ("jpeg".equals(value) ? "jpg" : value) : "jpg";
+    }
+
+    private String resolveExt(String filename, String contentType) {
+        String lower = filename == null ? "" : filename.toLowerCase(Locale.ROOT);
+        int dot = lower.lastIndexOf('.');
+        if (dot >= 0 && dot < lower.length() - 1) {
+            return safeExt(lower.substring(dot + 1));
+        }
+        String type = contentType == null ? "" : contentType.toLowerCase(Locale.ROOT);
+        if (type.contains("png")) {
+            return "png";
+        }
+        if (type.contains("webp")) {
+            return "webp";
+        }
+        if (type.contains("bmp")) {
+            return "bmp";
+        }
+        return "jpg";
     }
 
     private String first(String... values) {
