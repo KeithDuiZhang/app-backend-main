@@ -1,41 +1,56 @@
-# 个人服务器自动部署说明
+# 自托管正式服务器部署说明
 
 ## 部署目标
 
-- 后端仓库：`D:\Code_Project\love-match-backend`
-- 前端仓库：`D:\Code_Project\love-match-frontend-main`
-- 正式域名：`https://translation.superpowersai.cn`
-- 后端容器端口：`48080`
-- Nginx 对外端口：`80`、`443`
-- 生产 API：`/admin-api`
-- App API / 支付回调：`/app-api`
+- 后端仓库：`D:\Code_Project\app-backend-main`
+- 前端仓库：`D:\Code_Project\app-frontend-main`
+- 正式服务器：`120.53.11.250:22`
+- 正式域名：`https://translate.kunqiongai.com`
+- 部署目录：`/opt/kunqiong-translation`
+- Gitea：`http://120.53.11.250:3210`
+- 后端容器端口：`48080`，默认只映射到宿主机 `127.0.0.1:48080`
+- Docker host-network Nginx：对外绑定 `80/443`，服务前端并代理 `/admin-api/`、`/app-api/`
 
-生产环境不要写死 `localhost`、`127.0.0.1`、服务器 IP 或花生壳地址。花生壳地址只允许出现在本地开发说明或 dev/local 配置中。
+正式部署默认使用 `FRONTDOOR_MODE=docker-host-nginx`。服务器当前由 `/opt/kunqiong-frontdoor` 下的 Docker Nginx 使用 host network 接管 `80/443`；后端 Compose 不再要求业务栈里的容器 Nginx 绑定宿主机 `80/443`。宿主机包安装版 Nginx 可通过 `FRONTDOOR_MODE=host-nginx` 启用，老的业务栈容器 Nginx 可通过 `FRONTDOOR_MODE=container-nginx` 启用。
 
-## 已生成的部署文件
+生产环境不要写死 `localhost`、`127.0.0.1`、服务器 IP 或本地穿透地址到前端配置或移动端配置中。宿主机 Nginx 访问后端使用 `127.0.0.1:48080` 是部署内网连接，不是对外业务地址。
 
-- `deploy/scripts/init-server-env.sh`：初始化 Ubuntu 服务器，安装或检查 Docker、Docker Compose、Node.js、npm、JDK 17、Git、curl、unzip、rsync。
-- `deploy/backend/Dockerfile`：使用 JDK 17 运行 `yudao-server.jar`，默认启用 `prod` profile，暴露容器端口 `48080`。
-- `deploy/docker-compose.yml`：编排 MySQL 8.0、Redis 7、yudao-server、Nginx，并通过独立 Docker network 内网互通。
-- `deploy/.env.example`：生产 `.env` 示例，只提交示例，不提交真实 `.env`。
-- `deploy/nginx/conf.d/admin.conf`：HTTP 80 配置，支持 Vue history 路由，并反向代理 `/admin-api/`、`/app-api/`。
-- `deploy/scripts/deploy.sh`：备份旧 Jar 和旧前端 dist，安装新产物，执行 `docker compose up -d --build`，输出容器状态和后端日志。
-- `.github/workflows/deploy-self-server.yml`：GitHub Actions 自动部署。
-- `.gitea/workflows/deploy-self-server.yml`：Gitea Actions 自动部署。
-- `yudao-server/src/main/resources/application-prod.yaml`：生产环境 MySQL 使用 `mysql`，Redis 使用 `redis`，支付回调域名使用 `SERVER_DOMAIN`。
+## 前置条件
+
+服务器需要提前具备：
+
+- Docker 和 Docker Compose。
+- Docker Nginx 前置入口 `/opt/kunqiong-frontdoor` 已创建并运行。
+- `translate.kunqiongai.com` 的 TLS 证书已放在 Docker Nginx 前置入口目录：
+  - `/opt/kunqiong-frontdoor/cert/translate.kunqiongai.com/fullchain.crt`
+  - `/opt/kunqiong-frontdoor/cert/translate.kunqiongai.com/privkey.key`
+- Apache SVN Web 调整为只监听 `127.0.0.1:8080`。`svnserve` 继续使用 `3690`，不要占用或迁移该端口。
+
+宿主机包安装版 Nginx 配置模板位于：
+
+```text
+deploy/nginx/host/translate.kunqiongai.com.conf
+```
+
+`deploy.sh` 在 `FRONTDOOR_MODE=host-nginx` 时默认安装该配置到：
+
+```text
+/etc/nginx/conf.d/translate.kunqiongai.com.conf
+```
+
+并执行 `nginx -t` 与 reload。`FRONTDOOR_MODE=docker-host-nginx` 时，脚本只执行 `docker exec kunqiong-nginx-frontdoor nginx -t` 和 reload，不覆盖 `/opt/kunqiong-frontdoor` 配置。若服务器已有手工维护的 Host Nginx 配置，可设置：
+
+```bash
+HOST_NGINX_INSTALL_CONF=false
+```
+
+此时脚本只测试并 reload 现有 Nginx 配置。
 
 ## 服务器首次初始化
 
-首次在服务器上准备部署目录：
-
 ```bash
-mkdir -p /opt/translation
-cd /opt/translation
-```
-
-复制 `deploy/` 目录到服务器后执行：
-
-```bash
+mkdir -p /opt/kunqiong-translation
+cd /opt/kunqiong-translation
 chmod +x scripts/*.sh
 ./scripts/init-server-env.sh
 cp .env.example .env
@@ -48,177 +63,92 @@ MYSQL_ROOT_PASSWORD=change_to_real_password
 MYSQL_DATABASE=ruoyi-vue-pro
 REDIS_PASSWORD=change_to_real_password
 SPRING_PROFILES_ACTIVE=prod
-SERVER_DOMAIN=translation.superpowersai.cn
+SERVER_DOMAIN=translate.kunqiongai.com
+FRONTDOOR_MODE=docker-host-nginx
+PUBLIC_BASE_URL=https://translate.kunqiongai.com
+YUDAO_SERVER_HOST_BIND=127.0.0.1
+YUDAO_SERVER_HOST_PORT=48080
 ```
 
-MySQL 和 Redis 不安装到宿主机，由 Docker Compose 容器运行。
+不要把真实 `.env`、SSH 私钥、数据库密码或第三方密钥提交到仓库。
 
-## GitHub / Gitea Secrets
+## Gitea Actions
 
-GitHub Actions 和 Gitea Actions 使用相同的敏感变量名：
+`.gitea/workflows/deploy-self-server.yml` 默认从 Gitea 内网地址克隆：
 
-- `SERVER_HOST`：服务器公网 IP 或域名。
-- `SERVER_PORT`：SSH 端口，默认通常是 `22`。
-- `SERVER_USER`：SSH 用户。
-- `SERVER_SSH_KEY`：可登录服务器的私钥内容。
-- `DEPLOY_DIR`：服务器部署目录，例如 `/opt/translation`。
-
-可选仓库变量：
-
-- `FRONTEND_REPOSITORY`：前端仓库，默认 `KeithDuiZhang/love-match-frontend-main`。
-- `FRONTEND_REF`：前端分支，默认 `main`。
-
-服务器需要把对应公钥加入部署用户的 `~/.ssh/authorized_keys`。CI 使用 SSH key 部署，不使用密码登录。
-
-## 自动部署触发
-
-推送后端仓库的 `main` 或 `test` 分支会触发自动部署：
-
-```bash
-git push origin main
-git push origin test
+```text
+http://gitea:3000/superpowersai/app-backend-main.git
+http://gitea:3000/superpowersai/app-frontend-main.git
 ```
 
-也可以在 GitHub Actions 或 Gitea Actions 页面手动触发 `Deploy Self Server`。
+默认部署到：
 
-CI 会执行：
+```text
+/opt/kunqiong-translation
+```
 
-1. 构建后端 `yudao-server.jar`。
-2. 构建前端 vben `apps/web-antd`。
-3. 整理产物到 `release/backend/yudao-server.jar` 和 `release/frontend`。
-4. 通过 SSH 上传 `deploy/` 和 `release/`。
-5. 在服务器执行 `scripts/deploy.sh`。
+需要在 Gitea Secrets 中配置：
+
+- `SERVER_SSH_KEY_B64`：部署私钥的 base64 内容。
+- `FRONTEND_REPO_TOKEN`：可读取前端仓库的令牌。
+
+可选 Secrets：
+
+- `SERVER_HOST`：默认 `120.53.11.250`。
+- `SERVER_PORT`：默认 `22`。
+- `SERVER_USER`：默认 `root`。
+- `DEPLOY_DIR`：默认 `/opt/kunqiong-translation`。
+
+工作流不会保存服务器密码；SSH 登录依赖私钥。
 
 ## 手动部署
 
-如果不用 CI，也可以把产物放到服务器：
+将产物放到：
 
 ```text
-/opt/translation/release/backend/yudao-server.jar
-/opt/translation/release/frontend/index.html
+/opt/kunqiong-translation/release/backend/yudao-server.jar
+/opt/kunqiong-translation/release/frontend/index.html
 ```
 
-然后执行：
+执行：
 
 ```bash
-cd /opt/translation
+cd /opt/kunqiong-translation
 chmod +x scripts/*.sh
-./scripts/deploy.sh
+FRONTDOOR_MODE=docker-host-nginx ./scripts/deploy.sh
 ```
 
-`deploy.sh` 会拒绝部署过小的后端 Jar，避免把非可执行 thin jar 推到生产环境。
+脚本会备份旧 Jar 和旧前端 dist，安装新产物，启动 MySQL、Redis、`yudao-server`，然后测试并 reload Docker Nginx 前置入口。
 
-## 查看日志和状态
+## 容器 Nginx 兼容模式
 
-查看容器状态：
+如需恢复旧的容器 Nginx 前门：
 
 ```bash
-cd /opt/translation
+cd /opt/kunqiong-translation
+FRONTDOOR_MODE=container-nginx ./scripts/deploy.sh
+```
+
+该模式会启用 Compose 的 `container-nginx` profile，并重启容器 Nginx。若 `.env` 中设置了 `CLOUDFLARED_TOKEN`，脚本会同时启用 tunnel profile。
+
+## 验收
+
+```bash
+curl -I https://translate.kunqiongai.com
+curl -I https://translate.kunqiongai.com/admin-api/
+curl -I https://translate.kunqiongai.com/app-api/
 docker compose --env-file .env ps
-```
-
-查看后端日志：
-
-```bash
-cd /opt/translation
 docker compose --env-file .env logs -f --tail=200 yudao-server
 ```
 
-查看 Nginx 日志：
+SVN Web 由 Docker Nginx 前置入口代理到 Apache：
 
 ```bash
-cd /opt/translation
-docker compose --env-file .env logs -f --tail=200 nginx
+curl -I https://translate.kunqiongai.com/svn/
 ```
 
-## 回滚上一版
-
-后端 Jar 备份目录：
+Gitea 直接访问：
 
 ```text
-/opt/translation/backups/backend/
+http://120.53.11.250:3210
 ```
-
-前端 dist 备份目录：
-
-```text
-/opt/translation/backups/frontend/
-```
-
-回滚示例：
-
-```bash
-cd /opt/translation
-cp backups/backend/yudao-server.jar.YYYYMMDDHHMMSS backend/yudao-server.jar
-rm -rf nginx/html/admin
-mkdir -p nginx/html/admin
-tar -xzf backups/frontend/admin-dist.YYYYMMDDHHMMSS.tar.gz -C nginx/html/admin
-docker compose --env-file .env up -d --build
-docker compose --env-file .env ps
-```
-
-## 验收方式
-
-前端成功：
-
-```bash
-curl -I https://translation.superpowersai.cn
-```
-
-返回 `200` 或 Nginx 正常响应，并且浏览器能打开管理端页面。
-
-后端成功：
-
-```bash
-curl -I https://translation.superpowersai.cn/admin-api/
-```
-
-接口路径存在反向代理响应，`yudao-server` 容器保持 `running`。
-
-MySQL 成功：
-
-```bash
-docker compose --env-file .env exec mysql mysqladmin ping -uroot -p
-```
-
-Redis 成功：
-
-```bash
-docker compose --env-file .env exec redis redis-cli -a "$REDIS_PASSWORD" ping
-```
-
-支付回调生产域名统一使用：
-
-```text
-https://translation.superpowersai.cn/app-api/pay/notify/wechat
-https://translation.superpowersai.cn/app-api/pay/notify/alipay
-```
-
-具体路径以项目实际接口为准，但域名必须是 `translation.superpowersai.cn`。
-
-## Cloudflare SSL/TLS
-
-Cloudflare 中 `translation.superpowersai.cn` 已经开启 Proxied 后，推荐：
-
-1. 优先使用 `Full (strict)`。
-2. 源站证书可以使用 Cloudflare Origin Certificate，也可以使用 Let's Encrypt 证书。
-3. 证书和私钥放到服务器 `/opt/translation/nginx/cert/`，当前 Nginx 配置使用：
-   - `/etc/nginx/cert/origin-fullchain.pem`
-   - `/etc/nginx/cert/origin-privkey.pem`
-4. 执行：
-
-```bash
-cd /opt/translation
-docker compose --env-file .env restart nginx
-```
-
-如果 Cloudflare 到源站 443 出现 `525 SSL handshake failed`，但源站本机和其它外部服务器直连 443 都正常，优先检查是否存在运营商或机房链路对特定 SNI 的 TLS reset。本服务器最终采用 Cloudflare Tunnel 绕过入站 443 回源：
-
-```bash
-cd /opt/translation
-# 服务器 .env 中设置真实 CLOUDFLARED_TOKEN 后，部署脚本会自动启用 tunnel profile
-docker compose --env-file .env --profile tunnel up -d cloudflared
-docker compose --env-file .env --profile tunnel ps
-```
-
-Cloudflare DNS 中 `translation.superpowersai.cn` 和 `git.superpowersai.cn` 应指向 Tunnel 的 `*.cfargotunnel.com` CNAME，并保持 Proxied。Tunnel 使用内网访问 `http://nginx:80`，公网用户仍访问 `https://translation.superpowersai.cn`。

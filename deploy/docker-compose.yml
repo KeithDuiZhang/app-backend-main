@@ -64,6 +64,8 @@ services:
         condition: service_healthy
     expose:
       - "48080"
+    ports:
+      - "${YUDAO_SERVER_HOST_BIND:-127.0.0.1}:${YUDAO_SERVER_HOST_PORT:-48080}:48080"
     volumes:
       - ./logs/yudao-server:/app/logs
     networks:
@@ -71,12 +73,14 @@ services:
 
   nginx:
     image: nginx:1.25
+    profiles:
+      - container-nginx
     restart: always
     depends_on:
       - yudao-server
     ports:
-      - "80:80"
-      - "443:443"
+      - "${NGINX_HTTP_HOST_PORT:-80}:80"
+      - "${NGINX_HTTPS_HOST_PORT:-443}:443"
     volumes:
       - ./nginx/html/admin:/usr/share/nginx/html/admin:ro
       - ./nginx/conf.d:/etc/nginx/conf.d:ro

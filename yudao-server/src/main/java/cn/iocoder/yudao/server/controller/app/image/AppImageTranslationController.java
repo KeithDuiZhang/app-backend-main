@@ -85,6 +85,16 @@ public class AppImageTranslationController {
         return success(imageTranslationTaskService.getTaskStatus(userId, taskId));
     }
 
+    @PostMapping("/tasks/{taskId}/text-items")
+    @PermitAll
+    @Operation(summary = "Extract image translation text items")
+    @ApiAccessLog(requestEnable = false, responseEnable = false)
+    public CommonResult<TaskStatusRespVO> extractTextItems(@PathVariable("taskId") String taskId,
+                                                           HttpServletRequest request) {
+        Long userId = appAuthService.requireUserId(request);
+        return success(imageTranslationTaskService.extractTextItems(userId, taskId));
+    }
+
     @PostMapping("/tasks/{taskId}/retry")
     @PermitAll
     @Operation(summary = "Retry image translation task")

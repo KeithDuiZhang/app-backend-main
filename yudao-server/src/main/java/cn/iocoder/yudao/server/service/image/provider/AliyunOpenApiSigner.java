@@ -67,11 +67,30 @@ final class AliyunOpenApiSigner {
                                            String accessKeyId,
                                            String accessKeySecret,
                                            String host) {
+        return acs3Headers(method, path, query,
+                (body == null ? "" : body).getBytes(StandardCharsets.UTF_8),
+                "application/json; charset=utf-8",
+                action, version, accessKeyId, accessKeySecret, host);
+    }
+
+    static Map<String, String> acs3Headers(String method,
+                                           String path,
+                                           String query,
+                                           byte[] bodyBytes,
+                                           String contentType,
+                                           String action,
+                                           String version,
+                                           String accessKeyId,
+                                           String accessKeySecret,
+                                           String host) {
+        byte[] bytes = bodyBytes != null ? bodyBytes : new byte[0];
         TreeMap<String, String> headers = new TreeMap<>();
-        headers.put("content-type", "application/json; charset=utf-8");
+        headers.put("content-type", contentType == null || contentType.isBlank()
+                ? "application/json; charset=utf-8"
+                : contentType);
         headers.put("host", host);
         headers.put("x-acs-action", action);
-        headers.put("x-acs-content-sha256", sha256Hex(body));
+        headers.put("x-acs-content-sha256", sha256Hex(bytes));
         headers.put("x-acs-date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
                 .withZone(ZoneOffset.UTC)
                 .format(Instant.now()));
@@ -142,9 +161,13 @@ final class AliyunOpenApiSigner {
     }
 
     private static String sha256Hex(String value) {
+        return sha256Hex((value == null ? "" : value).getBytes(StandardCharsets.UTF_8));
+    }
+
+    private static String sha256Hex(byte[] value) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            return hex(digest.digest((value == null ? "" : value).getBytes(StandardCharsets.UTF_8)));
+            return hex(digest.digest(value != null ? value : new byte[0]));
         } catch (Exception ex) {
             throw new IllegalStateException("Unable to hash Aliyun OpenAPI request", ex);
         }
