@@ -118,8 +118,8 @@ reload_docker_host_nginx() {
   echo "[deploy] Testing docker host-network nginx config"
   docker exec "${container_name}" nginx -t
 
-  echo "[deploy] Reloading docker host-network nginx"
-  docker exec "${container_name}" nginx -s reload
+  echo "[deploy] Restarting docker host-network nginx to refresh bind-mounted frontend assets"
+  docker restart "${container_name}" >/dev/null
 }
 
 if [ ! -f "${JAR_SOURCE}" ]; then
