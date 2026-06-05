@@ -1,9 +1,9 @@
 param(
-    [string] $AppBaseUrl = "https://translation.superpowersai.cn/app-api",
-    [string] $AdminBaseUrl = "https://translation.superpowersai.cn/admin-api",
+    [string] $AppBaseUrl = "https://translate.kunqiongai.com/app-api",
+    [string] $AdminBaseUrl = "https://translate.kunqiongai.com/admin-api",
     [string] $PublishedRoot = "D:\Code_Project\md_CN_model_repo\published\model-repo\cn\1.0.0",
     [string] $Mobile = "19927621043",
-    [string] $PaymentReturnUrl = "https://translation.superpowersai.cn/app-api/pay/alipay/return",
+    [string] $PaymentReturnUrl = "https://translate.kunqiongai.com/app-api/pay/alipay/return",
     [int] $ExpectedComponentCount = 59,
     [int] $ExpectedOpusModelCount = 54,
     [switch] $PublishLocal,
