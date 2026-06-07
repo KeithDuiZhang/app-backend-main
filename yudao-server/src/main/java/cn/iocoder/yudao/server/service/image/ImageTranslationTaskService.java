@@ -187,6 +187,7 @@ public class ImageTranslationTaskService {
                 jdbcTemplate.update("UPDATE image_translation_cache SET hit_count = hit_count + 1, updater = 'app', update_time = NOW() WHERE id = ?",
                         cache.get("id"));
                 String taskNo = createCachedTask(userId, source, target, mode, preferProvider, rawSha256, cacheKey, cache);
+                consumeQuotaByTaskNo(userId, taskNo);
                 attachSourceImagesForCachedTaskIfNeeded(userId, taskNo, rawSha256, originalBytes, originalFilename,
                         contentType, cache);
                 return taskResponse(taskNo, Status.SUCCESS.name(), true, string(cache, "display_mode"), MESSAGE_CACHED);
@@ -319,6 +320,7 @@ public class ImageTranslationTaskService {
                         cache.get("quality_score"), string(cache, "warning_message"), task.get("id"));
                 jdbcTemplate.update("UPDATE image_translation_cache SET hit_count = hit_count + 1, updater = 'app', update_time = NOW() WHERE id = ?",
                         cache.get("id"));
+                consumeQuota(task);
                 return taskResponse(taskNo, Status.SUCCESS.name(), true, string(cache, "display_mode"), MESSAGE_CACHED);
             }
         }
@@ -515,6 +517,14 @@ public class ImageTranslationTaskService {
         reqVO.setTargetLanguageCode(string(task, "target_lang"));
         reqVO.setImageTranslateCount(1);
         appPaymentService.consumeOnlineUsage(numberLong(task.get("user_id")), reqVO);
+    }
+
+    private void consumeQuotaByTaskNo(Long userId, String taskNo) {
+        Map<String, Object> task = findTaskByNoAndUser(taskNo, userId);
+        if (task == null) {
+            throw new IllegalStateException("Image translation task was not created");
+        }
+        consumeQuota(task);
     }
 
     private void persistExtractedTextItemsAndConsume(Long userId,
