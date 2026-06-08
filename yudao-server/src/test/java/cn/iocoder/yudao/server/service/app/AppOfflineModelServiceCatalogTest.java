@@ -65,7 +65,8 @@ class AppOfflineModelServiceCatalogTest {
         assertEquals(2, catalog.getSchemaVersion());
         assertEquals("1.0.0", catalog.getReleaseVersion());
         assertTrue(catalog.isDownloadRequiresSignedUrl());
-        assertEquals(3, catalog.getBusinessPacks().size());
+        assertEquals(4, catalog.getBusinessPacks().size());
+        assertRecommendedZhCentricTextPack(catalog);
         assertBusinessPack(catalog.getBusinessPacks(), "offline-text-translation-full",
                 expectedBusinessComponents("text-hymt-core"));
         assertBusinessPack(catalog.getBusinessPacks(), "offline-image-translation-full",
@@ -164,10 +165,60 @@ class AppOfflineModelServiceCatalogTest {
         assertEquals(components, pack.getComponents());
     }
 
+    private void assertRecommendedZhCentricTextPack(ModelCatalogRespVO catalog) {
+        BusinessPackRespVO pack = catalog.getBusinessPacks().stream()
+                .filter(item -> "offline-text-zh-centric-12".equals(item.getPackId()))
+                .findFirst()
+                .orElseThrow();
+        List<String> expectedComponents = expectedRecommendedZhCentricComponents();
+        assertEquals(expectedComponents, pack.getComponents());
+        assertEquals(22, pack.getComponents().size());
+        assertFalse(pack.getComponents().contains("text-hymt-core"));
+        assertFalse(pack.getComponents().contains("text-m2m100-418m-int8"));
+        assertFalse(pack.getComponents().contains("ocr-tesseract-core"));
+        assertFalse(pack.getComponents().contains("asr-whisper-wide"));
+
+        Map<String, ComponentPackRespVO> componentsById = catalog.getComponents().stream()
+                .collect(Collectors.toMap(ComponentPackRespVO::getPackId, Function.identity()));
+        long expectedSizeBytes = expectedComponents.stream()
+                .map(componentsById::get)
+                .peek(component -> assertNotNull(component, "missing component in recommended pack"))
+                .mapToLong(ComponentPackRespVO::getSizeBytes)
+                .sum();
+        assertEquals(expectedSizeBytes, pack.getSizeBytes());
+        assertEquals(1_602_490_006L, pack.getSizeBytes());
+    }
+
     private List<String> expectedBusinessComponents(String... extraComponents) {
         java.util.ArrayList<String> components = new java.util.ArrayList<>(expectedOpusModelIds());
         components.addAll(List.of(extraComponents));
         return components;
+    }
+
+    private List<String> expectedRecommendedZhCentricComponents() {
+        return List.of(
+                "text-opus-marian-zh-en",
+                "text-opus-marian-en-zh",
+                "text-opus-marian-zh-ja",
+                "text-opus-marian-ja-zh",
+                "text-opus-marian-zh-ko",
+                "text-opus-marian-ko-zh",
+                "text-opus-marian-zh-vi",
+                "text-opus-marian-vi-en",
+                "text-opus-marian-en-id",
+                "text-opus-marian-id-en",
+                "text-opus-marian-zh-ms",
+                "text-opus-marian-ms-en",
+                "text-opus-marian-en-th",
+                "text-opus-marian-th-en",
+                "text-opus-marian-zh-de",
+                "text-opus-marian-de-zh",
+                "text-opus-marian-en-fr",
+                "text-opus-marian-fr-en",
+                "text-opus-marian-en-es",
+                "text-opus-marian-es-en",
+                "text-opus-marian-en-ru",
+                "text-opus-marian-ru-en");
     }
 
     private Set<String> expectedOpusModelIds() {

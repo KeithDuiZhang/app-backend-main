@@ -6,6 +6,11 @@ param(
     [string] $PaymentReturnUrl = "https://translate.kunqiongai.com/app-api/pay/alipay/return",
     [int] $ExpectedComponentCount = 59,
     [int] $ExpectedOpusModelCount = 54,
+    [int] $ExpectedBusinessPackCount = 4,
+    [string] $ExpectedRecommendedBusinessPackId = "offline-text-zh-centric-12",
+    [int] $ExpectedRecommendedBusinessPackComponentCount = 22,
+    [long] $ExpectedRecommendedBusinessPackBytes = 1602490006,
+    [int] $RequestTimeoutSec = 20,
     [switch] $PublishLocal,
     [switch] $SkipCatalog,
     [switch] $SkipSms,
@@ -15,6 +20,14 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+
+$tlsProtocols = [Net.SecurityProtocolType]::Tls12
+try {
+    $tlsProtocols = $tlsProtocols -bor [Net.SecurityProtocolType]::Tls13
+} catch {
+    # Tls13 is not available on older Windows PowerShell runtimes.
+}
+[Net.ServicePointManager]::SecurityProtocol = $tlsProtocols
 
 function Normalize-BaseUrl([string] $Value) {
     return $Value.TrimEnd("/")
@@ -29,17 +42,31 @@ function New-BearerHeaders([string] $EnvName) {
 }
 
 function Invoke-JsonRequest([string] $Method, [string] $Uri, [hashtable] $Headers = @{}, [object] $Body = $null) {
+    if ($Method -eq "GET" -and $Headers.Count -eq 0 -and $null -eq $Body) {
+        $curl = Get-Command curl.exe -ErrorAction SilentlyContinue
+        if ($null -ne $curl) {
+            return Invoke-PublicCurlJsonGet -Uri $Uri
+        }
+    }
     $request = @{
         Method = $Method
         Uri = $Uri
         Headers = $Headers
         UseBasicParsing = $true
+        TimeoutSec = $RequestTimeoutSec
     }
     if ($null -ne $Body) {
         $request.ContentType = "application/json"
         $request.Body = ($Body | ConvertTo-Json -Depth 16)
     }
-    $response = Invoke-WebRequest @request
+    try {
+        $response = Invoke-WebRequest @request
+    } catch {
+        if ($Method -ne "GET" -or $Headers.Count -gt 0 -or $null -ne $Body) {
+            throw
+        }
+        return Invoke-PublicCurlJsonGet -Uri $Uri
+    }
     $data = $null
     if (-not [string]::IsNullOrWhiteSpace($response.Content)) {
         $data = $response.Content | ConvertFrom-Json
@@ -47,6 +74,31 @@ function Invoke-JsonRequest([string] $Method, [string] $Uri, [hashtable] $Header
     return [pscustomobject]@{
         StatusCode = $response.StatusCode
         Data = $data
+    }
+}
+
+function Invoke-PublicCurlJsonGet([string] $Uri) {
+    $curl = Get-Command curl.exe -ErrorAction SilentlyContinue
+    if ($null -eq $curl) {
+        throw "curl.exe is not available for public GET fallback"
+    }
+    $tmp = New-TemporaryFile
+    try {
+        $httpCode = & $curl.Source -L --silent --show-error --max-time $RequestTimeoutSec --write-out "%{http_code}" -o $tmp $Uri
+        if ($LASTEXITCODE -ne 0) {
+            throw "curl fallback failed with exit code $LASTEXITCODE"
+        }
+        $content = Get-Content -LiteralPath $tmp -Raw -Encoding UTF8
+        $data = $null
+        if (-not [string]::IsNullOrWhiteSpace($content)) {
+            $data = $content | ConvertFrom-Json
+        }
+        return [pscustomobject]@{
+            StatusCode = [int]$httpCode
+            Data = $data
+        }
+    } finally {
+        Remove-Item -LiteralPath $tmp -Force -ErrorAction SilentlyContinue
     }
 }
 
@@ -117,14 +169,28 @@ if (-not $SkipCatalog) {
         $catalog = $catalogResponse.Data
         $components = @($catalog.data.components)
         $models = @($catalog.data.models)
+        $businessPacks = @($catalog.data.businessPacks)
         $opusModels = @($models | Where-Object { $_.modelId -like "text-opus-marian-*" })
         $opusDownloadable = @($opusModels | Where-Object { $_.capabilityStatus -eq "downloadable" })
+        $recommendedPack = @($businessPacks | Where-Object { $_.packId -eq $ExpectedRecommendedBusinessPackId })[0]
+        $recommendedComponents = @()
+        $recommendedExcludedIds = @("text-hymt-core", "text-m2m100-418m-int8", "ocr-tesseract-core", "asr-whisper-wide")
+        $recommendedExcludedPresent = @()
+        if ($null -ne $recommendedPack) {
+            $recommendedComponents = @($recommendedPack.components)
+            $recommendedExcludedPresent = @($recommendedComponents | Where-Object { $recommendedExcludedIds -contains $_ })
+        }
         $signedUrlLeak = Has-SignedUrlLeak $catalog
         $strictOk = -not $StrictCatalog -or (
             $catalog.data.schemaVersion -eq 2 -and
             $components.Count -eq $ExpectedComponentCount -and
             $opusModels.Count -eq $ExpectedOpusModelCount -and
-            $opusDownloadable.Count -eq $ExpectedOpusModelCount
+            $opusDownloadable.Count -eq $ExpectedOpusModelCount -and
+            $businessPacks.Count -eq $ExpectedBusinessPackCount -and
+            $null -ne $recommendedPack -and
+            $recommendedComponents.Count -eq $ExpectedRecommendedBusinessPackComponentCount -and
+            [long]$recommendedPack.sizeBytes -eq $ExpectedRecommendedBusinessPackBytes -and
+            $recommendedExcludedPresent.Count -eq 0
         )
         $ok = $catalogResponse.StatusCode -eq 200 -and $catalog.code -eq 0 -and -not $signedUrlLeak -and $strictOk
         Add-Result $results "offline-model-catalog" ($(if ($ok) { "PASS" } else { "FAIL" })) @{
@@ -134,6 +200,12 @@ if (-not $SkipCatalog) {
             componentCount = $components.Count
             opusModelCount = $opusModels.Count
             opusDownloadableCount = $opusDownloadable.Count
+            businessPackCount = $businessPacks.Count
+            recommendedBusinessPackId = $ExpectedRecommendedBusinessPackId
+            recommendedBusinessPackPresent = $null -ne $recommendedPack
+            recommendedBusinessPackComponents = $recommendedComponents.Count
+            recommendedBusinessPackBytes = $(if ($null -ne $recommendedPack) { [long]$recommendedPack.sizeBytes } else { 0 })
+            recommendedBusinessPackExcludedComponentCount = $recommendedExcludedPresent.Count
             signedUrlLeak = $signedUrlLeak
             strictCatalog = [bool]$StrictCatalog
         }

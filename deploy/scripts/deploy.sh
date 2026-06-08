@@ -33,6 +33,7 @@ FRONTDOOR_MODE="${FRONTDOOR_MODE:-$(read_env_value FRONTDOOR_MODE)}"
 FRONTDOOR_MODE="${FRONTDOOR_MODE:-docker-host-nginx}"
 PUBLIC_BASE_URL="${PUBLIC_BASE_URL:-$(read_env_value PUBLIC_BASE_URL)}"
 PUBLIC_BASE_URL="${PUBLIC_BASE_URL:-https://translate.kunqiongai.com}"
+SKIP_FRONTEND_DEPLOY="${SKIP_FRONTEND_DEPLOY:-false}"
 
 case "${FRONTDOOR_MODE}" in
   host-nginx|docker-host-nginx|container-nginx) ;;
@@ -133,7 +134,7 @@ if [ "${JAR_SIZE}" -lt 50000000 ]; then
   exit 1
 fi
 
-if [ ! -d "${FRONTEND_SOURCE}" ] && [ ! -f "${FRONTEND_SOURCE}.zip" ]; then
+if [ "${SKIP_FRONTEND_DEPLOY}" != "true" ] && [ ! -d "${FRONTEND_SOURCE}" ] && [ ! -f "${FRONTEND_SOURCE}.zip" ]; then
   echo "[deploy] ERROR: frontend dist not found: ${FRONTEND_SOURCE}" >&2
   exit 1
 fi
@@ -143,40 +144,44 @@ if [ -f backend/yudao-server.jar ]; then
   cp -a backend/yudao-server.jar "backups/backend/yudao-server.jar.${TIMESTAMP}"
 fi
 
-echo "[deploy] Backing up old frontend dist"
-if [ -d nginx/html/admin ] && [ -n "$(find nginx/html/admin -mindepth 1 -maxdepth 1 2>/dev/null)" ]; then
-  tar -czf "backups/frontend/admin-dist.${TIMESTAMP}.tar.gz" -C nginx/html/admin .
-fi
-
 echo "[deploy] Installing new backend jar"
 cp -a "${JAR_SOURCE}" backend/yudao-server.jar
 
-echo "[deploy] Installing new frontend dist"
-rm -rf nginx/html/admin.tmp
-mkdir -p nginx/html/admin.tmp
-
-if [ -f "${FRONTEND_SOURCE}.zip" ]; then
-  unzip -q "${FRONTEND_SOURCE}.zip" -d nginx/html/admin.tmp
-elif [ -f "${FRONTEND_SOURCE}/dist.zip" ]; then
-  unzip -q "${FRONTEND_SOURCE}/dist.zip" -d nginx/html/admin.tmp
+if [ "${SKIP_FRONTEND_DEPLOY}" = "true" ]; then
+  echo "[deploy] Skipping frontend deploy; keeping existing admin dist"
 else
-  rsync -a --delete "${FRONTEND_SOURCE}/" nginx/html/admin.tmp/
-fi
+  echo "[deploy] Backing up old frontend dist"
+  if [ -d nginx/html/admin ] && [ -n "$(find nginx/html/admin -mindepth 1 -maxdepth 1 2>/dev/null)" ]; then
+    tar -czf "backups/frontend/admin-dist.${TIMESTAMP}.tar.gz" -C nginx/html/admin .
+  fi
 
-if [ -f nginx/html/admin.tmp/dist/index.html ]; then
-  rm -rf nginx/html/admin.tmp.normalized
-  mv nginx/html/admin.tmp/dist nginx/html/admin.tmp.normalized
+  echo "[deploy] Installing new frontend dist"
   rm -rf nginx/html/admin.tmp
-  mv nginx/html/admin.tmp.normalized nginx/html/admin.tmp
-fi
+  mkdir -p nginx/html/admin.tmp
 
-if [ ! -f nginx/html/admin.tmp/index.html ]; then
-  echo "[deploy] ERROR: frontend dist must contain index.html" >&2
-  exit 1
-fi
+  if [ -f "${FRONTEND_SOURCE}.zip" ]; then
+    unzip -q "${FRONTEND_SOURCE}.zip" -d nginx/html/admin.tmp
+  elif [ -f "${FRONTEND_SOURCE}/dist.zip" ]; then
+    unzip -q "${FRONTEND_SOURCE}/dist.zip" -d nginx/html/admin.tmp
+  else
+    rsync -a --delete "${FRONTEND_SOURCE}/" nginx/html/admin.tmp/
+  fi
 
-rm -rf nginx/html/admin
-mv nginx/html/admin.tmp nginx/html/admin
+  if [ -f nginx/html/admin.tmp/dist/index.html ]; then
+    rm -rf nginx/html/admin.tmp.normalized
+    mv nginx/html/admin.tmp/dist nginx/html/admin.tmp.normalized
+    rm -rf nginx/html/admin.tmp
+    mv nginx/html/admin.tmp.normalized nginx/html/admin.tmp
+  fi
+
+  if [ ! -f nginx/html/admin.tmp/index.html ]; then
+    echo "[deploy] ERROR: frontend dist must contain index.html" >&2
+    exit 1
+  fi
+
+  rm -rf nginx/html/admin
+  mv nginx/html/admin.tmp nginx/html/admin
+fi
 
 echo "[deploy] Starting Docker services (${FRONTDOOR_MODE})"
 docker compose "${COMPOSE_ARGS[@]}" up -d --build "${COMPOSE_SERVICES[@]}"

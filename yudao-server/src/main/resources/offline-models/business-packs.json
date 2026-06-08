@@ -1,5 +1,38 @@
 [
   {
+    "packId": "offline-text-zh-centric-12",
+    "displayNameZh": "中文中心12语文本包",
+    "summaryZh": "默认推荐下载，支持中文与英语、日语、韩语、越南语、印尼语、马来语、泰语、德语、法语、西班牙语、俄语双向文本互译。",
+    "version": "1.0.0",
+    "releaseStatus": "test",
+    "components": [
+      "text-opus-marian-zh-en",
+      "text-opus-marian-en-zh",
+      "text-opus-marian-zh-ja",
+      "text-opus-marian-ja-zh",
+      "text-opus-marian-zh-ko",
+      "text-opus-marian-ko-zh",
+      "text-opus-marian-zh-vi",
+      "text-opus-marian-vi-en",
+      "text-opus-marian-en-id",
+      "text-opus-marian-id-en",
+      "text-opus-marian-zh-ms",
+      "text-opus-marian-ms-en",
+      "text-opus-marian-en-th",
+      "text-opus-marian-th-en",
+      "text-opus-marian-zh-de",
+      "text-opus-marian-de-zh",
+      "text-opus-marian-en-fr",
+      "text-opus-marian-fr-en",
+      "text-opus-marian-en-es",
+      "text-opus-marian-es-en",
+      "text-opus-marian-en-ru",
+      "text-opus-marian-ru-en"
+    ],
+    "sizeBytes": 1602490006,
+    "dependencyModel": "component-progress"
+  },
+  {
     "packId": "offline-text-translation-full",
     "displayNameZh": "文本翻译离线包",
     "summaryZh": "下载后可使用稳定离线文本翻译；增强翻译模式需手动开启。",
