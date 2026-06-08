@@ -1,407 +1,3546 @@
 [
-    {
-        "packId":  "text-hymt-core",
-        "type":  "translation",
-        "engine":  "HY-MT",
-        "version":  "1.0.0",
-        "displayNameZh":  "HY-MT 离线文本翻译核心包（2bit）",
-        "summaryZh":  "文本翻译离线能力基础包",
-        "releaseStatus":  "test",
-        "minRamGb":  6,
-        "installPath":  "translation/text-hymt-core/1.0.0",
-        "sourceBytes":  600536716,
-        "sizeBytes":  594648072,
-        "sha256":  "01abd49939e4c359a46d408614ecc6eabee9ff9e48678088354974ed5652d604",
-        "url":  "packs/translation/text-hymt-core/1.0.0/text-hymt-core-1.0.0.zip",
-        "objectKey":  "model-repo/cn/1.0.0/packs/translation/text-hymt-core/1.0.0/text-hymt-core-1.0.0.zip",
-        "manifestUrl":  "packs/translation/text-hymt-core/1.0.0/manifest.json",
-        "manifestObjectKey":  "model-repo/cn/1.0.0/packs/translation/text-hymt-core/1.0.0/manifest.json",
-        "requiredFiles":  [
-                              {
-                                  "path":  "Hy-MT1.5-1.8B-2bit.gguf",
-                                  "sizeBytes":  600534880,
-                                  "sha256":  "2603ca8063c77328b544f8f6414b398d95893deafb60a9c1f11c2d2af4a20bfe"
-                              }
-                          ]
-    },
-    {
-        "packId":  "ocr-tesseract-core",
-        "type":  "ocr",
-        "engine":  "Tesseract4Android",
-        "version":  "1.0.0",
-        "displayNameZh":  "Tesseract 多语种 OCR 扩展包",
-        "summaryZh":  "拍照翻译扩展文字识别包",
-        "releaseStatus":  "test",
-        "minRamGb":  3,
-        "installPath":  "ocr/ocr-tesseract-core/1.0.0",
-        "sourceBytes":  29512671,
-        "sizeBytes":  16428900,
-        "sha256":  "f38374cdf492dcb7401bc5257d4c657c1e933623337e13e473d47b7bb08c977e",
-        "url":  "packs/ocr/ocr-tesseract-core/1.0.0/ocr-tesseract-core-1.0.0.zip",
-        "objectKey":  "model-repo/cn/1.0.0/packs/ocr/ocr-tesseract-core/1.0.0/ocr-tesseract-core-1.0.0.zip",
-        "manifestUrl":  "packs/ocr/ocr-tesseract-core/1.0.0/manifest.json",
-        "manifestObjectKey":  "model-repo/cn/1.0.0/packs/ocr/ocr-tesseract-core/1.0.0/manifest.json",
-        "requiredFiles":  [
-                              {
-                                  "path":  "tessdata/ara.traineddata",
-                                  "sizeBytes":  1432056,
-                                  "sha256":  "e3206d3dc87fd50c24a0fb9f01838615911d25168f4e64415244b67d2bb3e729"
-                              },
-                              {
-                                  "path":  "tessdata/chi_sim.traineddata",
-                                  "sizeBytes":  2469156,
-                                  "sha256":  "a5fcb6f0db1e1d6d8522f39db4e848f05984669172e584e8d76b6b3141e1f730"
-                              },
-                              {
-                                  "path":  "tessdata/deu.traineddata",
-                                  "sizeBytes":  1525436,
-                                  "sha256":  "19d219bbb6672c869d20a9636c6816a81eb9a71796cb93ebe0cb1530e2cdb22d"
-                              },
-                              {
-                                  "path":  "tessdata/eng.traineddata",
-                                  "sizeBytes":  4113088,
-                                  "sha256":  "7d4322bd2a7749724879683fc3912cb542f19906c83bcc1a52132556427170b2"
-                              },
-                              {
-                                  "path":  "tessdata/fra.traineddata",
-                                  "sizeBytes":  1130365,
-                                  "sha256":  "ced037562e8c80c13122dece28dd477d399af80911a28791a66a63ac1e3445ca"
-                              },
-                              {
-                                  "path":  "tessdata/hin.traineddata",
-                                  "sizeBytes":  1122751,
-                                  "sha256":  "4c73ffc59d497c186b19d1e90f5d721d678ea6b2e277b719bee4e2af12271825"
-                              },
-                              {
-                                  "path":  "tessdata/ind.traineddata",
-                                  "sizeBytes":  1122661,
-                                  "sha256":  "69786901da87ab8766c1ea7fbb10b28f2110c14da3f6c8f2735df131fba95d88"
-                              },
-                              {
-                                  "path":  "tessdata/ita.traineddata",
-                                  "sizeBytes":  2701314,
-                                  "sha256":  "b8f89e1e785118dac4d51ae042c029a64edb5c3ee42ef73027a6d412748d8827"
-                              },
-                              {
-                                  "path":  "tessdata/jpn.traineddata",
-                                  "sizeBytes":  2471260,
-                                  "sha256":  "1f5de9236d2e85f5fdf4b3c500f2d4926f8d9449f28f5394472d9e8d83b91b4d"
-                              },
-                              {
-                                  "path":  "tessdata/kor.traineddata",
-                                  "sizeBytes":  1677415,
-                                  "sha256":  "6b85e11d9bbf07863b97b3523b1b112844c43e713df8b66418a081fd1060b3b2"
-                              },
-                              {
-                                  "path":  "tessdata/por.traineddata",
-                                  "sizeBytes":  1982756,
-                                  "sha256":  "c4932b937207a9514b7514d518b931a99938c02a28a5a5a553f8599ed58b7deb"
-                              },
-                              {
-                                  "path":  "tessdata/rus.traineddata",
-                                  "sizeBytes":  3861738,
-                                  "sha256":  "e16e5e036cce1d9ec2b00063cf8b54472625b9e14d893a169e2b0dedeb4df225"
-                              },
-                              {
-                                  "path":  "tessdata/spa.traineddata",
-                                  "sizeBytes":  2294433,
-                                  "sha256":  "6f2e04d02774a18f01bed44b1111f2cd7f3ba7ac9dc4373cd3f898a40ea6b464"
-                              },
-                              {
-                                  "path":  "tessdata/tha.traineddata",
-                                  "sizeBytes":  1072600,
-                                  "sha256":  "294227cc2d1292b0acb28d61d4115c88252b96d466ca90b417cf4cf0c67bf07c"
-                              },
-                              {
-                                  "path":  "tessdata/vie.traineddata",
-                                  "sizeBytes":  531275,
-                                  "sha256":  "79df64caf7bcfb2a27df5042ecb6121e196eada34da774956995747636d5bfa1"
-                              }
-                          ]
-    },
-    {
-        "packId":  "asr-sensevoice-core",
-        "type":  "asr",
-        "engine":  "SenseVoice",
-        "version":  "1.0.0",
-        "displayNameZh":  "SenseVoice 默认语音识别包",
-        "summaryZh":  "实时对话基础语音识别包",
-        "releaseStatus":  "test",
-        "minRamGb":  4,
-        "installPath":  "asr/asr-sensevoice-core/1.0.0",
-        "sourceBytes":  240510372,
-        "sizeBytes":  161050741,
-        "sha256":  "bf7585c6b0cca6fa5b7cf73af230f1ce48945ee408d19a6e0181e03cec0c447c",
-        "url":  "packs/asr/asr-sensevoice-core/1.0.0/asr-sensevoice-core-1.0.0.zip",
-        "objectKey":  "model-repo/cn/1.0.0/packs/asr/asr-sensevoice-core/1.0.0/asr-sensevoice-core-1.0.0.zip",
-        "manifestUrl":  "packs/asr/asr-sensevoice-core/1.0.0/manifest.json",
-        "manifestObjectKey":  "model-repo/cn/1.0.0/packs/asr/asr-sensevoice-core/1.0.0/manifest.json",
-        "requiredFiles":  [
-                              {
-                                  "path":  "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/export-onnx.py",
-                                  "sizeBytes":  5905,
-                                  "sha256":  "c97f6a33f9d7135efd4d55b3e24e288c47d925f3b4f04b8b3418c2821c0a89ce"
-                              },
-                              {
-                                  "path":  "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/LICENSE",
-                                  "sizeBytes":  71,
-                                  "sha256":  "221c6df10b0931a5629adad671ea48fb7747e034c414b6d2bfa275bc3dd4ea17"
-                              },
-                              {
-                                  "path":  "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/model.int8.onnx",
-                                  "sizeBytes":  239233841,
-                                  "sha256":  "c71f0ce00bec95b07744e116345e33d8cbbe08cef896382cf907bf4b51a2cd51"
-                              },
-                              {
-                                  "path":  "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/README.md",
-                                  "sizeBytes":  104,
-                                  "sha256":  "763991a00edaea534ab36bf1b7cf89e61e911666dcfabbba71f91f9f7c593a63"
-                              },
-                              {
-                                  "path":  "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/test_wavs/en.wav",
-                                  "sizeBytes":  228908,
-                                  "sha256":  "eb1eb008904465b74c304aad8342e8c7d3c6e61ffe9f66adcaca9cf0f76a93f4"
-                              },
-                              {
-                                  "path":  "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/test_wavs/ja.wav",
-                                  "sizeBytes":  230444,
-                                  "sha256":  "460bd8dccb0d2a5f4e29c628f837be4082d13defc64c3fc21dd1b6bb0e119095"
-                              },
-                              {
-                                  "path":  "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/test_wavs/ko.wav",
-                                  "sizeBytes":  147500,
-                                  "sha256":  "0dc797a5c81ed30fc339d91f3da718ab02854e17ffa37cb93c4c039ac5c6bb9c"
-                              },
-                              {
-                                  "path":  "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/test_wavs/yue.wav",
-                                  "sizeBytes":  164780,
-                                  "sha256":  "0960b2db54ae202071d250e6462fbf74a3c863f0e3e7f01273e4939c996875a0"
-                              },
-                              {
-                                  "path":  "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/test_wavs/zh.wav",
-                                  "sizeBytes":  178988,
-                                  "sha256":  "b77f1794fe374a0ba1ee1dc458bfaf9349496cbbfc32780c50ba3c5a7ad8e373"
-                              },
-                              {
-                                  "path":  "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/tokens.txt",
-                                  "sizeBytes":  315894,
-                                  "sha256":  "f449eb28dc567533d7fa59be34e2abca8784f771850c78a47fb731a31429a1dc"
-                              }
-                          ]
-    },
-    {
-        "packId":  "asr-whisper-wide",
-        "type":  "asr",
-        "engine":  "Whisper",
-        "version":  "1.0.0",
-        "displayNameZh":  "Whisper 增强离线语音识别包",
-        "summaryZh":  "实时对话增强语音识别包",
-        "releaseStatus":  "test",
-        "minRamGb":  6,
-        "installPath":  "asr/asr-whisper-wide/1.0.0",
-        "sourceBytes":  303406962,
-        "sizeBytes":  242800126,
-        "sha256":  "3dc4938c0d949a68c6cc68342b17dd95d2be6223e2d675e88fcdb0b3e740258f",
-        "url":  "packs/asr/asr-whisper-wide/1.0.0/asr-whisper-wide-1.0.0.zip",
-        "objectKey":  "model-repo/cn/1.0.0/packs/asr/asr-whisper-wide/1.0.0/asr-whisper-wide-1.0.0.zip",
-        "manifestUrl":  "packs/asr/asr-whisper-wide/1.0.0/manifest.json",
-        "manifestObjectKey":  "model-repo/cn/1.0.0/packs/asr/asr-whisper-wide/1.0.0/manifest.json",
-        "requiredFiles":  [
-                              {
-                                  "path":  "Whisper_initializer.onnx",
-                                  "sizeBytes":  71378,
-                                  "sha256":  "dbf3281f2399b46527afbf0401a91174596222b79fa4e6646b0f2d49fb397d85"
-                              },
-                              {
-                                  "path":  "Whisper_encoder.onnx",
-                                  "sizeBytes":  92487048,
-                                  "sha256":  "0171be36c908738326f70c8a7f58049ba4786a07d7ea79c0e0f9e26550cdfb50"
-                              },
-                              {
-                                  "path":  "Whisper_decoder.onnx",
-                                  "sizeBytes":  181741988,
-                                  "sha256":  "704de24c96a812779f3d0d7ed2a47a37b070f44abb0d92ca5e19d31c727718df"
-                              },
-                              {
-                                  "path":  "Whisper_cache_initializer.onnx",
-                                  "sizeBytes":  14315416,
-                                  "sha256":  "6e303b22e38ea5a2f6c1e4c29ddbf11b047f77d8e7a99841182e709ee6b2d9d1"
-                              },
-                              {
-                                  "path":  "Whisper_cache_initializer_batch.onnx",
-                                  "sizeBytes":  14314991,
-                                  "sha256":  "6da66ede8430347e314a7341fa05481778ac945d5b028106a8340361fdc99986"
-                              },
-                              {
-                                  "path":  "Whisper_detokenizer.onnx",
-                                  "sizeBytes":  472377,
-                                  "sha256":  "713447d18dc0f4cae0759f616aba98a909100185941f80844bf954ef12888e12"
-                              }
-                          ]
-    },
-    {
-        "packId":  "tts-sherpa-core",
-        "type":  "tts",
-        "engine":  "sherpa-onnx",
-        "version":  "1.0.0",
-        "displayNameZh":  "sherpa-onnx 离线神经 TTS 包",
-        "summaryZh":  "实时对话离线朗读包",
-        "releaseStatus":  "test",
-        "minRamGb":  4,
-        "installPath":  "tts/tts-sherpa-core/1.0.0",
-        "sourceBytes":  336572939,
-        "sizeBytes":  288527483,
-        "sha256":  "ff259c70094d8cbc6c2fa376664d688fc260a8a4d48bcc691a412e3174ba5f2b",
-        "url":  "packs/tts/tts-sherpa-core/1.0.0/tts-sherpa-core-1.0.0.zip",
-        "objectKey":  "model-repo/cn/1.0.0/packs/tts/tts-sherpa-core/1.0.0/tts-sherpa-core-1.0.0.zip",
-        "manifestUrl":  "packs/tts/tts-sherpa-core/1.0.0/manifest.json",
-        "manifestObjectKey":  "model-repo/cn/1.0.0/packs/tts/tts-sherpa-core/1.0.0/manifest.json",
-        "requiredFiles":  [
-                              {
-                                  "path":  "vits-melo-tts-zh_en/date.fst",
-                                  "sizeBytes":  59154,
-                                  "sha256":  "eb8aa079ae3cb81d8f4404992f39d61a0cb990947512b5b8d1e54d1f6980e718"
-                              },
-                              {
-                                  "path":  "vits-melo-tts-zh_en/lexicon.txt",
-                                  "sizeBytes":  6837671,
-                                  "sha256":  "7236884b02435ac5d10cf69b4be40a61b45aa676b5300f0e412f185748fee528"
-                              },
-                              {
-                                  "path":  "vits-melo-tts-zh_en/LICENSE",
-                                  "sizeBytes":  1053,
-                                  "sha256":  "88a50e5a02bbc2a5c2f084dc19da751aa97b1690f5fda76cd8005c8634d1ca70"
-                              },
-                              {
-                                  "path":  "vits-melo-tts-zh_en/model.int8.onnx",
-                                  "sizeBytes":  133,
-                                  "sha256":  "0a1462eef98f05c15a6f57569bf2fb57a6b3995891bb17956187ff5e2694273e"
-                              },
-                              {
-                                  "path":  "vits-melo-tts-zh_en/model.onnx",
-                                  "sizeBytes":  170429550,
-                                  "sha256":  "bf30582eb1b012250a35b1a4a80e7dfbcf8485e7bb9de0d95efbbeef0e4ad86d"
-                              },
-                              {
-                                  "path":  "vits-melo-tts-zh_en/new_heteronym.fst",
-                                  "sizeBytes":  21974,
-                                  "sha256":  "ca14b2127e27baa571664e4bb791e143e7425f56a6bc29db08d74f97e6aa4e29"
-                              },
-                              {
-                                  "path":  "vits-melo-tts-zh_en/number.fst",
-                                  "sizeBytes":  64482,
-                                  "sha256":  "743f402181fcfebf76cc2f0546b71fa26476e626fbe4e460fb7b4c3a7a8bd5bd"
-                              },
-                              {
-                                  "path":  "vits-melo-tts-zh_en/phone.fst",
-                                  "sizeBytes":  88630,
-                                  "sha256":  "1ac2b6fa56b1442320c4de7db08353bab8963a2b57f365eebcdd3a2d3562f8d7"
-                              },
-                              {
-                                  "path":  "vits-melo-tts-zh_en/README.md",
-                                  "sizeBytes":  257,
-                                  "sha256":  "ae6e44dead53dfdbd5b4a77106226f3118eb910222b46cb5533a3860773fc6c7"
-                              },
-                              {
-                                  "path":  "vits-melo-tts-zh_en/tokens.txt",
-                                  "sizeBytes":  655,
-                                  "sha256":  "d18664a7e12bd7ea1022ddaf951e534e136815016c5a809d6b64156bffb4369d"
-                              },
-                              {
-                                  "path":  "vits-melo-tts-zh_en/dict/hmm_model.utf8",
-                                  "sizeBytes":  519739,
-                                  "sha256":  "f17790586ac86dd048c8adffed052c4bd2b28ed0682972c1275e59040c0589a7"
-                              },
-                              {
-                                  "path":  "vits-melo-tts-zh_en/dict/idf.utf8",
-                                  "sizeBytes":  5998717,
-                                  "sha256":  "dbd1e03d72b2263cc8d84a4304ed77677eed9e7deaf43a1a5133bbba9733b535"
-                              },
-                              {
-                                  "path":  "vits-melo-tts-zh_en/dict/jieba.dict.utf8",
-                                  "sizeBytes":  5071204,
-                                  "sha256":  "3043b77068e09c9904f27cad82f12b6ebe9dbdb5aeff3b25e45ab7f9c1122b55"
-                              },
-                              {
-                                  "path":  "vits-melo-tts-zh_en/dict/README.md",
-                                  "sizeBytes":  683,
-                                  "sha256":  "8bcc7c2ed7dff082d9a99c09de0bfd72249bf3b5c4298a3af328da40cbd8cfd1"
-                              },
-                              {
-                                  "path":  "vits-melo-tts-zh_en/dict/stop_words.utf8",
-                                  "sizeBytes":  8974,
-                                  "sha256":  "b788b8a939d2e2fe079abd579ea98f12f9fb84370bfd0dddd81bb9381f7ab42c"
-                              },
-                              {
-                                  "path":  "vits-melo-tts-zh_en/dict/user.dict.utf8",
-                                  "sizeBytes":  49,
-                                  "sha256":  "495bbf49270408a1234690e1e6a97328f30a482a7a72aa769e8a12e8714b0c62"
-                              },
-                              {
-                                  "path":  "vits-melo-tts-zh_en/dict/pos_dict/char_state_tab.utf8",
-                                  "sizeBytes":  327139,
-                                  "sha256":  "28b7be1dd7369766a51445af4d42e9a2ba4bf374c13be5bc1ca7721e27271dbb"
-                              },
-                              {
-                                  "path":  "vits-melo-tts-zh_en/dict/pos_dict/prob_emit.utf8",
-                                  "sizeBytes":  1687686,
-                                  "sha256":  "c33c4cb7edf3b3a5947df7209b6e9f267eae1f21335d9e2bd2521ea07105457a"
-                              },
-                              {
-                                  "path":  "vits-melo-tts-zh_en/dict/pos_dict/prob_start.utf8",
-                                  "sizeBytes":  4347,
-                                  "sha256":  "13623ea0e9300bdb597cb2da28770b7b385d6c0098d66e516083fb01b6bd5d96"
-                              },
-                              {
-                                  "path":  "vits-melo-tts-zh_en/dict/pos_dict/prob_trans.utf8",
-                                  "sizeBytes":  124159,
-                                  "sha256":  "f22363e2307408293d180c6f9f6b5cb75879d52f722f7764fa2d3d0ae2400236"
-                              },
-                              {
-                                  "path":  "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/duration_predictor.int8.onnx",
-                                  "sizeBytes":  3700147,
-                                  "sha256":  "c3eb91414d5ff8a7a239b7fe9e34e7e2bf8a8140d8375ffb14718b1c639325db"
-                              },
-                              {
-                                  "path":  "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/LICENSE",
-                                  "sizeBytes":  1070,
-                                  "sha256":  "0dfe0d0ba84416fe3879d9a34f4909d8d0137c78d1e95834177b0414ac096fa2"
-                              },
-                              {
-                                  "path":  "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/README.md",
-                                  "sizeBytes":  19518,
-                                  "sha256":  "a96c347945f7c8bc1673bea3525b1ac8d36fdde556e1e0a6a186052429caf863"
-                              },
-                              {
-                                  "path":  "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/text_encoder.int8.onnx",
-                                  "sizeBytes":  36416150,
-                                  "sha256":  "c7befd5ea8c3119769e8a6c1486c4edc6a3bc8365c67621c881bbb774b9902ff"
-                              },
-                              {
-                                  "path":  "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/tts.json",
-                                  "sizeBytes":  8253,
-                                  "sha256":  "42078d3aef1cd43ab43021f3c54f47d2d75ceb4e75f627f118890128b06a0d09"
-                              },
-                              {
-                                  "path":  "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/unicode_indexer.bin",
-                                  "sizeBytes":  262144,
-                                  "sha256":  "8402ca48e5189a8950138580b0fff64db6f072f24ac07cd54ba8b2fbb9883b30"
-                              },
-                              {
-                                  "path":  "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/vector_estimator.int8.onnx",
-                                  "sizeBytes":  78400833,
-                                  "sha256":  "20cd86fa5c6effedfda0e7cffe5b0569ca401c440a0c3a1d72bf39286c0db3fd"
-                              },
-                              {
-                                  "path":  "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/vocoder.int8.onnx",
-                                  "sizeBytes":  25991073,
-                                  "sha256":  "e923d60f53f95eb1ce235f1dc33ec56d9c057823c96fa6f8acf98f32b0da6152"
-                              },
-                              {
-                                  "path":  "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/voice.bin",
-                                  "sizeBytes":  517168,
-                                  "sha256":  "67d5209b0ee8ce6c74105ffbe12fe6a7628aea3b4ba2fcb308a4a67938a93ce8"
-                              }
-                          ]
-    }
+  {
+    "packId": "text-hymt-core",
+    "type": "translation",
+    "engine": "HY-MT",
+    "version": "1.0.0",
+    "displayNameZh": "HY-MT 离线文本翻译核心包（2bit）",
+    "summaryZh": "文本翻译离线能力基础包",
+    "releaseStatus": "test",
+    "minRamGb": 6,
+    "installPath": "translation/text-hymt-core/1.0.0",
+    "sourceBytes": 600536716,
+    "sizeBytes": 594648072,
+    "sha256": "01abd49939e4c359a46d408614ecc6eabee9ff9e48678088354974ed5652d604",
+    "url": "packs/translation/text-hymt-core/1.0.0/text-hymt-core-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-hymt-core/1.0.0/text-hymt-core-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-hymt-core/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-hymt-core/1.0.0/manifest.json",
+    "requiredFiles": [
+      {
+        "path": "Hy-MT1.5-1.8B-2bit.gguf",
+        "sizeBytes": 600534880,
+        "sha256": "2603ca8063c77328b544f8f6414b398d95893deafb60a9c1f11c2d2af4a20bfe"
+      }
+    ],
+    "modelIds": [
+      "text-hymt-enhance"
+    ]
+  },
+  {
+    "packId": "ocr-tesseract-core",
+    "type": "ocr",
+    "engine": "Tesseract4Android",
+    "version": "1.0.0",
+    "displayNameZh": "Tesseract 多语种 OCR 扩展包",
+    "summaryZh": "拍照翻译扩展文字识别包",
+    "releaseStatus": "test",
+    "minRamGb": 3,
+    "installPath": "ocr/ocr-tesseract-core/1.0.0",
+    "sourceBytes": 29512671,
+    "sizeBytes": 16428900,
+    "sha256": "f38374cdf492dcb7401bc5257d4c657c1e933623337e13e473d47b7bb08c977e",
+    "url": "packs/ocr/ocr-tesseract-core/1.0.0/ocr-tesseract-core-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/ocr/ocr-tesseract-core/1.0.0/ocr-tesseract-core-1.0.0.zip",
+    "manifestUrl": "packs/ocr/ocr-tesseract-core/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/ocr/ocr-tesseract-core/1.0.0/manifest.json",
+    "requiredFiles": [
+      {
+        "path": "tessdata/ara.traineddata",
+        "sizeBytes": 1432056,
+        "sha256": "e3206d3dc87fd50c24a0fb9f01838615911d25168f4e64415244b67d2bb3e729"
+      },
+      {
+        "path": "tessdata/chi_sim.traineddata",
+        "sizeBytes": 2469156,
+        "sha256": "a5fcb6f0db1e1d6d8522f39db4e848f05984669172e584e8d76b6b3141e1f730"
+      },
+      {
+        "path": "tessdata/deu.traineddata",
+        "sizeBytes": 1525436,
+        "sha256": "19d219bbb6672c869d20a9636c6816a81eb9a71796cb93ebe0cb1530e2cdb22d"
+      },
+      {
+        "path": "tessdata/eng.traineddata",
+        "sizeBytes": 4113088,
+        "sha256": "7d4322bd2a7749724879683fc3912cb542f19906c83bcc1a52132556427170b2"
+      },
+      {
+        "path": "tessdata/fra.traineddata",
+        "sizeBytes": 1130365,
+        "sha256": "ced037562e8c80c13122dece28dd477d399af80911a28791a66a63ac1e3445ca"
+      },
+      {
+        "path": "tessdata/hin.traineddata",
+        "sizeBytes": 1122751,
+        "sha256": "4c73ffc59d497c186b19d1e90f5d721d678ea6b2e277b719bee4e2af12271825"
+      },
+      {
+        "path": "tessdata/ind.traineddata",
+        "sizeBytes": 1122661,
+        "sha256": "69786901da87ab8766c1ea7fbb10b28f2110c14da3f6c8f2735df131fba95d88"
+      },
+      {
+        "path": "tessdata/ita.traineddata",
+        "sizeBytes": 2701314,
+        "sha256": "b8f89e1e785118dac4d51ae042c029a64edb5c3ee42ef73027a6d412748d8827"
+      },
+      {
+        "path": "tessdata/jpn.traineddata",
+        "sizeBytes": 2471260,
+        "sha256": "1f5de9236d2e85f5fdf4b3c500f2d4926f8d9449f28f5394472d9e8d83b91b4d"
+      },
+      {
+        "path": "tessdata/kor.traineddata",
+        "sizeBytes": 1677415,
+        "sha256": "6b85e11d9bbf07863b97b3523b1b112844c43e713df8b66418a081fd1060b3b2"
+      },
+      {
+        "path": "tessdata/por.traineddata",
+        "sizeBytes": 1982756,
+        "sha256": "c4932b937207a9514b7514d518b931a99938c02a28a5a5a553f8599ed58b7deb"
+      },
+      {
+        "path": "tessdata/rus.traineddata",
+        "sizeBytes": 3861738,
+        "sha256": "e16e5e036cce1d9ec2b00063cf8b54472625b9e14d893a169e2b0dedeb4df225"
+      },
+      {
+        "path": "tessdata/spa.traineddata",
+        "sizeBytes": 2294433,
+        "sha256": "6f2e04d02774a18f01bed44b1111f2cd7f3ba7ac9dc4373cd3f898a40ea6b464"
+      },
+      {
+        "path": "tessdata/tha.traineddata",
+        "sizeBytes": 1072600,
+        "sha256": "294227cc2d1292b0acb28d61d4115c88252b96d466ca90b417cf4cf0c67bf07c"
+      },
+      {
+        "path": "tessdata/vie.traineddata",
+        "sizeBytes": 531275,
+        "sha256": "79df64caf7bcfb2a27df5042ecb6121e196eada34da774956995747636d5bfa1"
+      }
+    ],
+    "modelIds": []
+  },
+  {
+    "packId": "asr-sensevoice-core",
+    "type": "asr",
+    "engine": "SenseVoice",
+    "version": "1.0.0",
+    "displayNameZh": "SenseVoice 默认语音识别包",
+    "summaryZh": "实时对话基础语音识别包",
+    "releaseStatus": "test",
+    "minRamGb": 4,
+    "installPath": "asr/asr-sensevoice-core/1.0.0",
+    "sourceBytes": 240510372,
+    "sizeBytes": 161050741,
+    "sha256": "bf7585c6b0cca6fa5b7cf73af230f1ce48945ee408d19a6e0181e03cec0c447c",
+    "url": "packs/asr/asr-sensevoice-core/1.0.0/asr-sensevoice-core-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/asr/asr-sensevoice-core/1.0.0/asr-sensevoice-core-1.0.0.zip",
+    "manifestUrl": "packs/asr/asr-sensevoice-core/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/asr/asr-sensevoice-core/1.0.0/manifest.json",
+    "requiredFiles": [
+      {
+        "path": "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/export-onnx.py",
+        "sizeBytes": 5905,
+        "sha256": "c97f6a33f9d7135efd4d55b3e24e288c47d925f3b4f04b8b3418c2821c0a89ce"
+      },
+      {
+        "path": "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/LICENSE",
+        "sizeBytes": 71,
+        "sha256": "221c6df10b0931a5629adad671ea48fb7747e034c414b6d2bfa275bc3dd4ea17"
+      },
+      {
+        "path": "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/model.int8.onnx",
+        "sizeBytes": 239233841,
+        "sha256": "c71f0ce00bec95b07744e116345e33d8cbbe08cef896382cf907bf4b51a2cd51"
+      },
+      {
+        "path": "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/README.md",
+        "sizeBytes": 104,
+        "sha256": "763991a00edaea534ab36bf1b7cf89e61e911666dcfabbba71f91f9f7c593a63"
+      },
+      {
+        "path": "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/test_wavs/en.wav",
+        "sizeBytes": 228908,
+        "sha256": "eb1eb008904465b74c304aad8342e8c7d3c6e61ffe9f66adcaca9cf0f76a93f4"
+      },
+      {
+        "path": "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/test_wavs/ja.wav",
+        "sizeBytes": 230444,
+        "sha256": "460bd8dccb0d2a5f4e29c628f837be4082d13defc64c3fc21dd1b6bb0e119095"
+      },
+      {
+        "path": "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/test_wavs/ko.wav",
+        "sizeBytes": 147500,
+        "sha256": "0dc797a5c81ed30fc339d91f3da718ab02854e17ffa37cb93c4c039ac5c6bb9c"
+      },
+      {
+        "path": "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/test_wavs/yue.wav",
+        "sizeBytes": 164780,
+        "sha256": "0960b2db54ae202071d250e6462fbf74a3c863f0e3e7f01273e4939c996875a0"
+      },
+      {
+        "path": "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/test_wavs/zh.wav",
+        "sizeBytes": 178988,
+        "sha256": "b77f1794fe374a0ba1ee1dc458bfaf9349496cbbfc32780c50ba3c5a7ad8e373"
+      },
+      {
+        "path": "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17/tokens.txt",
+        "sizeBytes": 315894,
+        "sha256": "f449eb28dc567533d7fa59be34e2abca8784f771850c78a47fb731a31429a1dc"
+      }
+    ],
+    "modelIds": []
+  },
+  {
+    "packId": "asr-whisper-wide",
+    "type": "asr",
+    "engine": "Whisper",
+    "version": "1.0.0",
+    "displayNameZh": "Whisper 增强离线语音识别包",
+    "summaryZh": "实时对话增强语音识别包",
+    "releaseStatus": "test",
+    "minRamGb": 6,
+    "installPath": "asr/asr-whisper-wide/1.0.0",
+    "sourceBytes": 303406962,
+    "sizeBytes": 242800126,
+    "sha256": "3dc4938c0d949a68c6cc68342b17dd95d2be6223e2d675e88fcdb0b3e740258f",
+    "url": "packs/asr/asr-whisper-wide/1.0.0/asr-whisper-wide-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/asr/asr-whisper-wide/1.0.0/asr-whisper-wide-1.0.0.zip",
+    "manifestUrl": "packs/asr/asr-whisper-wide/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/asr/asr-whisper-wide/1.0.0/manifest.json",
+    "requiredFiles": [
+      {
+        "path": "Whisper_initializer.onnx",
+        "sizeBytes": 71378,
+        "sha256": "dbf3281f2399b46527afbf0401a91174596222b79fa4e6646b0f2d49fb397d85"
+      },
+      {
+        "path": "Whisper_encoder.onnx",
+        "sizeBytes": 92487048,
+        "sha256": "0171be36c908738326f70c8a7f58049ba4786a07d7ea79c0e0f9e26550cdfb50"
+      },
+      {
+        "path": "Whisper_decoder.onnx",
+        "sizeBytes": 181741988,
+        "sha256": "704de24c96a812779f3d0d7ed2a47a37b070f44abb0d92ca5e19d31c727718df"
+      },
+      {
+        "path": "Whisper_cache_initializer.onnx",
+        "sizeBytes": 14315416,
+        "sha256": "6e303b22e38ea5a2f6c1e4c29ddbf11b047f77d8e7a99841182e709ee6b2d9d1"
+      },
+      {
+        "path": "Whisper_cache_initializer_batch.onnx",
+        "sizeBytes": 14314991,
+        "sha256": "6da66ede8430347e314a7341fa05481778ac945d5b028106a8340361fdc99986"
+      },
+      {
+        "path": "Whisper_detokenizer.onnx",
+        "sizeBytes": 472377,
+        "sha256": "713447d18dc0f4cae0759f616aba98a909100185941f80844bf954ef12888e12"
+      }
+    ],
+    "modelIds": []
+  },
+  {
+    "packId": "tts-sherpa-core",
+    "type": "tts",
+    "engine": "sherpa-onnx",
+    "version": "1.0.0",
+    "displayNameZh": "sherpa-onnx 离线神经 TTS 包",
+    "summaryZh": "实时对话离线朗读包",
+    "releaseStatus": "test",
+    "minRamGb": 4,
+    "installPath": "tts/tts-sherpa-core/1.0.0",
+    "sourceBytes": 336572939,
+    "sizeBytes": 288527483,
+    "sha256": "ff259c70094d8cbc6c2fa376664d688fc260a8a4d48bcc691a412e3174ba5f2b",
+    "url": "packs/tts/tts-sherpa-core/1.0.0/tts-sherpa-core-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/tts/tts-sherpa-core/1.0.0/tts-sherpa-core-1.0.0.zip",
+    "manifestUrl": "packs/tts/tts-sherpa-core/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/tts/tts-sherpa-core/1.0.0/manifest.json",
+    "requiredFiles": [
+      {
+        "path": "vits-melo-tts-zh_en/date.fst",
+        "sizeBytes": 59154,
+        "sha256": "eb8aa079ae3cb81d8f4404992f39d61a0cb990947512b5b8d1e54d1f6980e718"
+      },
+      {
+        "path": "vits-melo-tts-zh_en/lexicon.txt",
+        "sizeBytes": 6837671,
+        "sha256": "7236884b02435ac5d10cf69b4be40a61b45aa676b5300f0e412f185748fee528"
+      },
+      {
+        "path": "vits-melo-tts-zh_en/LICENSE",
+        "sizeBytes": 1053,
+        "sha256": "88a50e5a02bbc2a5c2f084dc19da751aa97b1690f5fda76cd8005c8634d1ca70"
+      },
+      {
+        "path": "vits-melo-tts-zh_en/model.int8.onnx",
+        "sizeBytes": 133,
+        "sha256": "0a1462eef98f05c15a6f57569bf2fb57a6b3995891bb17956187ff5e2694273e"
+      },
+      {
+        "path": "vits-melo-tts-zh_en/model.onnx",
+        "sizeBytes": 170429550,
+        "sha256": "bf30582eb1b012250a35b1a4a80e7dfbcf8485e7bb9de0d95efbbeef0e4ad86d"
+      },
+      {
+        "path": "vits-melo-tts-zh_en/new_heteronym.fst",
+        "sizeBytes": 21974,
+        "sha256": "ca14b2127e27baa571664e4bb791e143e7425f56a6bc29db08d74f97e6aa4e29"
+      },
+      {
+        "path": "vits-melo-tts-zh_en/number.fst",
+        "sizeBytes": 64482,
+        "sha256": "743f402181fcfebf76cc2f0546b71fa26476e626fbe4e460fb7b4c3a7a8bd5bd"
+      },
+      {
+        "path": "vits-melo-tts-zh_en/phone.fst",
+        "sizeBytes": 88630,
+        "sha256": "1ac2b6fa56b1442320c4de7db08353bab8963a2b57f365eebcdd3a2d3562f8d7"
+      },
+      {
+        "path": "vits-melo-tts-zh_en/README.md",
+        "sizeBytes": 257,
+        "sha256": "ae6e44dead53dfdbd5b4a77106226f3118eb910222b46cb5533a3860773fc6c7"
+      },
+      {
+        "path": "vits-melo-tts-zh_en/tokens.txt",
+        "sizeBytes": 655,
+        "sha256": "d18664a7e12bd7ea1022ddaf951e534e136815016c5a809d6b64156bffb4369d"
+      },
+      {
+        "path": "vits-melo-tts-zh_en/dict/hmm_model.utf8",
+        "sizeBytes": 519739,
+        "sha256": "f17790586ac86dd048c8adffed052c4bd2b28ed0682972c1275e59040c0589a7"
+      },
+      {
+        "path": "vits-melo-tts-zh_en/dict/idf.utf8",
+        "sizeBytes": 5998717,
+        "sha256": "dbd1e03d72b2263cc8d84a4304ed77677eed9e7deaf43a1a5133bbba9733b535"
+      },
+      {
+        "path": "vits-melo-tts-zh_en/dict/jieba.dict.utf8",
+        "sizeBytes": 5071204,
+        "sha256": "3043b77068e09c9904f27cad82f12b6ebe9dbdb5aeff3b25e45ab7f9c1122b55"
+      },
+      {
+        "path": "vits-melo-tts-zh_en/dict/README.md",
+        "sizeBytes": 683,
+        "sha256": "8bcc7c2ed7dff082d9a99c09de0bfd72249bf3b5c4298a3af328da40cbd8cfd1"
+      },
+      {
+        "path": "vits-melo-tts-zh_en/dict/stop_words.utf8",
+        "sizeBytes": 8974,
+        "sha256": "b788b8a939d2e2fe079abd579ea98f12f9fb84370bfd0dddd81bb9381f7ab42c"
+      },
+      {
+        "path": "vits-melo-tts-zh_en/dict/user.dict.utf8",
+        "sizeBytes": 49,
+        "sha256": "495bbf49270408a1234690e1e6a97328f30a482a7a72aa769e8a12e8714b0c62"
+      },
+      {
+        "path": "vits-melo-tts-zh_en/dict/pos_dict/char_state_tab.utf8",
+        "sizeBytes": 327139,
+        "sha256": "28b7be1dd7369766a51445af4d42e9a2ba4bf374c13be5bc1ca7721e27271dbb"
+      },
+      {
+        "path": "vits-melo-tts-zh_en/dict/pos_dict/prob_emit.utf8",
+        "sizeBytes": 1687686,
+        "sha256": "c33c4cb7edf3b3a5947df7209b6e9f267eae1f21335d9e2bd2521ea07105457a"
+      },
+      {
+        "path": "vits-melo-tts-zh_en/dict/pos_dict/prob_start.utf8",
+        "sizeBytes": 4347,
+        "sha256": "13623ea0e9300bdb597cb2da28770b7b385d6c0098d66e516083fb01b6bd5d96"
+      },
+      {
+        "path": "vits-melo-tts-zh_en/dict/pos_dict/prob_trans.utf8",
+        "sizeBytes": 124159,
+        "sha256": "f22363e2307408293d180c6f9f6b5cb75879d52f722f7764fa2d3d0ae2400236"
+      },
+      {
+        "path": "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/duration_predictor.int8.onnx",
+        "sizeBytes": 3700147,
+        "sha256": "c3eb91414d5ff8a7a239b7fe9e34e7e2bf8a8140d8375ffb14718b1c639325db"
+      },
+      {
+        "path": "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/LICENSE",
+        "sizeBytes": 1070,
+        "sha256": "0dfe0d0ba84416fe3879d9a34f4909d8d0137c78d1e95834177b0414ac096fa2"
+      },
+      {
+        "path": "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/README.md",
+        "sizeBytes": 19518,
+        "sha256": "a96c347945f7c8bc1673bea3525b1ac8d36fdde556e1e0a6a186052429caf863"
+      },
+      {
+        "path": "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/text_encoder.int8.onnx",
+        "sizeBytes": 36416150,
+        "sha256": "c7befd5ea8c3119769e8a6c1486c4edc6a3bc8365c67621c881bbb774b9902ff"
+      },
+      {
+        "path": "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/tts.json",
+        "sizeBytes": 8253,
+        "sha256": "42078d3aef1cd43ab43021f3c54f47d2d75ceb4e75f627f118890128b06a0d09"
+      },
+      {
+        "path": "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/unicode_indexer.bin",
+        "sizeBytes": 262144,
+        "sha256": "8402ca48e5189a8950138580b0fff64db6f072f24ac07cd54ba8b2fbb9883b30"
+      },
+      {
+        "path": "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/vector_estimator.int8.onnx",
+        "sizeBytes": 78400833,
+        "sha256": "20cd86fa5c6effedfda0e7cffe5b0569ca401c440a0c3a1d72bf39286c0db3fd"
+      },
+      {
+        "path": "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/vocoder.int8.onnx",
+        "sizeBytes": 25991073,
+        "sha256": "e923d60f53f95eb1ce235f1dc33ec56d9c057823c96fa6f8acf98f32b0da6152"
+      },
+      {
+        "path": "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/voice.bin",
+        "sizeBytes": 517168,
+        "sha256": "67d5209b0ee8ce6c74105ffbe12fe6a7628aea3b4ba2fcb308a4a67938a93ce8"
+      }
+    ],
+    "modelIds": []
+  },
+  {
+    "packId": "text-opus-marian-en-zh",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian en-zh 离线文本翻译组件",
+    "summaryZh": "用于 en 到 zh 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-en-zh/1.0.0",
+    "sourceBytes": 116575945,
+    "sizeBytes": 75812482,
+    "sha256": "3d00404e5920b831d33bd3819e3db7eb27ab1c91638ca7f3ae6b7ce9863e56d9",
+    "url": "packs/translation/text-opus-marian-en-zh/1.0.0/text-opus-marian-en-zh-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-en-zh/1.0.0/text-opus-marian-en-zh-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-en-zh/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-en-zh/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-en-zh"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 113343974,
+        "sha256": "14f3b09c0b0e7b126c34e6c2eac4b368dc4b7c52f719d45eb094d73e52e4e7f5"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 806435,
+        "sha256": "5775ddc9e3ff2fae91554da56468ad35ff56edaba870fea74447bc7234bfdaa8"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 804600,
+        "sha256": "81dc94efa84e4025ef38d25d5d07429fe41e3eb29d44003f1db6fe98487b0052"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1617791,
+        "sha256": "f1832ca38f7aa158b9a944ff583e4901e6b37d9d4ad9241f03838e636e9cfb03"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1405,
+        "sha256": "0e73721ca9455e75cf62aa74474c75c36a428081c17184a765321307b97fa337"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2319,
+        "sha256": "32a7278331d8ab324057f30af0dd5e204633152873ec52c372bf510e35ffc3e3"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "d8e6c2d05c0cbb53382b0ce04b4f60a083804b5af21895cf2f173ae37b18fb1f"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-zh-en",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian zh-en 离线文本翻译组件",
+    "summaryZh": "用于 zh 到 en 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-zh-en/1.0.0",
+    "sourceBytes": 116576236,
+    "sizeBytes": 76568790,
+    "sha256": "ebd75fc0e178f1e0e6713732043e3d35945fde295f55cb0ed11fcadbb11a5725",
+    "url": "packs/translation/text-opus-marian-zh-en/1.0.0/text-opus-marian-zh-en-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-zh-en/1.0.0/text-opus-marian-zh-en-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-zh-en/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-zh-en/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-zh-en"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 113343973,
+        "sha256": "724de0784b014c285c1ae2e0fa1e9d9023328d54ea8c40de4bcceaf6048649cb"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 804677,
+        "sha256": "e27a3a1b539f4959ec72ea60e453f49156289f95d4e6000b29332efc45616203"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 806530,
+        "sha256": "6a881f4717cd7265f53fea54fd3dc689c767c05338fac7a4590f3088cb2d7855"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1617902,
+        "sha256": "c0f79ee4c413ccb24cd808a0c727eec85b2130f23c82802cc1caeb07b5f0d458"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1423,
+        "sha256": "8b04316c42477fe5b52705d369129f7646639a51906831b9a55eece2c56d4b33"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2319,
+        "sha256": "cf08c8f15a722553dad87ce084dcb2f6adae551429bcc476cc1c5223fa5da753"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "0fbf9528634042b68168bcce51e97ffc3c5e4fd535c83cc3f3f291c5926d227f"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-en-ja",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian en-ja 离线文本翻译组件",
+    "summaryZh": "用于 en 到 ja 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-en-ja/1.0.0",
+    "sourceBytes": 116820911,
+    "sizeBytes": 68201518,
+    "sha256": "debcb46c1894033d3e574e58fdfe0f184158c5df654a5546cabd3566725e3c45",
+    "url": "packs/translation/text-opus-marian-en-ja/1.0.0/text-opus-marian-en-ja-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-en-ja/1.0.0/text-opus-marian-en-ja-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-en-ja/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-en-ja/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-en-ja"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 113343974,
+        "sha256": "97cc24c5b293006c727bd86341b3af3b1d05f649929aa7005994e47f6c0258e7"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 807923,
+        "sha256": "e3fd0f2a618eaf9d0216d869b5904af7af2db87d2c561745f4cc21e363be4a75"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 834449,
+        "sha256": "c157a6b3846478cfbf2b1e2f652e6b62b6f0e9c667fda108ba8bf0ff67d75317"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1831457,
+        "sha256": "aec76f234028f99a5074d2d77f75a4a7c88735cef6ad39ce6a86ad52b5add3b0"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1538,
+        "sha256": "e2d9f873995d417d10a6f1568c63eaa0a583789b242ddf94ff32a757080d9f6f"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2361,
+        "sha256": "862fca6988308862dac03e25a505d9d11f6bcb59ffa9738a0e4a761fa6894fd8"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 738,
+        "sha256": "d70f9c7fe3ad244a87a82ec12fca8682fe5a9bcedbe2251ed228a265b533ed06"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-zh-ja",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian zh-ja 离线文本翻译组件",
+    "summaryZh": "用于 zh 到 ja 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-zh-ja/1.0.0",
+    "sourceBytes": 117778109,
+    "sizeBytes": 77246521,
+    "sha256": "a1982916034b3d406ccdb1515237e499825e1472ae78340a2dce33dc4f0d3a44",
+    "url": "packs/translation/text-opus-marian-zh-ja/1.0.0/text-opus-marian-zh-ja-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-zh-ja/1.0.0/text-opus-marian-zh-ja-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-zh-ja/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-zh-ja/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-zh-ja"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 113343974,
+        "sha256": "7fd5132203b1987de99785cae5d6b2c5b0568de1eeccb61b639cf9d3c0b7606a"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 1312134,
+        "sha256": "fe81460cde65383464718c26789ff8c5d818719c3f2c2c3cd36f42532579c56e"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 1312134,
+        "sha256": "25103859c8bbbe317e69b07551c55c53dc7943eebf078c56fbf5bc7f96d63289"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1806212,
+        "sha256": "c85719669d5888c2ff300bf97c33168bc2e9e1821bbf1fa52f912eea07e69e58"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1515,
+        "sha256": "f225d02e63bd46fe37182486b5ad2a4c3682da2412648634aed3274691f80e0e"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2504,
+        "sha256": "c85f3b3ea0497e246868c2212b7e25598673019584f2201dbec1a6c56dafd322"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 828,
+        "sha256": "b30f56b31c2f776069560073f257b37d05d2dd4f803389944ad32fed23aeb405"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-ja-zh",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian ja-zh 离线文本翻译组件",
+    "summaryZh": "用于 ja 到 zh 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-ja-zh/1.0.0",
+    "sourceBytes": 117778275,
+    "sizeBytes": 72327246,
+    "sha256": "1367e13f9380bcfe615c411a37c49ebf148bd1499bbef2c813353a787d9e01a0",
+    "url": "packs/translation/text-opus-marian-ja-zh/1.0.0/text-opus-marian-ja-zh-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ja-zh/1.0.0/text-opus-marian-ja-zh-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-ja-zh/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ja-zh/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-ja-zh"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 113343974,
+        "sha256": "1c4e866ef1bd125550cedaf8bafd0e1c603dd73bf37e536c140c30b88385f1a5"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 1312134,
+        "sha256": "25103859c8bbbe317e69b07551c55c53dc7943eebf078c56fbf5bc7f96d63289"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 1312134,
+        "sha256": "fe81460cde65383464718c26789ff8c5d818719c3f2c2c3cd36f42532579c56e"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1806212,
+        "sha256": "c85719669d5888c2ff300bf97c33168bc2e9e1821bbf1fa52f912eea07e69e58"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1567,
+        "sha256": "bc6632d95c944c9d33940d1bd52c7b471bbcb85f33655aeaa366100f2f8e42f4"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2504,
+        "sha256": "5512a453554976508776d3c4500c40b7d22697866f1212c3225b8bb2105abbf5"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 828,
+        "sha256": "496d0ae834f8d76c6e15c7c91a8f2a11165b37427c1105001b7b372c0a8953c3"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-ja-en",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian ja-en 离线文本翻译组件",
+    "summaryZh": "用于 ja 到 en 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-ja-en/1.0.0",
+    "sourceBytes": 112027251,
+    "sizeBytes": 65355950,
+    "sha256": "e305d6d2d77535ac00af2cf49a3cc04fda5c191a49ea11330a1fa83e39daa7ea",
+    "url": "packs/translation/text-opus-marian-ja-en/1.0.0/text-opus-marian-ja-en-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ja-en/1.0.0/text-opus-marian-ja-en-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-ja-en/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ja-en/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-ja-en"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 108938994,
+        "sha256": "288103e91751f029593490ff9e54fe1bd190496d586e2a9f2ccce605775543b5"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 781853,
+        "sha256": "d0b5c3b10b5959f056ff2c86e2f2356129242ff1fc72d3a4a34d6a8c0eee4e57"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 801883,
+        "sha256": "35d89c704e270d441fade716a3931d49c43179400682edcca7f180694982a2f6"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1501341,
+        "sha256": "0483c9c2b3deade6d6fbfe149eccf9cd3c44c77b348232030ae2d81400d65b61"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1464,
+        "sha256": "d053dd5f53af52998901ed60b8bc281ee71d829c4602cfcf1ef00928ad767847"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2319,
+        "sha256": "a891ba0b0895366a8750e27b5e4e7d78b800e177ce39703d584d47fc03a0f34f"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "d249ee4a8c06aae5280a7efdd3283523de942dfe01620e8096c6c339d4e06e3c"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-ko-en",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian ko-en 离线文本翻译组件",
+    "summaryZh": "用于 ko 到 en 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-ko-en/1.0.0",
+    "sourceBytes": 116721941,
+    "sizeBytes": 77134363,
+    "sha256": "42091a899c68657e2877599a3d488388848d9166c5bbdd7151f50e77368a5962",
+    "url": "packs/translation/text-opus-marian-ko-en/1.0.0/text-opus-marian-ko-en-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ko-en/1.0.0/text-opus-marian-ko-en-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-ko-en/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ko-en/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-ko-en"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 113343974,
+        "sha256": "4730f61d1d0ef4c17217b750ad176191deee7e7205ff8c8eb9ba2ade87e43d41"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 841805,
+        "sha256": "c9496f7c2be9aecb84c751ae9f35a875915dde8e3892f652a5c76811ab2a0f49"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 813126,
+        "sha256": "f1531ac8576fe64267dfca0dc33950a6e9a2d3fd9e05346558ad7ea5ee0e65bf"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1719866,
+        "sha256": "d42e3838e7ed0e43785fa013ef22ab4d382248cdf4e959c46a2b48db5eb019e9"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1439,
+        "sha256": "71fc16b6d1e2f5a6093bd57ddf43e2da34c0e8cb506eba8f57ee26f606a92368"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2319,
+        "sha256": "cf883eebcd7ccc3d79d07dd1bcf048f1b2db45b38ecffd403bc7becaddaa9f59"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "6ee303586d888085b35d32a129cbef9d6ed3e9893b893f0fd431e19240b2c84d"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-th-en",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian th-en 离线文本翻译组件",
+    "summaryZh": "用于 th 到 en 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-th-en/1.0.0",
+    "sourceBytes": 115005582,
+    "sizeBytes": 76025073,
+    "sha256": "3917d2dfcc4ca5dc04bf0f0c9aa6f690d2963536e28652d55593e9478de20a30",
+    "url": "packs/translation/text-opus-marian-th-en/1.0.0/text-opus-marian-th-en-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-th-en/1.0.0/text-opus-marian-th-en-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-th-en/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-th-en/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-th-en"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 110574541,
+        "sha256": "5d4d0091724aa7e16958cf508ff2e510305128d33c9be5908c465d0feb776e55"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 1213743,
+        "sha256": "01ecb88d0f92bbb20c21257b92e93e301a10971ecd60971e8e637bc3eacd9124"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 810346,
+        "sha256": "fc618401104178afa0e8d67d469a49f8e71cd3151c51d640a7003a1f71b16b1e"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 2403763,
+        "sha256": "2fe2fd208a8d1587c63fbbd18af1e6c75f8ae9ec7245903ad2e3f2d99879ee9a"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1458,
+        "sha256": "61e0b37d59663542429b47de3ba93ae248cf51ca000d420ae7ed0fabddad698b"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2320,
+        "sha256": "4787a8dfecc5d117c54221f25bf3aa53a15ed8bd8c21ab44a4e943e95b625202"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "873fd5619154bcec6c5a568979a2b74fb5d5043e900ddd3672057f29c2ca07c7"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-en-th",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian en-th 离线文本翻译组件",
+    "summaryZh": "用于 en 到 th 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-en-th/1.0.0",
+    "sourceBytes": 115348406,
+    "sizeBytes": 70192118,
+    "sha256": "dfaf2dff1649d907e67d332348f08736cc14835c86ddb1c8a76457a5e13d2735",
+    "url": "packs/translation/text-opus-marian-en-th/1.0.0/text-opus-marian-en-th-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-en-th/1.0.0/text-opus-marian-en-th-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-en-th/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-en-th/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-en-th"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 112428026,
+        "sha256": "d93b014b3baaf1482ea62e25dba1beea0a01779ad499cd7a1542c1096a4cbf08"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 790473,
+        "sha256": "9129bf81ef9d5fcc1797ea3061e789dc5f9e5602786b0490238d207d4219e0f5"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 706659,
+        "sha256": "6a0a52318dac3247455ec889eb3bd8da9bdf234974be8b9b0f99ad5378f474c9"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1419970,
+        "sha256": "430864f6ef403ad2d660fc4e1a571047631fb6d71d3c79b5aff184a281c68c63"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1546,
+        "sha256": "08f718ea7e8d73055eed401dbb2a999224a12c05545689d66a16c9fae3e48aac"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2350,
+        "sha256": "48c11479a13c2ff91facb346c2f82992d4aa9f66e959b593e1a56cb4f912c50d"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "440ea885b382994dd3a08f68709b52c7e7514acfa37b6d5870ca1acc298fbd5d"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-vi-en",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian vi-en 离线文本翻译组件",
+    "summaryZh": "用于 vi 到 en 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-vi-en/1.0.0",
+    "sourceBytes": 104528417,
+    "sizeBytes": 67956123,
+    "sha256": "e4e14fbb36f2e8a8540c4b36960cf1f5306a4fc8e2f819bd6d00dff9bc9fe770",
+    "url": "packs/translation/text-opus-marian-vi-en/1.0.0/text-opus-marian-vi-en-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-vi-en/1.0.0/text-opus-marian-vi-en-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-vi-en/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-vi-en/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-vi-en"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 101766637,
+        "sha256": "f63aeb968b67d30d2781a2330663becd0d8111a42a4a1e87d7f716506d7bb161"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 756168,
+        "sha256": "9deb4f9e7bebd3876f4bf238a9eb52f2f95a1fba2210a4a8239167c55c15e67d"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 808853,
+        "sha256": "629182070d11db929990c603779345a11743b749f6586f224829303fa979c138"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1193597,
+        "sha256": "07a5fc1c8250a0e3c503933c7e9145a9b5eee83afde59408deb640d85d79dd35"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1431,
+        "sha256": "034458054a9b6383344879b02ab894ab921202f3f25985b20826432b18ae3189"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2322,
+        "sha256": "b23d39925b7dae14f85a6892203f935f6098a06f675e1712cabcb421cf169d1c"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "d4b21b6999f3e60543d774f322e244810e308eef1a5cc75b8b612a8fc7be2087"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-en-vi",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian en-vi 离线文本翻译组件",
+    "summaryZh": "用于 en 到 vi 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-en-vi/1.0.0",
+    "sourceBytes": 104471475,
+    "sizeBytes": 68756419,
+    "sha256": "d931d94ac8637dfe285e784d4a0302a58585fdba52ff0fd90fa62f2c948d5555",
+    "url": "packs/translation/text-opus-marian-en-vi/1.0.0/text-opus-marian-en-vi-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-en-vi/1.0.0/text-opus-marian-en-vi-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-en-vi/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-en-vi/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-en-vi"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 101711125,
+        "sha256": "a9f995164ddc4e0f850cd3abced7c2a9c72ca8663629a9bb3c37bbe3a1387d30"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 808612,
+        "sha256": "fdd9ab486ca8ea060967105e30db7d8928729c78a67448711d2dd7c3153b37cd"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 756198,
+        "sha256": "fb8ad63c818f073c246952c91b2cb1f16aa30728bf51b5c179b8481bc0e20bb5"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1192392,
+        "sha256": "fccff4e1ed80f65ebc9b13352b4267d735595480c86378534d46f9d4b3c13c7c"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1417,
+        "sha256": "6192207dd1cfaff674ca3aae29d025a6035c37489f16a200e00af3f67bdf7720"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2322,
+        "sha256": "b53f81d8d0a1b8779ee8326b16512e3cf4f53f204d64073f74bc5e3f94a4f8a1"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "e5b1a7d4138de00d49f62c5a31db9211a648cc689a33bbe757ab6eb00a691458"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-id-en",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian id-en 离线文本翻译组件",
+    "summaryZh": "用于 id 到 en 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-id-en/1.0.0",
+    "sourceBytes": 105710392,
+    "sizeBytes": 73696945,
+    "sha256": "6dddb0fdfa1a73203cea362a9595c470e5132a0edb5319656b175c27c2bfe861",
+    "url": "packs/translation/text-opus-marian-id-en/1.0.0/text-opus-marian-id-en-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-id-en/1.0.0/text-opus-marian-id-en-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-id-en/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-id-en/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-id-en"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 102853233,
+        "sha256": "3aea887f0fd47a04a8f14ca3c9d0731b3080909b7de773fa53bcb6b95e013b7b"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 800687,
+        "sha256": "2a8fefe71c7f26cb0c6aa1b9f0cc0f8d18006b20fe41c547af7f25b9c8333465"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 795925,
+        "sha256": "e88300911c2c573ec5526777a1e84bae698d20925b82dcef9c7248bb0e537ed0"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1257390,
+        "sha256": "efb902a7e49901c3dcdd4b2e079419a0b6ccead3fa2cabfc90820ce1ba66e157"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1441,
+        "sha256": "b9c2f4fc4c8049e045cada5ad4f334f31e4735eb40af50999b568f00598235e4"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2322,
+        "sha256": "91cbb1a367a5aac32d7675de7f660beca6c3239ba6c0f19a7db9ee44965bb59f"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "75f1d4a2de0a7e41d1d9ecb4200002d279a9d9ffdf79ac4075ee888cfef4c90d"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-en-id",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian en-id 离线文本翻译组件",
+    "summaryZh": "用于 en 到 id 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-en-id/1.0.0",
+    "sourceBytes": 105710356,
+    "sizeBytes": 71298082,
+    "sha256": "7543e019422c9b29ff02f31dfdd5d950a0b75ee98b3dee0fd186a629302e5a71",
+    "url": "packs/translation/text-opus-marian-en-id/1.0.0/text-opus-marian-en-id-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-en-id/1.0.0/text-opus-marian-en-id-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-en-id/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-en-id/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-en-id"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 102853234,
+        "sha256": "63356de6d4ef903b01ab3b9883f564a9f28a39b276a52837a5991f2e2d88fe13"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 795925,
+        "sha256": "e88300911c2c573ec5526777a1e84bae698d20925b82dcef9c7248bb0e537ed0"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 800687,
+        "sha256": "2a8fefe71c7f26cb0c6aa1b9f0cc0f8d18006b20fe41c547af7f25b9c8333465"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1257390,
+        "sha256": "efb902a7e49901c3dcdd4b2e079419a0b6ccead3fa2cabfc90820ce1ba66e157"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1404,
+        "sha256": "44cde62a70529e84ccd0dafb658d545a58a4ad8e3065c812bcc3b951c3caca5a"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2322,
+        "sha256": "7860f8a13e00f6987aa0b38483d9a4ce5808f2964c4b46675c3a40680914dc4f"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "c78c126d7ffb9c7f3f9adcb929b12e6ae9511d878b389f959bc034f0fd646790"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-ms-en",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian ms-en 离线文本翻译组件",
+    "summaryZh": "用于 ms 到 en 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-ms-en/1.0.0",
+    "sourceBytes": 115417072,
+    "sizeBytes": 63615279,
+    "sha256": "8517d74a451149cd7dcaf0b0eb4592a0b4a926f6698a164667e064e20b407ada",
+    "url": "packs/translation/text-opus-marian-ms-en/1.0.0/text-opus-marian-ms-en-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ms-en/1.0.0/text-opus-marian-ms-en-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-ms-en/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ms-en/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-ms-en"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 112491761,
+        "sha256": "4859d9a6c4115c136286f118174b3a81e0fb3d2af5e74708cfae701f0d49f677"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 706917,
+        "sha256": "c4a99ea3602b29fbf901ade8b93a45efa3d7c64eab8fc5fa812383efa327a87d"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 791194,
+        "sha256": "c6dce5fa58fcd7dde9e81e279b8c075bf42ee558278f73d6fb48e342029d7f19"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1423947,
+        "sha256": "6f223b108c7ea7622561eb943a09ffd2329f493387bf12ab0e3aa341d355f837"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1521,
+        "sha256": "d7d92b2fbd06151c4c81101e94abc8991240907b77ce161af46a36cc84ed0f32"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2325,
+        "sha256": "b8bfd42459f3df794fc5874aa3c98b32a3d472cc909270acb04171f002d710ad"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "71b90934adf0642335205a05e0f71dbde18440ac285fd296b744b2bf2cf3538e"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-en-ms",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian en-ms 离线文本翻译组件",
+    "summaryZh": "用于 en 到 ms 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-en-ms/1.0.0",
+    "sourceBytes": 115348362,
+    "sizeBytes": 70192064,
+    "sha256": "930a721a6c44c28f100b15b90b3d0f050ec573546ac7219f62a1d86e87fead11",
+    "url": "packs/translation/text-opus-marian-en-ms/1.0.0/text-opus-marian-en-ms-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-en-ms/1.0.0/text-opus-marian-en-ms-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-en-ms/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-en-ms/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-en-ms"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 112428026,
+        "sha256": "d93b014b3baaf1482ea62e25dba1beea0a01779ad499cd7a1542c1096a4cbf08"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 790473,
+        "sha256": "9129bf81ef9d5fcc1797ea3061e789dc5f9e5602786b0490238d207d4219e0f5"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 706659,
+        "sha256": "6a0a52318dac3247455ec889eb3bd8da9bdf234974be8b9b0f99ad5378f474c9"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1419970,
+        "sha256": "430864f6ef403ad2d660fc4e1a571047631fb6d71d3c79b5aff184a281c68c63"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1502,
+        "sha256": "3a0b96222de2adc6a173b49f869287e06c3799ad99a9fa982893c1264675dd06"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2337,
+        "sha256": "a905abb3301e463096a596a81df1aebc650ee64d506b02a38199385e0190fbc4"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "fbf6052e9c5d09269e5ee21d9b3c501737ee5aa4d34572da88cebd42c0f63b19"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-fr-en",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian fr-en 离线文本翻译组件",
+    "summaryZh": "用于 fr 到 en 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-fr-en/1.0.0",
+    "sourceBytes": 110626486,
+    "sizeBytes": 68412745,
+    "sha256": "c4f4c92f45771c5c9c3f4affab506861e0825059956db03b23172d84f60a13c5",
+    "url": "packs/translation/text-opus-marian-fr-en/1.0.0/text-opus-marian-fr-en-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-fr-en/1.0.0/text-opus-marian-fr-en-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-fr-en/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-fr-en/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-fr-en"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 107703338,
+        "sha256": "69ca5595e909755aeda4f41a4a1675bf391e58bc8af40bd32eae41a08436f491"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 802397,
+        "sha256": "78d0e717c77053f1c4b856d8661d9cb87c64f083a35418c087b9146300e4f585"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 778395,
+        "sha256": "173e9f493a668fe396d599e28d414a201193094e6ffd7a4678e5aab0f6d3d838"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1339166,
+        "sha256": "945c604346ce15ce4aff9001001e7f925e336d942c4087017f191871162cbdc4"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1439,
+        "sha256": "d0040e737c995114a4f682f876e13f116df464320f0b3bdf50a6107e103d3695"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2298,
+        "sha256": "d5e06ea525d69f453420d2be278f82c96c70807a5ec9504bd5890fd3e6ad0073"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "4c24bbd261d25a8e1c5b0aabe6269776f3d24393db476cd0a4152ed063cc662d"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-en-fr",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian en-fr 离线文本翻译组件",
+    "summaryZh": "用于 en 到 fr 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-en-fr/1.0.0",
+    "sourceBytes": 110626465,
+    "sizeBytes": 66431331,
+    "sha256": "6a2aae312ff0ccedeecd931ed26fb9172db6328d1b7f3bcaf632831ac04557a5",
+    "url": "packs/translation/text-opus-marian-en-fr/1.0.0/text-opus-marian-en-fr-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-en-fr/1.0.0/text-opus-marian-en-fr-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-en-fr/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-en-fr/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-en-fr"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 107703338,
+        "sha256": "661da99f06c42c374d30589148326a0aeb9229df6dcde27f559257a93f8924c2"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 778395,
+        "sha256": "173e9f493a668fe396d599e28d414a201193094e6ffd7a4678e5aab0f6d3d838"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 802397,
+        "sha256": "78d0e717c77053f1c4b856d8661d9cb87c64f083a35418c087b9146300e4f585"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1339166,
+        "sha256": "945c604346ce15ce4aff9001001e7f925e336d942c4087017f191871162cbdc4"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1418,
+        "sha256": "6bb8a40da79d4b44bc6cd1230d86dfc0745ee58a9ffc2746bb80411d6b4896a5"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2298,
+        "sha256": "44bd8b2e549ff05a51aa86827e37ce458a04371cf62d84ec67f49f57227d14fc"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "c050cd677655ee982637fdf7608d518cd7a53060a956f6332bf0b6d736fbefd3"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-de-en",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian de-en 离线文本翻译组件",
+    "summaryZh": "用于 de 到 en 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-de-en/1.0.0",
+    "sourceBytes": 109092501,
+    "sizeBytes": 71709491,
+    "sha256": "3cfdf2d7d690ef3b6d15d987a3017a034055602bff665e60e6712105c5cf6bca",
+    "url": "packs/translation/text-opus-marian-de-en/1.0.0/text-opus-marian-de-en-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-de-en/1.0.0/text-opus-marian-de-en-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-de-en/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-de-en/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-de-en"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 106250774,
+        "sha256": "1853ee76f20bc8a95184f1b7722314cceda0220a7b4fe0aa41903d198a8bd9a9"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 796845,
+        "sha256": "bbd1f495eea99c8e21ae086d9146e0fa7b096c3dfdd9ba07ab8b631889df5c9b"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 768489,
+        "sha256": "678f2a1177d8389f67b66299762dcc4fc567e89b07e212ba91b0c56daecf47ce"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1273232,
+        "sha256": "0d70d89fee4a8b4ef99a56d712163baadcabd5600a597f71515547ee70306329"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1445,
+        "sha256": "e12690700629f51941b99b892fafb4e493731a7812c2f84773e5a591df0dbdc0"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2298,
+        "sha256": "cf938f717cc95f2699edca5eb48aae9852dd06ec8c4b5291a1cb25cce87541d0"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "d06f1ecbee75fe21801e39f7d0dc670ec196ed15fbc3466a4c03201f0226bade"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-en-de",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian en-de 离线文本翻译组件",
+    "summaryZh": "用于 en 到 de 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-en-de/1.0.0",
+    "sourceBytes": 109092416,
+    "sizeBytes": 67233777,
+    "sha256": "47148d2df21514170ec8dbbc1916a0fe2599825e99799176b43a514eb29a52e5",
+    "url": "packs/translation/text-opus-marian-en-de/1.0.0/text-opus-marian-en-de-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-en-de/1.0.0/text-opus-marian-en-de-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-en-de/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-en-de/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-en-de"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 106250773,
+        "sha256": "c3fb5bc4d0a4441502b7426c3b5afb7fa80deda70b9350b5868490bb7728c726"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 768489,
+        "sha256": "678f2a1177d8389f67b66299762dcc4fc567e89b07e212ba91b0c56daecf47ce"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 796845,
+        "sha256": "bbd1f495eea99c8e21ae086d9146e0fa7b096c3dfdd9ba07ab8b631889df5c9b"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1273232,
+        "sha256": "0d70d89fee4a8b4ef99a56d712163baadcabd5600a597f71515547ee70306329"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1407,
+        "sha256": "2a2cf39867fb369948b45a459589140d8b13140d581c3f230ddf1b871aa50f10"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2298,
+        "sha256": "b789bce28391570307cc8ea0eb0f3f2d14453d0eff21c787f768e2bd275b3f98"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "0035e7c5bc37b92b0b8a372a913d4021421a550341956ace563490ea077a7168"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-es-en",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian es-en 离线文本翻译组件",
+    "summaryZh": "用于 es 到 en 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-es-en/1.0.0",
+    "sourceBytes": 116564791,
+    "sizeBytes": 74892532,
+    "sha256": "6aa161d2675127bec734dc732c359ed879aeeaf554873a7817f1185a7d7a47ec",
+    "url": "packs/translation/text-opus-marian-es-en/1.0.0/text-opus-marian-es-en-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-es-en/1.0.0/text-opus-marian-es-en-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-es-en/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-es-en/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-es-en"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 113343973,
+        "sha256": "7bb7cfe5ae42c423189df5df1880a3c06d47197d9d383081424b656dbd1b97fc"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 825924,
+        "sha256": "e236ee6d866b635c0142114f8647f39831f9d92534aa2aad75c942f6a78ad0e3"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 801636,
+        "sha256": "4dd547c24816a335e7b0b2e63376a8f1b3cbfc671eda5ab808dd44fdadaa8791"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1590040,
+        "sha256": "257f346d7a6b2ecceafcca8ba05648ce2fd68dfaf105fb0e913dca7198f3f6d5"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1443,
+        "sha256": "857af9c3e7cde0db47e064ac12854194d5001d8a8f75925f73c550fb6ea5c386"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2304,
+        "sha256": "0de5d2601bc2aad433d37da66467a9fe62b232b284edbd4de0e044428b474eb2"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "b59309b7d2fae8143b0947b6b7eb64725cabd73716cabf2e9a87183240b42e78"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-en-es",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian en-es 离线文本翻译组件",
+    "summaryZh": "用于 en 到 es 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-en-es/1.0.0",
+    "sourceBytes": 116564794,
+    "sizeBytes": 71119321,
+    "sha256": "112b64743f2ddb899d0a6288c5e41ac64943c08b0e180b881abbe8f890418595",
+    "url": "packs/translation/text-opus-marian-en-es/1.0.0/text-opus-marian-en-es-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-en-es/1.0.0/text-opus-marian-en-es-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-en-es/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-en-es/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-en-es"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 113343974,
+        "sha256": "c19ac0a0ba125d0330db0235e8035e7c3b2e2fd9d24a78938294a86d6fcf5bcf"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 801636,
+        "sha256": "4dd547c24816a335e7b0b2e63376a8f1b3cbfc671eda5ab808dd44fdadaa8791"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 825924,
+        "sha256": "e236ee6d866b635c0142114f8647f39831f9d92534aa2aad75c942f6a78ad0e3"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1590040,
+        "sha256": "257f346d7a6b2ecceafcca8ba05648ce2fd68dfaf105fb0e913dca7198f3f6d5"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1410,
+        "sha256": "af41efc9df0ffe2ca3a899f4285d926e07bd1a93baeba8acfb22eef1b858e34a"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2304,
+        "sha256": "9ea51da9bf3c963116fd071b2dfee77e50ef1bb7c9de01ad3a15deee991df6e7"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "2fb286a09c88aefe6e03903ef890fe21149e419ad9ec1dcbb14027ab8baec12a"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-ru-en",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian ru-en 离线文本翻译组件",
+    "summaryZh": "用于 ru 到 en 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-ru-en/1.0.0",
+    "sourceBytes": 115279348,
+    "sizeBytes": 71673273,
+    "sha256": "ab6e501b820ef8ea29f03ff5b5c1236abf346903f3f26dcd6ef8e98f38a51c34",
+    "url": "packs/translation/text-opus-marian-ru-en/1.0.0/text-opus-marian-ru-en-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ru-en/1.0.0/text-opus-marian-ru-en-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-ru-en/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ru-en/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-ru-en"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 110791450,
+        "sha256": "f6ef79ed6001ca50dfa51d25eaaad445afb657e171f43ae3557d6435c0a7ec2b"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 1080169,
+        "sha256": "745998e51ba5b058e38b7ac7765c25c43ed5c1c39cc92b27163b9b2e323c9d7c"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 802781,
+        "sha256": "16bebef1389a0b8ab452772c4e35b9e605e5713f8ac7baa71ca701394eaa086d"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 2601758,
+        "sha256": "33e95da3be3fa3b50169c4c46693ba2f29fbf4cb29d99044bd07d72d181fa1e9"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1474,
+        "sha256": "9d657727f8a198a83a7523bc9f1d9dfcca5424263e367fd11870869feef79251"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2299,
+        "sha256": "0a1123bb4cb4d654a61b5dfad1169022548a238a85c05e3e31e08d155ff17b6b"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "5f28d49cc5e83a39c7b56ecd39fb6ba32b813f48f67285877962af2cd1802f86"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-en-ru",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian en-ru 离线文本翻译组件",
+    "summaryZh": "用于 en 到 ru 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-en-ru/1.0.0",
+    "sourceBytes": 115279293,
+    "sizeBytes": 75386314,
+    "sha256": "6120744321d0e49fa3e6d3009138a2a1243815dc6d1561a00ef39c99f0d136db",
+    "url": "packs/translation/text-opus-marian-en-ru/1.0.0/text-opus-marian-en-ru-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-en-ru/1.0.0/text-opus-marian-en-ru-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-en-ru/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-en-ru/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-en-ru"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 110791450,
+        "sha256": "7e0bcd71a4fe3f4d5eacb4e41242a264475e530796da66ca56055c91f87c8e8d"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 802781,
+        "sha256": "16bebef1389a0b8ab452772c4e35b9e605e5713f8ac7baa71ca701394eaa086d"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 1080169,
+        "sha256": "745998e51ba5b058e38b7ac7765c25c43ed5c1c39cc92b27163b9b2e323c9d7c"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 2601758,
+        "sha256": "33e95da3be3fa3b50169c4c46693ba2f29fbf4cb29d99044bd07d72d181fa1e9"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1419,
+        "sha256": "39fae1c9781bce9cb97662fd6a4fabb492b6121d4daae0886d790834600a3fa3"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2299,
+        "sha256": "6ee09c60ad06c906567efc228a9e434ac0962adf3811efa3eb2e6d7c60c7f24b"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "fe5e0aa0e47d869b067fba7522702e1bf1805acfedbcd2ef85727c4fb1cd8f37"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-zh-ko",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian zh-ko 离线文本翻译组件",
+    "summaryZh": "用于 zh 到 ko 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-zh-ko/1.0.0",
+    "sourceBytes": 117682182,
+    "sizeBytes": 77184091,
+    "sha256": "9acfdddad58359ea2122e93c62508a060a4ff3825124623ced5bac289e63ffd6",
+    "url": "packs/translation/text-opus-marian-zh-ko/1.0.0/text-opus-marian-zh-ko-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-zh-ko/1.0.0/text-opus-marian-zh-ko-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-zh-ko/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-zh-ko/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-zh-ko"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 113343974,
+        "sha256": "b4a89cad7d0f7a1f9933579ee78a85af466449f65b0815d8e3e7d550f37ee077"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 1299673,
+        "sha256": "5307f03c20e377525afb0f30675cc6ff74d092269cf3629f87115f1c336c435f"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 1299673,
+        "sha256": "84cdae01d9a780fcf2f7bf775665af53b46245b0b9ac5605940094a060507759"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1735202,
+        "sha256": "9348796c4197533d670b3ea3cd3d6077813ebac93be3779f772b4492e391888b"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1520,
+        "sha256": "c7d0b999323ac3abff66411f5fc320b6a1a5006b1f0bbb35971f3374a8214211"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2504,
+        "sha256": "8dead0abf0387c50079f2da63a56f9ebfeba6830d390c932a892b45befddc001"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 828,
+        "sha256": "6d59f43cb63a8b2ec30811e70cd52a3669b0a4f8222d79b8cb4573ee8ce999d9"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-ko-zh",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian ko-zh 离线文本翻译组件",
+    "summaryZh": "用于 ko 到 zh 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-ko-zh/1.0.0",
+    "sourceBytes": 117682307,
+    "sizeBytes": 81279876,
+    "sha256": "a32b904fd0db5fcfba3a8cdf673a99fc9b35942f430fafa90bf6b1834af49789",
+    "url": "packs/translation/text-opus-marian-ko-zh/1.0.0/text-opus-marian-ko-zh-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ko-zh/1.0.0/text-opus-marian-ko-zh-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-ko-zh/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ko-zh/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-ko-zh"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 113343973,
+        "sha256": "8078e868b0eed1dcb2e16ebd19bbfd1fad59c6fe96c517a43b7b19375450dffa"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 1299673,
+        "sha256": "84cdae01d9a780fcf2f7bf775665af53b46245b0b9ac5605940094a060507759"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 1299673,
+        "sha256": "5307f03c20e377525afb0f30675cc6ff74d092269cf3629f87115f1c336c435f"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1735202,
+        "sha256": "9348796c4197533d670b3ea3cd3d6077813ebac93be3779f772b4492e391888b"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1532,
+        "sha256": "0cbe5afdea23a8a25e011e32dd401e75d88ded44a742a19617a0a10d6c13668d"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2504,
+        "sha256": "9e5e95df534908ce386ca45657f0b416377cff9e6126a8958c9737622e90472e"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 828,
+        "sha256": "4af8e7e159fb283862739e62e016748127356f23ff3c6cdda26986f8fa823905"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-zh-vi",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian zh-vi 离线文本翻译组件",
+    "summaryZh": "用于 zh 到 vi 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-zh-vi/1.0.0",
+    "sourceBytes": 116373443,
+    "sizeBytes": 79544125,
+    "sha256": "cddb5bc92e8409e2e37543647920af4ac16f43d6a358471d95c2ec010eda88af",
+    "url": "packs/translation/text-opus-marian-zh-vi/1.0.0/text-opus-marian-zh-vi-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-zh-vi/1.0.0/text-opus-marian-zh-vi-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-zh-vi/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-zh-vi/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-zh-vi"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 113343973,
+        "sha256": "e81bca82c1a9d1a899cc20bab90001fd036410ae6eddd445ba922024489d120e"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 750285,
+        "sha256": "d617117f90da08f471ef72c649401748a26e9ffb22289986379a9b44f7d8810e"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 766197,
+        "sha256": "eb082ee05298800b89d0cfa7101ef9e468b2554459a8e7635cb56cc17d0f3f02"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1509806,
+        "sha256": "6a9dab7e1cb05a1d99f563d61b2f5bd277885b79c769a5d3f3ecf5139dcf5039"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1451,
+        "sha256": "525e2118ed64cfeccb4614107d22c98052acb137549fbfe021372cfe86889a9a"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2322,
+        "sha256": "9f7d7e73da69a151fbd2ab411a820dc7c26d86601ab2d5fa725634bdda4027ec"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "375c25a75cb469d37e84e3894113ccb602c2bfcc18886e785d1f2279c0e34dee"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-zh-ms",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian zh-ms 离线文本翻译组件",
+    "summaryZh": "用于 zh 到 ms 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-zh-ms/1.0.0",
+    "sourceBytes": 116423858,
+    "sizeBytes": 74597244,
+    "sha256": "caa5c524eaeb5cbf7925254f077be0cf39412bd157fae50be227c7eb5d61bd62",
+    "url": "packs/translation/text-opus-marian-zh-ms/1.0.0/text-opus-marian-zh-ms-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-zh-ms/1.0.0/text-opus-marian-zh-ms-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-zh-ms/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-zh-ms/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-zh-ms"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 113343973,
+        "sha256": "f106dbb418db452e9e406f00adf3e4e9b4810e0bc4b2b913ef166debfd2dfa09"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 748525,
+        "sha256": "8ba0a7b394095a6739e7794253658c158718c10db8c32b4503951e78ac4f6b9d"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 810827,
+        "sha256": "8f26c62e1ea21c1b7183b4ceec3b9bc18bd8cc343f0fdb7467560caebeb7681b"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1517299,
+        "sha256": "24088d6b0b7214accd859c2f0a7ad5ba36752451c9f79bde94c32714d13ec9fc"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1503,
+        "sha256": "45093367f2882e1c40b83623796244ffb3f633942677f03ebf4a8f453f365068"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2324,
+        "sha256": "e47678dd30b14a823019fc6ca87b7d350d10256e486af939eb5fbca3bbe5e14d"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "62a99c2d5884fc5a35d3e273ad7b31cb304cd225a6dd76c55c56f7560c048ee0"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-zh-de",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian zh-de 离线文本翻译组件",
+    "summaryZh": "用于 zh 到 de 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-zh-de/1.0.0",
+    "sourceBytes": 116464490,
+    "sizeBytes": 70244076,
+    "sha256": "91bf128035548c9b650e9f0073bdf1453c11a392e9c6154c06725972eab395ab",
+    "url": "packs/translation/text-opus-marian-zh-de/1.0.0/text-opus-marian-zh-de-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-zh-de/1.0.0/text-opus-marian-zh-de-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-zh-de/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-zh-de/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-zh-de"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 113343974,
+        "sha256": "fb05f6dd58d04669e9accb181063ab46397b8b6f5365d47f8f00fe784003f663"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 748969,
+        "sha256": "2e84dbd9a2d0e8366bde5d911310f2fb1b52c92d135681241c59f91bc11a5155"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 823304,
+        "sha256": "8a2ec4c936fc560710891109f3211082074dd0990265e2fe5df1c5d4d56b5308"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1544996,
+        "sha256": "c559d931f882df50bf67bd9c37fd6306b15416a45ff537edb1060146c7c970ef"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1516,
+        "sha256": "f079b7a69d07a6fc112934342235b99b0d3a886898973ca8de0a8534356d3a32"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2321,
+        "sha256": "e2a18bf8db157ba79a777a6f34d0ff6ab5580bce0ec02ff3f5697997968ed262"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "1e82153236f8c60716caa6fd68a8b4888c241272d4c7066b35cde2e845d1b4ad"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-de-zh",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian de-zh 离线文本翻译组件",
+    "summaryZh": "用于 de 到 zh 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-de-zh/1.0.0",
+    "sourceBytes": 113102359,
+    "sizeBytes": 66986419,
+    "sha256": "aac977b7ed953fab8872133a0b37af490aa38872ab758054a65c67e32556b8ee",
+    "url": "packs/translation/text-opus-marian-de-zh/1.0.0/text-opus-marian-de-zh-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-de-zh/1.0.0/text-opus-marian-de-zh-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-de-zh/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-de-zh/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-de-zh"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 110172593,
+        "sha256": "a9f7e60c6aa2113e1eca58a1891950c69568fa1d3f1baddf4f8d325c7cfed4ed"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 816201,
+        "sha256": "b4133b71df5764b5567a9c0df8a17931bbe0299d2c77a7420f0c6c8efa630778"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 710619,
+        "sha256": "eb1a4b79ddd8f762289f5c92d352c1f499cccfa93ba2ee7e30ee1c4077e557b2"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1399675,
+        "sha256": "2d2023bdd779d09e6fa962586e18a4e42ad2757c38c158be5e3facbcb9c459a5"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1513,
+        "sha256": "e1897c8b9dadcaf0c07a086512ded9c2f60a7e07112b33cb8f60261ed3eafa5a"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2322,
+        "sha256": "c09362aedc2b03f171ee3d352c626a416ef2df9a82ab75b484a714f71767181c"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "f51bfeced3f5c2abdc63752b4b0b97f3d38b21e5401331b72a43b858092d65d6"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-ja-vi",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian ja-vi 离线文本翻译组件",
+    "summaryZh": "用于 ja 到 vi 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-ja-vi/1.0.0",
+    "sourceBytes": 116115090,
+    "sizeBytes": 81275460,
+    "sha256": "4ab270231794c3ac59f71180e96cd3848e4f77ca8546736ff04be584f7bf8f77",
+    "url": "packs/translation/text-opus-marian-ja-vi/1.0.0/text-opus-marian-ja-vi-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ja-vi/1.0.0/text-opus-marian-ja-vi-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-ja-vi/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ja-vi/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-ja-vi"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 112831002,
+        "sha256": "de2d6981ff6cc43fab7eff42d472db15d77dd7e5f8054b461de58c8b635da402"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 839903,
+        "sha256": "d6d043e769032763788380b2851869987ca6f22b27e779468d4f704afd2e8473"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 762876,
+        "sha256": "391b0ec9aac4540171656ab73d5c86e9b60b1e74cbd449f9a3bca735eae02cbb"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1678004,
+        "sha256": "930bddc6fe758f163abebda8168da58426b1d9c744a3a36d300a949d4213658f"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1574,
+        "sha256": "e27e242b2a0e46c6514480f8c10bb5c7602e253b73b93f1f9dc58402f2b982cc"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2345,
+        "sha256": "63af62477d94ead55c2b2c35cfef6acd7e4b46220e0f32dc0de5129f6e4b0137"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "6e57e05e754f09a5f5c4875a5afbd91fe67c3a8021bad660c2950c35d14812dc"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-ja-es",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian ja-es 离线文本翻译组件",
+    "summaryZh": "用于 ja 到 es 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-ja-es/1.0.0",
+    "sourceBytes": 113378507,
+    "sizeBytes": 69355215,
+    "sha256": "5db5977ee1b4539e57fe185df48475567130c00e67d9a44b5a9bc654d74f3da9",
+    "url": "packs/translation/text-opus-marian-ja-es/1.0.0/text-opus-marian-ja-es-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ja-es/1.0.0/text-opus-marian-ja-es-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-ja-es/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ja-es/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-ja-es"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 110174649,
+        "sha256": "86ccbff35829fa3e256e0280f6e6281f21fa9aa1004921231affd1e89263edaf"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 787910,
+        "sha256": "15b2cf3eb78a63770f22f84c4530d75fd8c35709fcb7155df2ec6a38952f79e2"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 829324,
+        "sha256": "981ffc3205f62084cd5b0d6db0f110c2cfa17a3d8822d6708582998308f298f4"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1583335,
+        "sha256": "26472f360be20695958c4fb31ce8e34c20b1314054e36210484e8e327f1ba458"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1573,
+        "sha256": "b81298bd0f4f59e391498e9f0f8cc420058a3d71d31447bfbb1bf9e0e3f60a3d"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2327,
+        "sha256": "86d427afdd3585811220b6e6a5017d09566aced449d44ce6001795fdfb9984b9"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "37cde3b29733dbc9473913138ae3f204b8794baa939e378accb2b99abf64b7fa"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-ja-fr",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian ja-fr 离线文本翻译组件",
+    "summaryZh": "用于 ja 到 fr 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-ja-fr/1.0.0",
+    "sourceBytes": 113359422,
+    "sizeBytes": 67809697,
+    "sha256": "9d81c839f029b646d6d6e0f8e1e2e7e945104b9f53adf37721f53e0c9439f573",
+    "url": "packs/translation/text-opus-marian-ja-fr/1.0.0/text-opus-marian-ja-fr-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ja-fr/1.0.0/text-opus-marian-ja-fr-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-ja-fr/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ja-fr/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-ja-fr"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 110146894,
+        "sha256": "43c64e069fbcdc9e573f40d34f2dbf25e3eb64b59541b4d637cc36e75e8c6335"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 788443,
+        "sha256": "b568020ecc40d8af58d32d009fcf0006e24d8e7328103c2a0ab30bd004b16238"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 828224,
+        "sha256": "be498a191090754bbd4b10eae825d266b8c9badfadf1f00da49c6f802eca7e53"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1592563,
+        "sha256": "c645ba23e4c0d268ad9147f9c161761076a45d232cf5f227dc6c040321f47fbd"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1582,
+        "sha256": "bf109737c0e7f2ef3731856af05ec7d4e9cf0e4b05b60fabeb0c1e2e69e4af53"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2321,
+        "sha256": "ae8b868f28d2f349ffca22692c3dcf6387ffcaab1e2c6f02db0a5ab540a2a38a"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "4117ae9cd9472216b54dc04434cac70f634103313a6221497c115465453725c5"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-ja-ru",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian ja-ru 离线文本翻译组件",
+    "summaryZh": "用于 ja 到 ru 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-ja-ru/1.0.0",
+    "sourceBytes": 117898290,
+    "sizeBytes": 72305939,
+    "sha256": "a34504ab0d138504e907a0b865cb6d2681103231158d21112362c302cd453b17",
+    "url": "packs/translation/text-opus-marian-ja-ru/1.0.0/text-opus-marian-ja-ru-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ja-ru/1.0.0/text-opus-marian-ja-ru-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-ja-ru/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ja-ru/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-ja-ru"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 113247342,
+        "sha256": "cb45dd973952c4ce303da8fb6cbf29ea1346ae60a1a22a364eb0c184f61ab228"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 838812,
+        "sha256": "d4a4d020d47520b0bdf62319c7aa3399cdf94792b3ff2595f4787e7ca0a1bfbb"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 1034727,
+        "sha256": "4fa1758a75b25fa8a6ee8274fd374103c279939c463591919a80c38d72f570b4"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 2774069,
+        "sha256": "aef0de00956135d435e4e4d3f4768cb7fb0a88828158f00cb6037d4196039e47"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1609,
+        "sha256": "1201bd1791ba1648c12888aeb411f5234293ee237ba8e68892e081debc04b8b8"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2322,
+        "sha256": "71da106915401e6dc814c0d54654acbd421b70fea7191c67472d36f440713046"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "65f419f5dc6b94b40645bd2751dd943bb8be10ded601fa61b2aeac9ece917024"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-de-vi",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian de-vi 离线文本翻译组件",
+    "summaryZh": "用于 de 到 vi 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-de-vi/1.0.0",
+    "sourceBytes": 109312901,
+    "sizeBytes": 72192914,
+    "sha256": "6c075db8c47142b33f27e77bc74d8bd15548f74d8993b430b29a966584739cd6",
+    "url": "packs/translation/text-opus-marian-de-vi/1.0.0/text-opus-marian-de-vi-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-de-vi/1.0.0/text-opus-marian-de-vi-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-de-vi/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-de-vi/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-de-vi"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 106378246,
+        "sha256": "d89d43b488854649d59e1c73479e499823a539eea047c519f3602732085cc977"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 835650,
+        "sha256": "d0316d5deeb89008106e29cec9cc49b04645ed6ee84fac48ce6ec04b37f11203"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 760373,
+        "sha256": "bcd58670b83548060bc5535ad849d5c8ed344b684e69de24b8716423e8772d34"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1335370,
+        "sha256": "c4b013737be44a23f54609aa2366721f66014a6c77c81f1926934d7e98ebafb5"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1531,
+        "sha256": "b89a2a6b29d9af85a7ea202b2978525f711a85ca261836f600766875173d6ed4"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2324,
+        "sha256": "110929a473ba9625b832191846c3efd1d46a48a49a969786e0ea31c860517d7b"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "646437d384c67713f0736197425e17e2124e9b1f3e5d40d917053fd4ac6ddb5f"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-ru-vi",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian ru-vi 离线文本翻译组件",
+    "summaryZh": "用于 ru 到 vi 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-ru-vi/1.0.0",
+    "sourceBytes": 115550415,
+    "sizeBytes": 76820112,
+    "sha256": "7b5481544ce52880f832b3f3ae64edc970db2f84f7c06db9838ab31b50865ea0",
+    "url": "packs/translation/text-opus-marian-ru-vi/1.0.0/text-opus-marian-ru-vi-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ru-vi/1.0.0/text-opus-marian-ru-vi-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-ru-vi/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ru-vi/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-ru-vi"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 111294141,
+        "sha256": "327992bf8eba9821047a6be4639a7d85ab8ba90906196d9f78ced09351a2c71a"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 1032784,
+        "sha256": "c8ad482492c71094d328cad9c0592be71064e65e4663db36fe3e5be6ae7dab38"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 759871,
+        "sha256": "5cb285abe28b4a7ec04e5d82a66fa3ebe61be5c4b8c193bc291607581d68e345"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 2460295,
+        "sha256": "2fd50894d340173139effec31bafff5d258322bc5bd88014be78e2165ec5bf12"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1593,
+        "sha256": "22a99174f2307751dd29835149a4c554f038e212f0920170cbcb1a9081fe666e"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2325,
+        "sha256": "f9731ade571e29783f772ffac692c0fd3668ec07b3c9503aa2d666d7d402ed34"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "9c6d9141b46758be7f6b5793468d11107effdc12c24d1d2172094010bbe4c6c8"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-fr-de",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian fr-de 离线文本翻译组件",
+    "summaryZh": "用于 fr 到 de 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-fr-de/1.0.0",
+    "sourceBytes": 112495749,
+    "sizeBytes": 70748181,
+    "sha256": "a78ccbffb3c0cf3ebdfefc7ab903ff62f768e0b1cd5eecf7978d56efcf053076",
+    "url": "packs/translation/text-opus-marian-fr-de/1.0.0/text-opus-marian-fr-de-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-fr-de/1.0.0/text-opus-marian-fr-de-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-fr-de/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-fr-de/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-fr-de"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 109388230,
+        "sha256": "a46b2750e6131259c0964b6873c89b20d6cdc5a660b1ec32fa5e1ec3bf3c5897"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 812399,
+        "sha256": "e9a9acb44b4f88235ca6cc9f0b4546f942ba34fb1b27937b11386cc8db63ee83"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 827737,
+        "sha256": "965802053f4a59f81d48283bd1160ed49950124891f8f532d98945de4f5e58eb"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1464136,
+        "sha256": "f0b50c6f6c01e5d7ad62872e61aefe1ddeb52c7740c80f0caa16cc6c0bdd129b"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1531,
+        "sha256": "152c0b63ebf30e9c177acacc184a79185ce4c0b19a48253c69b2e835b5b79f63"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2321,
+        "sha256": "d6b014a0d40f48eb401bdfdc92339bf3b4301710404d182c4c3d4588d6c46352"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "05dfeb65d29c4f78ceae63de4582024393a74381b51ea6493c90fcea7aa3213d"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-de-fr",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian de-fr 离线文本翻译组件",
+    "summaryZh": "用于 de 到 fr 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-de-fr/1.0.0",
+    "sourceBytes": 112495758,
+    "sizeBytes": 72788936,
+    "sha256": "eb151f09e9ce6fd92362d88a6a6c0d0fcf7dd4a22b0059e762dd9dd2cfd75345",
+    "url": "packs/translation/text-opus-marian-de-fr/1.0.0/text-opus-marian-de-fr-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-de-fr/1.0.0/text-opus-marian-de-fr-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-de-fr/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-de-fr/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-de-fr"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 109388230,
+        "sha256": "1a68606cfc0283f1b8cf893bd94af7cdd08a432251f4e27d279197aedb8fc1a1"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 827737,
+        "sha256": "965802053f4a59f81d48283bd1160ed49950124891f8f532d98945de4f5e58eb"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 812399,
+        "sha256": "e9a9acb44b4f88235ca6cc9f0b4546f942ba34fb1b27937b11386cc8db63ee83"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1464136,
+        "sha256": "f0b50c6f6c01e5d7ad62872e61aefe1ddeb52c7740c80f0caa16cc6c0bdd129b"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1540,
+        "sha256": "7e00f024d18a046cb9b1b744c4dc4fb1d6ad1d047f36f03e7660bb5d181df67a"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2321,
+        "sha256": "9c88c12af31e9f238e70845b4f69d8a6d2f67e1b9e7d1537cdc2d62b8173e338"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "93612f06b10eadb1045db5fd881ac2b8926f05f6a5486fa762400e28829dd3b6"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-fr-es",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian fr-es 离线文本翻译组件",
+    "summaryZh": "用于 fr 到 es 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-fr-es/1.0.0",
+    "sourceBytes": 127411558,
+    "sizeBytes": 63448763,
+    "sha256": "edd2df6a5d0b57e16e6c450de495e133d87785733ac41ee61f84a1c60a864a02",
+    "url": "packs/translation/text-opus-marian-fr-es/1.0.0/text-opus-marian-fr-es-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-fr-es/1.0.0/text-opus-marian-fr-es-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-fr-es/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-fr-es/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-fr-es"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 123439962,
+        "sha256": "6e3408caf8f78ad411ce1f9d6b18e08631fb7a9b36ea856f4cb41d2cd2f67568"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 811963,
+        "sha256": "74ffc930c4af87e3bdec6dde479eb36f05152e1a657ec65dfb923baf4b5d27a9"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 818689,
+        "sha256": "0807c7b3dabe387a083700920a4b406c7656db09922bf934c25c2fab24706c4d"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 2337705,
+        "sha256": "c9030ac4070b1477fd6e697ba9d867add990214942e93dcd6af679044dc1e269"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1523,
+        "sha256": "4f5f91b893065e0b359d80e530b7d70cc8ea967efc8cf2ea273d4f012b3d5306"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2327,
+        "sha256": "ffe14ea507d559e596b87d52b60ecf08ed554e788e24ea936a886c44d227de4d"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "1d327b52e1e3c37039395cf44aed548f3f8b26f3476f9c34fc07618cefa2a35c"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-ru-fr",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian ru-fr 离线文本翻译组件",
+    "summaryZh": "用于 ru 到 fr 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-ru-fr/1.0.0",
+    "sourceBytes": 117249576,
+    "sizeBytes": 67885104,
+    "sha256": "ff492dcad50653050d82e0e88c5196f429a2ac6811ed44ad447ac9b1154f1921",
+    "url": "packs/translation/text-opus-marian-ru-fr/1.0.0/text-opus-marian-ru-fr-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ru-fr/1.0.0/text-opus-marian-ru-fr-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-ru-fr/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ru-fr/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-ru-fr"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 112702501,
+        "sha256": "1e8a24d2db9875a359920cdb2d302f4a5a83c45ab938a0dfe96f0acaaac71c5b"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 1063848,
+        "sha256": "50a16a6e7a21936d7a5cd1764c61364660353e2cebb2ed78e55b97bd74e85771"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 820963,
+        "sha256": "e852342099cfac79243a4ee0184eeb426814a84bb44b0cdf50516795d696e373"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 2658919,
+        "sha256": "ab4eb145fa5b698946f002a5e513ade6cfadd31abc7f0b69f95b41915be58e1a"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1594,
+        "sha256": "8785ed09a200f9d87b4caf587759f6f6c9de6082f6150635979a24779714289c"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2322,
+        "sha256": "13fdad86e6cb82c7af7350b1000f9b7b88699fa7898c510abc117e37b0edf04d"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "55e5a443252b5d77c4c2aad93d9adf1aeb5d355c0dacebc178bf161c42795180"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-de-es",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian de-es 离线文本翻译组件",
+    "summaryZh": "用于 de 到 es 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-de-es/1.0.0",
+    "sourceBytes": 112656398,
+    "sizeBytes": 68969642,
+    "sha256": "6fb4907cec037d22795be2efd292ab02c42def2ae98a5d64c7e0eb23b7d8e847",
+    "url": "packs/translation/text-opus-marian-de-es/1.0.0/text-opus-marian-de-es-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-de-es/1.0.0/text-opus-marian-de-es-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-de-es/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-de-es/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-de-es"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 109540374,
+        "sha256": "34c3a8ace582a65953e35f29f44eef6b2c1ed5b2d8552f59b57dff38624b4e79"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 828663,
+        "sha256": "4c6cf9cacbfbf82db361e3e07df76172cce7d1ef683d4e7d090349c84246caf0"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 818345,
+        "sha256": "d15fb47311fe1d385213350041a25dcb2f2b0ceb7d7102b7853b1405b33fd794"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1465772,
+        "sha256": "5afdba8ce02954340f89ca24f6f877b3fb89d2f4d764c43e8b99bca12f7c6b0f"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1528,
+        "sha256": "29f2b70c9adf4d81eddd9887d30c4d08685ea74ed1c7ced45779bc1311fd89ae"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2327,
+        "sha256": "280538ce21e89202c0df9047676413c61dbd7bc954082a71a63131f8bbd7660f"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "1c89aa4dd59b32327de65355720acb5ad67556206dafae8b10513df1abd15497"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-es-de",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian es-de 离线文本翻译组件",
+    "summaryZh": "用于 es 到 de 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-es-de/1.0.0",
+    "sourceBytes": 112656392,
+    "sizeBytes": 72466087,
+    "sha256": "b7ae7da8b1e84dd1aa8871b548228173295d72535fb1038483809566dd1d0351",
+    "url": "packs/translation/text-opus-marian-es-de/1.0.0/text-opus-marian-es-de-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-es-de/1.0.0/text-opus-marian-es-de-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-es-de/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-es-de/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-es-de"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 109540374,
+        "sha256": "e247e67ee8314a4c6f98d73588b20a1b13fd571d7ea897fac8e85f24b5f7a09a"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 818345,
+        "sha256": "d15fb47311fe1d385213350041a25dcb2f2b0ceb7d7102b7853b1405b33fd794"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 828663,
+        "sha256": "4c6cf9cacbfbf82db361e3e07df76172cce7d1ef683d4e7d090349c84246caf0"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1465772,
+        "sha256": "5afdba8ce02954340f89ca24f6f877b3fb89d2f4d764c43e8b99bca12f7c6b0f"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1522,
+        "sha256": "90b04e24bcfad06738295bd6de5814d736745ad53a53d64048e6de3f8afb4953"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2327,
+        "sha256": "1043138dcba1c4b23d32a30b015e140dcd741c340f1fa40bdfccdf57db837e34"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "aa65a9ff6fa8dd0c4e7c223e5a98f595962f1f4022d656271869e748ba38afe6"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-ru-es",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian ru-es 离线文本翻译组件",
+    "summaryZh": "用于 ru 到 es 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-ru-es/1.0.0",
+    "sourceBytes": 116241849,
+    "sizeBytes": 73924936,
+    "sha256": "a1c65a6672db5f4dda6fcefb9dcc3c4dd61c88a355c89b19176203ebd6a08bbc",
+    "url": "packs/translation/text-opus-marian-ru-es/1.0.0/text-opus-marian-ru-es-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ru-es/1.0.0/text-opus-marian-ru-es-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-ru-es/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ru-es/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-ru-es"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 111728985,
+        "sha256": "4e18324471e183a1d25b2a48c2034e080bd821eef6b39db29fbc6fcdb9d9684e"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 1060731,
+        "sha256": "581d0ce357f10ff41e4ab32b5771068257470676ec0d555ba73f36e7e7a1c99c"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 829382,
+        "sha256": "b309d8a58c506172b66c39fdd552a89792f3fb256f09e0e9a3dbfc0faefa636f"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 2619455,
+        "sha256": "394d9f7711c621b460487a72d82bf01c3eb72f6d4a73809d529f95e8a674bcac"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1580,
+        "sha256": "601af5470befcb04ba00b3c9c56a28ee7730f595e5cb8e4e988dfd454d5c06c1"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2328,
+        "sha256": "08dc6f2e0e32c8fc87866bac5582c8ed619b6a46de3ba6b5785d5e21f88b782a"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "466d033d063b432510e2af0cc906c04343b2cf8ae9b673a001a7e1a1e963c990"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-ja-ms",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian ja-ms 离线文本翻译组件",
+    "summaryZh": "用于 ja 到 ms 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-ja-ms/1.0.0",
+    "sourceBytes": 116447775,
+    "sizeBytes": 80195354,
+    "sha256": "b782648c4c888c4641b716efb8ee03bd737532ba146513688cea8808bffed7eb",
+    "url": "packs/translation/text-opus-marian-ja-ms/1.0.0/text-opus-marian-ja-ms-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ja-ms/1.0.0/text-opus-marian-ja-ms-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-ja-ms/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ja-ms/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-ja-ms"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 113066413,
+        "sha256": "6d55be82cea39ce7716f01bb0c4cebc39226714189705bc662e1d66c540f07da"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 842486,
+        "sha256": "4e406e2a49c9371c70f2b6365807de3cb88162aa1c377fafba121322daa1cd27"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 820259,
+        "sha256": "e6746bbe3eefc3d7408ccf9afa4efbc26d8de40f07ba4ea3c2be78bde98107a3"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1715312,
+        "sha256": "3601812aa9594c424c40cbc0d1be1614e7fe05248daa340a39a40f9dc1cd8bb7"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1574,
+        "sha256": "6a72a34fc2e63557c948cb2c4450706c1a25d4f53e0db0aa19ccfff4c707aa39"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2324,
+        "sha256": "d853e823df4c396b1d6fe1f3609a731322094b0bd3b8027223cfb122510dea15"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "19c8456ad7facd4466b1c76ca5435b14adac8d872d97b4cccc4301b7927ed630"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-ko-fr",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian ko-fr 离线文本翻译组件",
+    "summaryZh": "用于 ko 到 fr 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-ko-fr/1.0.0",
+    "sourceBytes": 116809265,
+    "sizeBytes": 69902694,
+    "sha256": "48ce8d48e90e25a8f1d5368e61ce5ca6662fa68093b48913ad7edf4065cb3a75",
+    "url": "packs/translation/text-opus-marian-ko-fr/1.0.0/text-opus-marian-ko-fr-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ko-fr/1.0.0/text-opus-marian-ko-fr-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-ko-fr/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ko-fr/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-ko-fr"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 113343974,
+        "sha256": "47b5c43bb02c26664f962b3d4643aaad41600cea89e57c03dcd82393468bf6e0"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 844952,
+        "sha256": "a908f8b2fef8249bf857afd0e9d4e64d1bb4bcda880cc6f5d22b8e86f89488ea"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 835161,
+        "sha256": "75e7d65c1648fe7aeb620f63fe7f114a1a985446384f90e3d35968b8c614b6ce"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1781898,
+        "sha256": "b0aedb17121701e65cb11b35a13523db693ed72e876710faa455e2a506380d70"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1549,
+        "sha256": "5eb41578228b46c43744f225e7b9248f57b60d0f2cfd9eb2a695af92d0c92b41"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2321,
+        "sha256": "7d60f9c9fa70a14190cdc90135c3b96d8968046cd2605986bd4fb3ebae0107ee"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "a7ad8037503c1d8be6bf890a2c0255c182813148e64ee559f5c726d90e63bfac"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-th-fr",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian th-fr 离线文本翻译组件",
+    "summaryZh": "用于 th 到 fr 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-th-fr/1.0.0",
+    "sourceBytes": 114742375,
+    "sizeBytes": 71242585,
+    "sha256": "62ca8d44f549757101132425578d9533d71e0b43bf3f3fcc43ec39fdb7a9d163",
+    "url": "packs/translation/text-opus-marian-th-fr/1.0.0/text-opus-marian-th-fr-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-th-fr/1.0.0/text-opus-marian-th-fr-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-th-fr/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-th-fr/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-th-fr"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 110369969,
+        "sha256": "443467b9f8ae4f0a5b3243dfac1d76c7faf41932993d0454ad9a24f045cab998"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 1179628,
+        "sha256": "6c3c9ec7a99ce8fee177d07677152eff5f5310fd79d0f934adc2c029d795f32e"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 820744,
+        "sha256": "720abe95b2af540354a9e07a26472e5b3ffe3b305fccdfc7efe87bc7348a6b00"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 2368739,
+        "sha256": "efd73ed85bfa07661186b038b533e6224889f78118513c949ae7aa777198df79"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1579,
+        "sha256": "a645e19b856a15f46f62c17b8c24f92b4146c5ba29d328db1f7d71ca749afcbb"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2322,
+        "sha256": "25c9ad403f08b901dc418a4da409a987d2b55dc200fd788ad021a69d193ea680"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "c81be6cec38161c770e04fc7fa30d1fbd3c266bb7cf34fa10d6b0cad3207a233"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-id-fr",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian id-fr 离线文本翻译组件",
+    "summaryZh": "用于 id 到 fr 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-id-fr/1.0.0",
+    "sourceBytes": 107896374,
+    "sizeBytes": 73402535,
+    "sha256": "1f47fee40bd591d898e1ad13d4643c0371df5fd82ba7d58724750ca10e758fb0",
+    "url": "packs/translation/text-opus-marian-id-fr/1.0.0/text-opus-marian-id-fr-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-id-fr/1.0.0/text-opus-marian-id-fr-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-id-fr/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-id-fr/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-id-fr"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 104958577,
+        "sha256": "ffad08c42536ad8bcd84aaf135ef30f74e7b47d4325fbc86ed56a3bfb4be6691"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 804305,
+        "sha256": "682d9b70fa53331e4c748fe367ed7f7c15c3f158a6d3aae4a43a499ea695d9d1"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 817631,
+        "sha256": "e6e76184cad8bc6cce2698624efd701a09ad062e4f32f7f25e07e2e9911e2a77"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1312615,
+        "sha256": "37425c8659c83f7aacb411adf60366b45047a8c5475a4e0eb63b5e6fe140e408"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1530,
+        "sha256": "33cd217671f57ba572d021965d4a31a2b1d63b8a93ffe25232efdffe54e5a7d4"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2324,
+        "sha256": "f157023ec116afb98f3c9bf5fd74d7ae5a899708ee632ca751db469274bee216"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "9b823e12dc20ab817760ce387c35576075df9992c2de8b868aaf2408942261a7"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-ms-fr",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian ms-fr 离线文本翻译组件",
+    "summaryZh": "用于 ms 到 fr 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-ms-fr/1.0.0",
+    "sourceBytes": 108503833,
+    "sizeBytes": 68250606,
+    "sha256": "94248a67c279585ee7c80ddd5a9f880ca3ec55f92f173963f1401534361d33be",
+    "url": "packs/translation/text-opus-marian-ms-fr/1.0.0/text-opus-marian-ms-fr-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ms-fr/1.0.0/text-opus-marian-ms-fr-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-ms-fr/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ms-fr/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-ms-fr"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 105531174,
+        "sha256": "50892d9e081958971a0a22cd5ea2fa38016a29275a3266f9460bd20ccaf7bc3d"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 810064,
+        "sha256": "e6d2a2ccdc3392d902b519777ec9a5b83ee0dc127daa74a29d0f3badf65f51de"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 822984,
+        "sha256": "16bee425dad05630b8bd85fbc222726362ca8bd0f12a3f155939f73bbf59f2a5"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1336354,
+        "sha256": "224ba9f0b8c044c7472a53c5b1cba7e7290a7613dd9fc9813274d14499161416"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1526,
+        "sha256": "f4badb13ed370f4730cea9fb92ee3fd18e5070a268b4a02d81f7b1461645405e"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2324,
+        "sha256": "4b4556fcd6d04e611bedb0f29c98de93532f8a0e3ae747958416d75e2504a4d9"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "f6e6a8d7868792b1f677d2e3843d545c030a899f1a55e60869a38cdd3da6c199"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-ms-de",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian ms-de 离线文本翻译组件",
+    "summaryZh": "用于 ms 到 de 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-ms-de/1.0.0",
+    "sourceBytes": 108834407,
+    "sizeBytes": 70740582,
+    "sha256": "5626af8fdc26c1839b1bd265593340318e14816f6ff969cef807cdbf99d12881",
+    "url": "packs/translation/text-opus-marian-ms-de/1.0.0/text-opus-marian-ms-de-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ms-de/1.0.0/text-opus-marian-ms-de-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-ms-de/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-ms-de/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-ms-de"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 105853966,
+        "sha256": "f21afdbe79661bd3b0b62a16c25d27dbff1fd6a007ac64fd6a5623c639e8a2fe"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 812413,
+        "sha256": "ed0236edcb172472f0b26295279a696f22340ec829b746dc8a387b411997a8c2"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 830014,
+        "sha256": "3863c85b5613f6a5cf0d34ea17d81cc1548e05a3dcaae74b0a3a156d0cecef56"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1334763,
+        "sha256": "3ecb96b3f63d44cd993cde03cae6bcc05095809dd98fb2d74e2362a89ae367b1"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1520,
+        "sha256": "98335f3dca3c00af5d9d417498d6bf6d3a5dd8db63031a7b5a4f273ab64ea07e"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2324,
+        "sha256": "953662c3c2cc3191906934c1ba8dc95aef35c2b8c9370b654f38805909982da1"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "e51fa2d5f374768ea53c111b7e6c6ba368c4f31b21d6f6734744f161f875048f"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-fr-vi",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian fr-vi 离线文本翻译组件",
+    "summaryZh": "用于 fr 到 vi 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-fr-vi/1.0.0",
+    "sourceBytes": 109013335,
+    "sizeBytes": 74487778,
+    "sha256": "0ffccb67a8159b35b57b98b9398e03e4c3efaa122a0d3a7943e66abb0273685f",
+    "url": "packs/translation/text-opus-marian-fr-vi/1.0.0/text-opus-marian-fr-vi-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-fr-vi/1.0.0/text-opus-marian-fr-vi-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-fr-vi/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-fr-vi/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-fr-vi"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 106082182,
+        "sha256": "597f112468a98e947bce4b45ffded643cd0ef1b6768a347f43f5a73f2a73e951"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 828153,
+        "sha256": "c11707dad9e8dfb3dcef7ac67bf44df1cfc4b9d09bdc219cd06d3b7f5480e20d"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 759941,
+        "sha256": "f1bcf530841c8263fe13a0d7c0fee672099834a35e1f075aed1dad389ee7ef67"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1339794,
+        "sha256": "283e4232918514c8fcfc132f2ae6d7432dca9584c9fcec67f59e61952fafebbf"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1534,
+        "sha256": "bdf795da2f899b9183ae71c718445dbef78705101941f334e821efc5db24f355"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2324,
+        "sha256": "75f0adc8273a33a86aeef2b152484fc04c14a78bbdf0bfe12d54c8911d9a3a1f"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "f567495ac9e641038738a89eccc92c7e6f00c1091a25a837798bb7c9dfe4d580"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-fr-id",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian fr-id 离线文本翻译组件",
+    "summaryZh": "用于 fr 到 id 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-fr-id/1.0.0",
+    "sourceBytes": 107896372,
+    "sizeBytes": 74359010,
+    "sha256": "dd479ec60a400978020596f8bc3d250400e3e5cbad57667c284136b76301f32b",
+    "url": "packs/translation/text-opus-marian-fr-id/1.0.0/text-opus-marian-fr-id-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-fr-id/1.0.0/text-opus-marian-fr-id-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-fr-id/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-fr-id/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-fr-id"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 104958578,
+        "sha256": "d0de49f1ccb62133535c766e90564dc87c21830a1e388dfb5aa1c01f6780afb3"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 817631,
+        "sha256": "e6e76184cad8bc6cce2698624efd701a09ad062e4f32f7f25e07e2e9911e2a77"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 804305,
+        "sha256": "682d9b70fa53331e4c748fe367ed7f7c15c3f158a6d3aae4a43a499ea695d9d1"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1312615,
+        "sha256": "37425c8659c83f7aacb411adf60366b45047a8c5475a4e0eb63b5e6fe140e408"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1527,
+        "sha256": "1c24a29ea917945a11cc3c78383e169c8a4eaf074a8294ce691ff86e6e533bcd"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2324,
+        "sha256": "2234fb92bac4fa840aa5b719fe07decc1dd34d05b5fc935a50ce9123141d95fc"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "9e02edf41cca4023774c09c7d83ed7c8a65ef9c4e3485db55bcfba0e2880a6e6"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-fr-ms",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian fr-ms 离线文本翻译组件",
+    "summaryZh": "用于 fr 到 ms 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-fr-ms/1.0.0",
+    "sourceBytes": 108505134,
+    "sizeBytes": 72020924,
+    "sha256": "8ef8f1c55f591fdfebed625dd409178da33ddae9957536efb28bac812a44ab36",
+    "url": "packs/translation/text-opus-marian-fr-ms/1.0.0/text-opus-marian-fr-ms-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-fr-ms/1.0.0/text-opus-marian-fr-ms-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-fr-ms/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-fr-ms/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-fr-ms"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 105533229,
+        "sha256": "163958a168a36d91ce7ec9042d2a2626dbe28f5666280d75927907350e2ea091"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 823009,
+        "sha256": "7470ad11bf8855b132e56b9bf1e8a84e2b2b617b352920a189f5fd24c16c2672"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 809631,
+        "sha256": "33b2f4682f5ed92489b56b87cc3aea3df739d3c54478fed4e875cc2f070980c8"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1336013,
+        "sha256": "f42556c59cf268896517689f216d3e57954088b8527ffd2ce5111c7888c370b5"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1521,
+        "sha256": "4895a935705eb12ca6e14b3a7cf59b87cf9ec7be563f91097be4d6a77a71ec04"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2324,
+        "sha256": "8f11bb305c0b2ee0efd4a4c0923f4848e393593108b797c3c55f082882f497b8"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "122d5116f330074662b2744f79b07ae237179476474134876a2cb4e927502f87"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-de-ms",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian de-ms 离线文本翻译组件",
+    "summaryZh": "用于 de 到 ms 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-de-ms/1.0.0",
+    "sourceBytes": 108834853,
+    "sizeBytes": 69846603,
+    "sha256": "1f1654e467fa72a5d1c66d470c883798392c1723ba7d0dbc0c41638d8d006dd2",
+    "url": "packs/translation/text-opus-marian-de-ms/1.0.0/text-opus-marian-de-ms-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-de-ms/1.0.0/text-opus-marian-de-ms-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-de-ms/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-de-ms/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-de-ms"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 105854994,
+        "sha256": "df3ebbd90206c209e89655eb0e0eedb40464e4522c6a53422f40ed4782f2fe66"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 829878,
+        "sha256": "837156735c0cbf7a0e6b8398576cf4333280ffa9d58ccec0f8153590bfa82ed1"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 812234,
+        "sha256": "08a52c274f19ffd57cca57210beccd08fc42367ea15f8093b738f22a3b11dc4b"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1334494,
+        "sha256": "2b1873795172744879af2d55180a57e98db673177f573f213bccc325939192dd"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1522,
+        "sha256": "696dcfad394006118e23d682d5413d6ef60f0a2de1039362a43432e3da92fa91"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2324,
+        "sha256": "e5e84df1a64156afbe0d4e88a588de4aeee219881baddf7cd974f3920a87c069"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "b93c7b0ccd2ad0ae590f94dfeaf69a155f887c144b0092f7e05575cb530592f5"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-es-id",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian es-id 离线文本翻译组件",
+    "summaryZh": "用于 es 到 id 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-es-id/1.0.0",
+    "sourceBytes": 108485676,
+    "sizeBytes": 67987870,
+    "sha256": "b3f39b992ec48311747c9107e59da117993841fc7d2089c11621b113d8bab773",
+    "url": "packs/translation/text-opus-marian-es-id/1.0.0/text-opus-marian-es-id-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-es-id/1.0.0/text-opus-marian-es-id-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-es-id/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-es-id/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-es-id"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 105544537,
+        "sha256": "b9f6654e57bbe59453078f1139f1300ab0271a9b0ff24bf6612684f1f6808eeb"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 817838,
+        "sha256": "b17d50593445efa71f3b25e9f5b5246268b120ac384d7efa45e501524b758d9e"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 803577,
+        "sha256": "f6db879f6e4028028c4ba699ab70a953a61cb44d150613c54bebbc910eb07454"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1316488,
+        "sha256": "1c59fb94bca7e9bba777338e27e53f68ee0366146bfabd7c52304a0e7fb73a20"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1520,
+        "sha256": "ba858dd63dac7c5d3bd3258a36f1fafbcd5b9728b436fae8104a445fa8ca07b1"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2330,
+        "sha256": "af71458373d111557e2cadce03d62ce6270685d123cfc180a5a152f95e9a247b"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "90864f6350827f960cae94bc14409dd62fcff33f8ddc525c8af7a6c23a709f8d"
+      }
+    ]
+  },
+  {
+    "packId": "text-opus-marian-id-es",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian id-es 离线文本翻译组件",
+    "summaryZh": "用于 id 到 es 的稳定离线文本翻译模型。",
+    "releaseStatus": "test",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-id-es/1.0.0",
+    "sourceBytes": 108485670,
+    "sizeBytes": 66233992,
+    "sha256": "44bb9a532c81ab099cb617162149a909def3ccb385a41e90977fe8d8a58a4a05",
+    "url": "packs/translation/text-opus-marian-id-es/1.0.0/text-opus-marian-id-es-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-id-es/1.0.0/text-opus-marian-id-es-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-opus-marian-id-es/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-id-es/1.0.0/manifest.json",
+    "modelIds": [
+      "text-opus-marian-id-es"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.int8.onnx",
+        "sizeBytes": 105544538,
+        "sha256": "c9680acdca4d6abaafb579e8d550aecc4e9515a098e68a58730f331d9fa2c1a0"
+      },
+      {
+        "path": "source.spm",
+        "sizeBytes": 803577,
+        "sha256": "f6db879f6e4028028c4ba699ab70a953a61cb44d150613c54bebbc910eb07454"
+      },
+      {
+        "path": "target.spm",
+        "sizeBytes": 817838,
+        "sha256": "b17d50593445efa71f3b25e9f5b5246268b120ac384d7efa45e501524b758d9e"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 1316488,
+        "sha256": "1c59fb94bca7e9bba777338e27e53f68ee0366146bfabd7c52304a0e7fb73a20"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1513,
+        "sha256": "73c2bec2d6cd76de89d973fb6bef1c8f481f753eb5b93c759145769263df6572"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2330,
+        "sha256": "e58809417cffc82f446cb65a274a8d92b8155a70a6638eebf77933b605fe1d83"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 737,
+        "sha256": "1b0d650a23bf63b4aed6c02851c2b28b97d9f50ed8b59698cec6ec7656e532fd"
+      }
+    ]
+  }
 ]

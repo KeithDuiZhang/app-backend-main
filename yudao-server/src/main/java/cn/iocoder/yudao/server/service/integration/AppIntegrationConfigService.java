@@ -51,6 +51,10 @@ public class AppIntegrationConfigService {
 
     public static final String ALIYUN_ACCESS_KEY_ID = "aliyun.access-key-id";
     public static final String ALIYUN_ACCESS_KEY_SECRET = "aliyun.access-key-secret";
+    public static final String ALIYUN_MT_ACCESS_KEY_ID = "aliyun.mt.access-key-id";
+    public static final String ALIYUN_MT_ACCESS_KEY_SECRET = "aliyun.mt.access-key-secret";
+    public static final String ALIYUN_OCR_ACCESS_KEY_ID = "aliyun.ocr.access-key-id";
+    public static final String ALIYUN_OCR_ACCESS_KEY_SECRET = "aliyun.ocr.access-key-secret";
     public static final String ALIYUN_TRANSLATION_REGION = "aliyun.translation.region";
     public static final String ALIYUN_OCR_REGION = "aliyun.ocr.region";
     public static final String ALIYUN_SPEECH_REGION = "aliyun.speech.region";

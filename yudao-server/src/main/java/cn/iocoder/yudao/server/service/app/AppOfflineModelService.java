@@ -51,9 +51,12 @@ public class AppOfflineModelService {
 
     private static final String COMPONENT_PACKS_RESOURCE = "classpath:offline-models/component-packs.json";
     private static final String BUSINESS_PACKS_RESOURCE = "classpath:offline-models/business-packs.json";
+    private static final int CATALOG_SCHEMA_VERSION = 2;
     private static final String DEFAULT_LOCAL_PUBLISH_ROOT =
             "D:/Code_Project/md_CN_model_repo/published/model-repo/cn/1.0.0";
     private static final String LOCAL_REPO_GUARD = "D:/Code_Project/md_CN_model_repo";
+    private static final Set<String> REALTIME_TRANSLATION_LANGUAGES =
+            Set.of("zh", "en", "ja", "ko", "th", "vi", "id");
 
     @Resource
     private ResourceLoader resourceLoader;
@@ -67,6 +70,7 @@ public class AppOfflineModelService {
     private List<BusinessPackRespVO> businessPacks = Collections.emptyList();
     private Map<String, ComponentPackRespVO> componentPacksById = Collections.emptyMap();
     private Map<String, BusinessPackRespVO> businessPacksById = Collections.emptyMap();
+    private List<TranslationModelRespVO> catalogModels = Collections.emptyList();
 
     @PostConstruct
     public void init() throws IOException {
@@ -86,17 +90,20 @@ public class AppOfflineModelService {
             businessMap.put(businessPack.getPackId(), businessPack);
         }
         businessPacksById = Collections.unmodifiableMap(businessMap);
+        catalogModels = Collections.unmodifiableList(buildCatalogModels(componentPacksById));
     }
 
     public ModelCatalogRespVO getCatalog() {
         validateCosRuntimeConfigured();
         CosConfig cosConfig = integrationConfigService.getCosRuntimeConfig();
         ModelCatalogRespVO respVO = new ModelCatalogRespVO();
+        respVO.setSchemaVersion(CATALOG_SCHEMA_VERSION);
         respVO.setReleaseVersion("1.0.0");
         respVO.setBaseUrl(buildBaseUrl(cosConfig));
         respVO.setDownloadRequiresSignedUrl(true);
         respVO.setBusinessPacks(businessPacks);
         respVO.setComponents(componentPacks);
+        respVO.setModels(catalogModels);
         return respVO;
     }
 
@@ -267,7 +274,8 @@ public class AppOfflineModelService {
             throw ServiceExceptionUtil.invalidParamException("请选择需要下载的离线模型包");
         }
         for (String componentId : componentIds) {
-            if (!componentPacksById.containsKey(componentId)) {
+            ComponentPackRespVO component = componentPacksById.get(componentId);
+            if (component == null || StrUtil.isBlank(component.getUrl())) {
                 throw ServiceExceptionUtil.invalidParamException("离线模型包暂不可用，请稍后重试");
             }
         }
@@ -337,6 +345,183 @@ public class AppOfflineModelService {
         return "application/octet-stream";
     }
 
+    private static List<TranslationModelRespVO> buildCatalogModels(Map<String, ComponentPackRespVO> componentsById) {
+        List<TranslationModelRespVO> models = new ArrayList<>();
+        for (String[] pair : List.of(
+                new String[]{"en", "zh"},
+                new String[]{"zh", "en"},
+                new String[]{"en", "ja"},
+                new String[]{"zh", "ja"},
+                new String[]{"ja", "zh"},
+                new String[]{"ja", "en"},
+                new String[]{"ko", "en"},
+                new String[]{"th", "en"},
+                new String[]{"en", "th"},
+                new String[]{"vi", "en"},
+                new String[]{"en", "vi"},
+                new String[]{"id", "en"},
+                new String[]{"en", "id"},
+                new String[]{"ms", "en"},
+                new String[]{"en", "ms"},
+                new String[]{"fr", "en"},
+                new String[]{"en", "fr"},
+                new String[]{"de", "en"},
+                new String[]{"en", "de"},
+                new String[]{"es", "en"},
+                new String[]{"en", "es"},
+                new String[]{"ru", "en"},
+                new String[]{"en", "ru"},
+                new String[]{"zh", "ko"},
+                new String[]{"ko", "zh"},
+                new String[]{"zh", "vi"},
+                new String[]{"zh", "ms"},
+                new String[]{"zh", "de"},
+                new String[]{"de", "zh"},
+                new String[]{"ja", "vi"},
+                new String[]{"ja", "es"},
+                new String[]{"ja", "fr"},
+                new String[]{"ja", "ru"},
+                new String[]{"de", "vi"},
+                new String[]{"ru", "vi"},
+                new String[]{"fr", "de"},
+                new String[]{"de", "fr"},
+                new String[]{"fr", "es"},
+                new String[]{"ru", "fr"},
+                new String[]{"de", "es"},
+                new String[]{"es", "de"},
+                new String[]{"ru", "es"},
+                new String[]{"ja", "ms"},
+                new String[]{"ko", "fr"},
+                new String[]{"th", "fr"},
+                new String[]{"id", "fr"},
+                new String[]{"ms", "fr"},
+                new String[]{"ms", "de"},
+                new String[]{"fr", "vi"},
+                new String[]{"fr", "id"},
+                new String[]{"fr", "ms"},
+                new String[]{"de", "ms"},
+                new String[]{"es", "id"},
+                new String[]{"id", "es"})) {
+            addOpusModel(models, pair[0], pair[1], componentsById);
+        }
+
+        TranslationModelRespVO m2m100 = new TranslationModelRespVO();
+        m2m100.setModelId("text-m2m100-418m-int8");
+        m2m100.setFamily("m2m100");
+        m2m100.setEngine("M2M100");
+        m2m100.setSourceLanguageCode("*");
+        m2m100.setTargetLanguageCode("*");
+        m2m100.setComponentPackId("text-m2m100-418m-int8");
+        m2m100.setArtifactPaths(Map.of(
+                "model", "model.int8.onnx",
+                "sentencepiece", "sentencepiece.model",
+                "metadata", "metadata.json",
+                "manifest", "manifest.json",
+                "checksum", "checksum.sha256"));
+        m2m100.setModelFormat("onnx");
+        m2m100.setQuantization("int8");
+        m2m100.setSizeBytes(0L);
+        m2m100.setSha256("");
+        m2m100.setSupportsText(true);
+        m2m100.setSupportsOcrBlock(true);
+        m2m100.setSupportsRealtime(false);
+        m2m100.setSupportsBatch(true);
+        m2m100.setPriority(60);
+        m2m100.setLicense("TBD");
+        m2m100.setAttribution("M2M100 metadata placeholder");
+        m2m100.setRequiredPlan("offline_membership");
+        m2m100.setRecommendedDeviceLevel("HIGH");
+        m2m100.setMinAndroidSdk(23);
+        m2m100.setMinIosVersion("13.0");
+        m2m100.setCapabilityStatus("planned");
+        models.add(m2m100);
+
+        TranslationModelRespVO hymt = new TranslationModelRespVO();
+        hymt.setModelId("text-hymt-enhance");
+        hymt.setFamily("hy-mt");
+        hymt.setEngine("HY-MT");
+        hymt.setSourceLanguageCode("*");
+        hymt.setTargetLanguageCode("*");
+        hymt.setComponentPackId("text-hymt-core");
+        hymt.setArtifactPaths(Map.of(
+                "model", "Hy-MT1.5-1.8B-2bit.gguf",
+                "metadata", "metadata.json",
+                "manifest", "manifest.json",
+                "checksum", "checksum.sha256"));
+        hymt.setModelFormat("gguf");
+        hymt.setQuantization("2bit");
+        hymt.setSizeBytes(594648072L);
+        hymt.setSha256("01abd49939e4c359a46d408614ecc6eabee9ff9e48678088354974ed5652d604");
+        hymt.setSupportsText(true);
+        hymt.setSupportsOcrBlock(true);
+        hymt.setSupportsRealtime(false);
+        hymt.setSupportsBatch(false);
+        hymt.setPriority(100);
+        hymt.setLicense("TBD");
+        hymt.setAttribution("HY-MT enhancement package");
+        hymt.setRequiredPlan("offline_membership");
+        hymt.setRecommendedDeviceLevel("HIGH");
+        hymt.setMinAndroidSdk(23);
+        hymt.setMinIosVersion("13.0");
+        hymt.setCapabilityStatus("manual-enhance");
+        models.add(hymt);
+        return Collections.unmodifiableList(models);
+    }
+
+    private static void addOpusModel(List<TranslationModelRespVO> models,
+                                     String sourceLanguage,
+                                     String targetLanguage,
+                                     Map<String, ComponentPackRespVO> componentsById) {
+        String modelId = "text-opus-marian-" + sourceLanguage + "-" + targetLanguage;
+        ComponentPackRespVO component = componentsById.get(modelId);
+        boolean published = isPublishedComponent(component);
+        TranslationModelRespVO model = new TranslationModelRespVO();
+        model.setModelId(modelId);
+        model.setFamily("opus-marian");
+        model.setEngine("OPUS-Marian");
+        model.setSourceLanguageCode(sourceLanguage);
+        model.setTargetLanguageCode(targetLanguage);
+        model.setComponentPackId(modelId);
+        model.setArtifactPaths(Map.of(
+                "model", "model.int8.onnx",
+                "sourceTokenizer", "source.spm",
+                "targetTokenizer", "target.spm",
+                "vocab", "vocab.json",
+                "metadata", "metadata.json",
+                "manifest", "manifest.json",
+                "checksum", "checksum.sha256"));
+        model.setModelFormat("onnx");
+        model.setQuantization("int8");
+        model.setSizeBytes(component != null && component.getSizeBytes() != null ? component.getSizeBytes() : 0L);
+        model.setSha256(component != null && component.getSha256() != null ? component.getSha256() : "");
+        model.setSupportsText(true);
+        model.setSupportsOcrBlock(true);
+        model.setSupportsRealtime(isRealtimeTranslationLanguage(sourceLanguage)
+                && isRealtimeTranslationLanguage(targetLanguage));
+        model.setSupportsBatch(true);
+        model.setPriority(("en".equals(sourceLanguage) || "en".equals(targetLanguage)) ? 10 : 20);
+        model.setLicense("TBD");
+        model.setAttribution("OPUS-MT / Marian");
+        model.setRequiredPlan("offline_membership");
+        model.setRecommendedDeviceLevel("LOW");
+        model.setMinAndroidSdk(23);
+        model.setMinIosVersion("13.0");
+        model.setCapabilityStatus(published ? "downloadable" : "planned");
+        models.add(model);
+    }
+
+    private static boolean isPublishedComponent(ComponentPackRespVO component) {
+        return component != null
+                && !StrUtil.containsIgnoreCase(component.getReleaseStatus(), "planned")
+                && StrUtil.isNotBlank(component.getUrl())
+                && StrUtil.isNotBlank(component.getSha256())
+                && CollUtil.isNotEmpty(component.getRequiredFiles());
+    }
+
+    private static boolean isRealtimeTranslationLanguage(String languageCode) {
+        return REALTIME_TRANSLATION_LANGUAGES.contains(languageCode);
+    }
+
     private <T> T readJsonResource(String location, TypeReference<T> typeReference) throws IOException {
         try (InputStream inputStream = resourceLoader.getResource(location).getInputStream()) {
             return objectMapper.readValue(inputStream, typeReference);
@@ -345,11 +530,13 @@ public class AppOfflineModelService {
 
     @Data
     public static class ModelCatalogRespVO {
+        private Integer schemaVersion;
         private String releaseVersion;
         private String baseUrl;
         private boolean downloadRequiresSignedUrl;
         private List<BusinessPackRespVO> businessPacks;
         private List<ComponentPackRespVO> components;
+        private List<TranslationModelRespVO> models;
     }
 
     @Data
@@ -382,7 +569,35 @@ public class AppOfflineModelService {
         private String objectKey;
         private String manifestUrl;
         private String manifestObjectKey;
+        private List<String> modelIds;
         private List<RequiredFileRespVO> requiredFiles;
+    }
+
+    @Data
+    public static class TranslationModelRespVO {
+        private String modelId;
+        private String family;
+        private String engine;
+        private String sourceLanguageCode;
+        private String targetLanguageCode;
+        private String componentPackId;
+        private Map<String, String> artifactPaths;
+        private String modelFormat;
+        private String quantization;
+        private Long sizeBytes;
+        private String sha256;
+        private Boolean supportsText;
+        private Boolean supportsOcrBlock;
+        private Boolean supportsRealtime;
+        private Boolean supportsBatch;
+        private Integer priority;
+        private String license;
+        private String attribution;
+        private String requiredPlan;
+        private String recommendedDeviceLevel;
+        private Integer minAndroidSdk;
+        private String minIosVersion;
+        private String capabilityStatus;
     }
 
     @Data

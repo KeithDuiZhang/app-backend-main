@@ -21,9 +21,13 @@ import cn.iocoder.yudao.server.service.image.ImageTranslationModels.RetryReqVO;
 import cn.iocoder.yudao.server.service.image.ImageTranslationModels.Status;
 import cn.iocoder.yudao.server.service.image.ImageTranslationModels.TaskStatusRespVO;
 import cn.iocoder.yudao.server.service.image.ImageTranslationModels.TextItemRespVO;
+import cn.iocoder.yudao.server.service.image.provider.AliyunImageTextOcrClient;
+import cn.iocoder.yudao.server.service.image.provider.AliyunImageTextOcrClient.OcrDetail;
+import cn.iocoder.yudao.server.service.image.provider.AliyunImageTextTranslateClient;
 import cn.iocoder.yudao.server.service.image.provider.AliyunTranslateImageProvider;
 import cn.iocoder.yudao.server.service.image.provider.ImageTranslationProvider;
 import cn.iocoder.yudao.server.service.image.provider.QwenMtImageProvider;
+import cn.iocoder.yudao.server.service.app.AppPaymentService.UserEntitlementRespVO;
 import cn.iocoder.yudao.server.service.image.redis.ImageTranslationTaskMessage;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,6 +39,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.transaction.support.TransactionSynchronization;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.web.multipart.MultipartFile;
@@ -79,6 +84,12 @@ public class ImageTranslationTaskService {
     private ProviderFallbackPolicy fallbackPolicy;
     @Resource
     private AppPaymentService appPaymentService;
+    @Resource
+    private AliyunImageTextOcrClient imageTextOcrClient;
+    @Resource
+    private AliyunImageTextTranslateClient imageTextTranslateClient;
+    @Resource
+    private TransactionTemplate transactionTemplate;
     @Autowired(required = false)
     private RedisMQTemplate redisMQTemplate;
 
@@ -176,6 +187,9 @@ public class ImageTranslationTaskService {
                 jdbcTemplate.update("UPDATE image_translation_cache SET hit_count = hit_count + 1, updater = 'app', update_time = NOW() WHERE id = ?",
                         cache.get("id"));
                 String taskNo = createCachedTask(userId, source, target, mode, preferProvider, rawSha256, cacheKey, cache);
+                consumeQuotaByTaskNo(userId, taskNo);
+                attachSourceImagesForCachedTaskIfNeeded(userId, taskNo, rawSha256, originalBytes, originalFilename,
+                        contentType, cache);
                 return taskResponse(taskNo, Status.SUCCESS.name(), true, string(cache, "display_mode"), MESSAGE_CACHED);
             }
         }
@@ -235,6 +249,53 @@ public class ImageTranslationTaskService {
         return respVO;
     }
 
+    public TaskStatusRespVO extractTextItems(Long userId, String taskNo) {
+        if (StrUtil.isBlank(taskNo)) {
+            throw ServiceExceptionUtil.invalidParamException("图片翻译任务不存在");
+        }
+        String lockName = "image_text_extract:" + taskNo;
+        if (!acquireNamedLock(lockName)) {
+            throw ServiceExceptionUtil.invalidParamException("图片文字正在提取，请稍后再试");
+        }
+        long start = System.nanoTime();
+        try {
+            Map<String, Object> task = findTaskByNoAndUser(taskNo, userId);
+            if (task == null) {
+                throw ServiceExceptionUtil.invalidParamException("图片翻译任务不存在");
+            }
+            if (hasMeaningfulTextItems(task)) {
+                return getTaskStatus(userId, taskNo);
+            }
+            validateTextExtractionTask(task);
+            checkOcrQuota(userId);
+            byte[] imageBytes = readTextExtractionImage(task);
+            OcrDetail ocrDetail = imageTextOcrClient.recognize(imageBytes);
+            List<TextItemRespVO> textItems = normalizeTextItems(ocrDetail.getItems());
+            if (textItems.isEmpty()) {
+                throw ServiceExceptionUtil.invalidParamException("暂未识别到可提取文字");
+            }
+            int sourceChars = countSourceChars(textItems);
+            checkTextQuota(userId, sourceChars);
+            translateTextItems(textItems, string(task, "source_lang"), string(task, "target_lang"));
+            if (!hasTranslatedText(textItems)) {
+                throw ServiceExceptionUtil.invalidParamException("译文暂不可用，请稍后重试");
+            }
+            String textItemsJson = objectMapper.writeValueAsString(textItems);
+            persistExtractedTextItemsAndConsume(userId, taskNo, textItemsJson, sourceChars);
+            log.info("image text items extracted taskId={} user={} provider={} lines={} chars={} costMs={}",
+                    taskNo, maskUser(userId), string(task, "provider"), textItems.size(), sourceChars, elapsedMs(start));
+            return getTaskStatus(userId, taskNo);
+        } catch (RuntimeException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            log.warn("image text items extraction failed taskId={} user={} reason={}",
+                    taskNo, maskUser(userId), ex.getClass().getSimpleName());
+            throw ServiceExceptionUtil.invalidParamException("图片文字提取失败，请稍后重试");
+        } finally {
+            releaseNamedLock(lockName);
+        }
+    }
+
     @Transactional(rollbackFor = Exception.class)
     public CreateTaskRespVO retryTask(Long userId, String taskNo, RetryReqVO reqVO) {
         Map<String, Object> task = findTaskByNoAndUser(taskNo, userId);
@@ -259,6 +320,7 @@ public class ImageTranslationTaskService {
                         cache.get("quality_score"), string(cache, "warning_message"), task.get("id"));
                 jdbcTemplate.update("UPDATE image_translation_cache SET hit_count = hit_count + 1, updater = 'app', update_time = NOW() WHERE id = ?",
                         cache.get("id"));
+                consumeQuota(task);
                 return taskResponse(taskNo, Status.SUCCESS.name(), true, string(cache, "display_mode"), MESSAGE_CACHED);
             }
         }
@@ -457,6 +519,180 @@ public class ImageTranslationTaskService {
         appPaymentService.consumeOnlineUsage(numberLong(task.get("user_id")), reqVO);
     }
 
+    private void consumeQuotaByTaskNo(Long userId, String taskNo) {
+        Map<String, Object> task = findTaskByNoAndUser(taskNo, userId);
+        if (task == null) {
+            throw new IllegalStateException("Image translation task was not created");
+        }
+        consumeQuota(task);
+    }
+
+    private void persistExtractedTextItemsAndConsume(Long userId,
+                                                     String taskNo,
+                                                     String textItemsJson,
+                                                     int sourceChars) {
+        transactionTemplate.execute(status -> {
+            Map<String, Object> current = findTaskByNoAndUser(taskNo, userId);
+            if (current == null) {
+                throw ServiceExceptionUtil.invalidParamException("图片翻译任务不存在");
+            }
+            if (hasMeaningfulTextItems(current)) {
+                return null;
+            }
+            jdbcTemplate.update("""
+                    UPDATE image_translation_task
+                    SET text_items_json = ?, updater = 'worker', update_time = NOW()
+                    WHERE id = ?
+                    """, textItemsJson, current.get("id"));
+            updateCacheTextItems(current, textItemsJson);
+            consumeTextExtractionQuota(current, sourceChars);
+            return null;
+        });
+    }
+
+    private void consumeTextExtractionQuota(Map<String, Object> task, int sourceChars) {
+        UsageConsumeReqVO reqVO = new UsageConsumeReqVO();
+        String source = string(task, "source_lang");
+        String target = string(task, "target_lang");
+        reqVO.setClientRequestId("image_text_extract:" + string(task, "task_no") + ":" + source + ":" + target);
+        reqVO.setMode("online");
+        reqVO.setScene("image_text_extract");
+        reqVO.setSourceLanguageCode(source);
+        reqVO.setTargetLanguageCode(target);
+        reqVO.setOcrTranslateCount(1);
+        reqVO.setTextChars(Math.max(0, sourceChars));
+        appPaymentService.consumeOnlineUsage(numberLong(task.get("user_id")), reqVO);
+    }
+
+    private void updateCacheTextItems(Map<String, Object> task, String textItemsJson) {
+        String cacheKey = string(task, "cache_key");
+        if (StrUtil.isBlank(cacheKey)) {
+            return;
+        }
+        jdbcTemplate.update("""
+                UPDATE image_translation_cache
+                SET text_items_json = ?, updater = 'worker', update_time = NOW()
+                WHERE cache_key = ? AND deleted = 0
+                """, textItemsJson, cacheKey);
+    }
+
+    private void validateTextExtractionTask(Map<String, Object> task) {
+        String status = string(task, "status");
+        if (!Status.SUCCESS.name().equals(status) && !Status.DEGRADED.name().equals(status)) {
+            throw ServiceExceptionUtil.invalidParamException("译图完成后才能提取文字");
+        }
+        if (StrUtil.hasBlank(string(task, "source_lang"), string(task, "target_lang"))) {
+            throw ServiceExceptionUtil.invalidParamException("当前语言方向暂不支持提取文字翻译");
+        }
+        if (StrUtil.isBlank(string(task, "enhanced_cos_key")) && StrUtil.isBlank(string(task, "original_cos_key"))) {
+            throw ServiceExceptionUtil.invalidParamException("原图读取失败，请重新翻译后再试");
+        }
+    }
+
+    private byte[] readTextExtractionImage(Map<String, Object> task) {
+        String imageKey = StrUtil.blankToDefault(string(task, "enhanced_cos_key"), string(task, "original_cos_key"));
+        byte[] bytes = storageService.getObjectBytes(imageKey);
+        if (bytes == null || bytes.length == 0) {
+            throw ServiceExceptionUtil.invalidParamException("原图读取失败，请重新翻译后再试");
+        }
+        return bytes;
+    }
+
+    private void translateTextItems(List<TextItemRespVO> textItems, String source, String target) {
+        for (TextItemRespVO item : textItems) {
+            if (item == null || StrUtil.isBlank(item.getSourceText())) {
+                continue;
+            }
+            item.setTranslatedText(imageTextTranslateClient.translateGeneral(source, target, item.getSourceText()));
+        }
+    }
+
+    private List<TextItemRespVO> normalizeTextItems(List<TextItemRespVO> input) {
+        if (input == null || input.isEmpty()) {
+            return new ArrayList<>();
+        }
+        ArrayList<TextItemRespVO> output = new ArrayList<>();
+        for (TextItemRespVO item : input) {
+            if (item == null || StrUtil.isBlank(item.getSourceText())) {
+                continue;
+            }
+            item.setSourceText(item.getSourceText().trim());
+            item.setTranslatedText(StrUtil.trimToEmpty(item.getTranslatedText()));
+            item.setConfidence(Math.max(0d, Math.min(1d, item.getConfidence())));
+            output.add(item);
+        }
+        return output;
+    }
+
+    private boolean hasMeaningfulTextItems(Map<String, Object> task) {
+        List<TextItemRespVO> items = parseTextItems(string(task, "text_items_json"));
+        for (TextItemRespVO item : items) {
+            if (item != null && (StrUtil.isNotBlank(item.getSourceText()) || StrUtil.isNotBlank(item.getTranslatedText()))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean hasTranslatedText(List<TextItemRespVO> textItems) {
+        for (TextItemRespVO item : textItems) {
+            if (item != null && StrUtil.isNotBlank(item.getTranslatedText())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private int countSourceChars(List<TextItemRespVO> textItems) {
+        int count = 0;
+        for (TextItemRespVO item : textItems) {
+            String text = item != null ? StrUtil.trimToEmpty(item.getSourceText()) : "";
+            if (StrUtil.isNotBlank(text)) {
+                count += text.codePointCount(0, text.length());
+            }
+        }
+        return count;
+    }
+
+    private void checkOcrQuota(Long userId) {
+        UserEntitlementRespVO entitlement = appPaymentService.getUserEntitlement(userId);
+        if (remaining(entitlement.getOcrTranslateRemaining()) < 1) {
+            throw ServiceExceptionUtil.invalidParamException("识别翻译次数不足，请先开通或续费套餐");
+        }
+    }
+
+    private void checkTextQuota(Long userId, int sourceChars) {
+        if (sourceChars <= 0) {
+            throw ServiceExceptionUtil.invalidParamException("暂未识别到可提取文字");
+        }
+        UserEntitlementRespVO entitlement = appPaymentService.getUserEntitlement(userId);
+        if (remaining(entitlement.getTextCharsRemaining()) < sourceChars) {
+            throw ServiceExceptionUtil.invalidParamException("文本翻译字符不足，请先开通或续费套餐");
+        }
+    }
+
+    private int remaining(Integer value) {
+        return value == null ? 0 : Math.max(0, value);
+    }
+
+    private boolean acquireNamedLock(String lockName) {
+        try {
+            Number value = jdbcTemplate.queryForObject("SELECT GET_LOCK(?, 15)", Number.class, lockName);
+            return value != null && value.intValue() == 1;
+        } catch (Exception ex) {
+            log.warn("image text extract lock acquire failed type={}", ex.getClass().getSimpleName());
+            return false;
+        }
+    }
+
+    private void releaseNamedLock(String lockName) {
+        try {
+            jdbcTemplate.queryForObject("SELECT RELEASE_LOCK(?)", Number.class, lockName);
+        } catch (Exception ex) {
+            log.warn("image text extract lock release failed type={}", ex.getClass().getSimpleName());
+        }
+    }
+
     private void validateUpload(MultipartFile file, String sourceLang, String targetLang) {
         if (file == null || file.isEmpty()) {
             throw ServiceExceptionUtil.invalidParamException("请先选择图片");
@@ -539,6 +775,36 @@ public class ImageTranslationTaskService {
                 string(cache, "provider"), cache.get("quality_score"), string(cache, "warning_message"),
                 cache.get("expire_at"), taskId);
         return taskNo;
+    }
+
+    private void attachSourceImagesForCachedTaskIfNeeded(Long userId,
+                                                         String taskNo,
+                                                         String rawSha256,
+                                                         byte[] originalBytes,
+                                                         String originalFilename,
+                                                         String contentType,
+                                                         Map<String, Object> cache) {
+        if (hasMeaningfulTextItems(cache)) {
+            return;
+        }
+        long start = System.nanoTime();
+        try {
+            ProcessedImage image = preprocessor.process(originalBytes, originalFilename, contentType);
+            String originalKey = storageService.originalKey(rawSha256, image.getOriginalExt());
+            String enhancedKey = storageService.enhancedKey(rawSha256, image.getEnhancedExt());
+            storageService.uploadBytes(originalKey, image.getOriginalBytes(), contentType(image.getOriginalExt()));
+            storageService.uploadBytes(enhancedKey, image.getEnhancedBytes(), "image/jpeg");
+            jdbcTemplate.update("""
+                    UPDATE image_translation_task
+                    SET original_cos_key = ?, enhanced_cos_key = ?, updater = 'app', update_time = NOW()
+                    WHERE task_no = ? AND user_id = ? AND deleted = 0
+                    """, originalKey, enhancedKey, taskNo, userId);
+            log.info("image translation cached task source saved taskId={} user={} rawSha={} status=success costMs={}",
+                    taskNo, maskUser(userId), rawShaPrefix(rawSha256), elapsedMs(start));
+        } catch (Exception ex) {
+            log.warn("image translation cached task source save failed taskId={} user={} rawSha={} reason={} costMs={}",
+                    taskNo, maskUser(userId), rawShaPrefix(rawSha256), ex.getClass().getSimpleName(), elapsedMs(start));
+        }
     }
 
     private Map<String, Object> findValidCache(String cacheKey) {
@@ -733,6 +999,10 @@ public class ImageTranslationTaskService {
 
     private String rawShaPrefix(String rawSha256) {
         return rawSha256 != null && rawSha256.length() >= 8 ? rawSha256.substring(0, 8) : "";
+    }
+
+    private long elapsedMs(long startNanos) {
+        return Math.max(0L, (System.nanoTime() - startNanos) / 1_000_000L);
     }
 
     private String maskUser(Long userId) {

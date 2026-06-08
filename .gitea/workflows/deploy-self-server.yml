@@ -8,9 +8,12 @@ on:
   workflow_dispatch:
 
 env:
-  GITEA_INTERNAL_URL: http://gitea:3000
-  FRONTEND_REPOSITORY: superpowersai/love-match-frontend-main
+  GITEA_INTERNAL_URL: http://120.53.11.250:3210
+  BACKEND_REPOSITORY: superpowersai/app-backend-main
+  FRONTEND_REPOSITORY: superpowersai/app-frontend-main
   FRONTEND_REF: main
+  FRONTDOOR_MODE: docker-host-nginx
+  DEPLOY_DIR_DEFAULT: /opt/kunqiong-translation
 
 jobs:
   deploy:
@@ -56,12 +59,13 @@ jobs:
       - name: Clone repositories
         env:
           FRONTEND_REPO_TOKEN: ${{ secrets.FRONTEND_REPO_TOKEN }}
+          FORMAL_GITEA_USERNAME: ${{ secrets.FORMAL_GITEA_USERNAME }}
         run: |
           test -n "${FRONTEND_REPO_TOKEN}"
           cat > /tmp/git-askpass.sh <<'EOF'
           #!/usr/bin/env sh
           case "$1" in
-            *Username*) echo "keith" ;;
+            *Username*) echo "${FORMAL_GITEA_USERNAME:-u2648525541}" ;;
             *) echo "$FRONTEND_REPO_TOKEN" ;;
           esac
           EOF
@@ -69,8 +73,8 @@ jobs:
           export GIT_ASKPASS=/tmp/git-askpass.sh
           export GIT_TERMINAL_PROMPT=0
 
-          BACKEND_REF="${GITHUB_REF_NAME:-main}"
-          git clone --depth 1 --branch "${BACKEND_REF}" "${GITEA_INTERNAL_URL}/superpowersai/love-match-backend.git" backend
+          BACKEND_REF="${GITEA_REF_NAME:-${GITHUB_REF_NAME:-main}}"
+          git clone --depth 1 --branch "${BACKEND_REF}" "${GITEA_INTERNAL_URL}/${BACKEND_REPOSITORY}.git" backend
           git clone --depth 1 --branch "${FRONTEND_REF}" "${GITEA_INTERNAL_URL}/${FRONTEND_REPOSITORY}.git" frontend
 
       - name: Build backend
@@ -108,6 +112,11 @@ jobs:
           SERVER_SSH_KEY_B64: ${{ secrets.SERVER_SSH_KEY_B64 }}
           DEPLOY_DIR: ${{ secrets.DEPLOY_DIR }}
         run: |
+          SERVER_HOST="${SERVER_HOST:-120.53.11.250}"
+          SERVER_PORT="${SERVER_PORT:-22}"
+          SERVER_USER="${SERVER_USER:-root}"
+          DEPLOY_DIR="${DEPLOY_DIR:-${DEPLOY_DIR_DEFAULT}}"
+
           test -n "${SERVER_HOST}"
           test -n "${SERVER_PORT}"
           test -n "${SERVER_USER}"
@@ -129,9 +138,9 @@ jobs:
             --exclude='logs/' \
             --exclude='backups/' \
             --exclude='backend/yudao-server.jar' \
-            --exclude='nginx/html/admin/' \
+            --exclude='nginx/html/***' \
             --exclude='nginx/cert/' \
             -e "ssh ${SSH_OPTS}" \
             backend/deploy/ "${SERVER_USER}@${SERVER_HOST}:${DEPLOY_DIR}/"
           rsync -a --delete -e "ssh ${SSH_OPTS}" release/ "${SERVER_USER}@${SERVER_HOST}:${DEPLOY_DIR}/release/"
-          ssh ${SSH_OPTS} "${SERVER_USER}@${SERVER_HOST}" "cd '${DEPLOY_DIR}' && chmod +x scripts/*.sh && ./scripts/deploy.sh"
+          ssh ${SSH_OPTS} "${SERVER_USER}@${SERVER_HOST}" "cd '${DEPLOY_DIR}' && chmod +x scripts/*.sh && FRONTDOOR_MODE='${FRONTDOOR_MODE}' PUBLIC_BASE_URL='https://translate.kunqiongai.com' ./scripts/deploy.sh"
