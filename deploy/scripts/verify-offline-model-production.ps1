@@ -4,12 +4,18 @@ param(
     [string] $PublishedRoot = "D:\Code_Project\md_CN_model_repo\published\model-repo\cn\1.0.0",
     [string] $Mobile = "19927621043",
     [string] $PaymentReturnUrl = "https://translate.kunqiongai.com/app-api/pay/alipay/return",
-    [int] $ExpectedComponentCount = 59,
-    [int] $ExpectedOpusModelCount = 54,
+    [int] $ExpectedComponentCount = 71,
+    [int] $ExpectedOpusModelCount = 66,
+    [int] $ExpectedOpusDownloadableModelCount = 54,
+    [int] $ExpectedOpusPlannedModelCount = 12,
     [int] $ExpectedBusinessPackCount = 4,
     [string] $ExpectedRecommendedBusinessPackId = "offline-text-zh-centric-12",
     [int] $ExpectedRecommendedBusinessPackComponentCount = 22,
-    [long] $ExpectedRecommendedBusinessPackBytes = 1602490006,
+    [long] $ExpectedRecommendedBusinessPackBytes = 751968666,
+    [int] $ExpectedImageBusinessPackComponentCount = 0,
+    [long] $ExpectedImageBusinessPackBytes = 0,
+    [int] $ExpectedConversationBusinessPackComponentCount = 3,
+    [long] $ExpectedConversationBusinessPackBytes = 902832184,
     [int] $RequestTimeoutSec = 20,
     [switch] $PublishLocal,
     [switch] $SkipCatalog,
@@ -172,7 +178,16 @@ if (-not $SkipCatalog) {
         $businessPacks = @($catalog.data.businessPacks)
         $opusModels = @($models | Where-Object { $_.modelId -like "text-opus-marian-*" })
         $opusDownloadable = @($opusModels | Where-Object { $_.capabilityStatus -eq "downloadable" })
+        $opusPlanned = @($opusModels | Where-Object { $_.capabilityStatus -eq "planned" })
         $recommendedPack = @($businessPacks | Where-Object { $_.packId -eq $ExpectedRecommendedBusinessPackId })[0]
+        $imagePack = @($businessPacks | Where-Object { $_.packId -eq "offline-image-translation-full" })[0]
+        $conversationPack = @($businessPacks | Where-Object { $_.packId -eq "offline-conversation-translation-full" })[0]
+        $expectedImageComponents = @()
+        $expectedConversationComponents = @("asr-sensevoice-core", "asr-whisper-wide", "tts-sherpa-core")
+        $imageComponents = @($imagePack.components)
+        $conversationComponents = @($conversationPack.components)
+        $imageComponentDiff = @(Compare-Object -ReferenceObject $expectedImageComponents -DifferenceObject $imageComponents)
+        $conversationComponentDiff = @(Compare-Object -ReferenceObject $expectedConversationComponents -DifferenceObject $conversationComponents)
         $recommendedComponents = @()
         $recommendedExcludedIds = @("text-hymt-core", "text-m2m100-418m-int8", "ocr-tesseract-core", "asr-whisper-wide")
         $recommendedExcludedPresent = @()
@@ -185,8 +200,17 @@ if (-not $SkipCatalog) {
             $catalog.data.schemaVersion -eq 2 -and
             $components.Count -eq $ExpectedComponentCount -and
             $opusModels.Count -eq $ExpectedOpusModelCount -and
-            $opusDownloadable.Count -eq $ExpectedOpusModelCount -and
+            $opusDownloadable.Count -eq $ExpectedOpusDownloadableModelCount -and
+            $opusPlanned.Count -eq $ExpectedOpusPlannedModelCount -and
             $businessPacks.Count -eq $ExpectedBusinessPackCount -and
+            $null -ne $imagePack -and
+            $imageComponents.Count -eq $ExpectedImageBusinessPackComponentCount -and
+            $imageComponentDiff.Count -eq 0 -and
+            [long]$imagePack.sizeBytes -eq $ExpectedImageBusinessPackBytes -and
+            $null -ne $conversationPack -and
+            $conversationComponents.Count -eq $ExpectedConversationBusinessPackComponentCount -and
+            $conversationComponentDiff.Count -eq 0 -and
+            [long]$conversationPack.sizeBytes -eq $ExpectedConversationBusinessPackBytes -and
             $null -ne $recommendedPack -and
             $recommendedComponents.Count -eq $ExpectedRecommendedBusinessPackComponentCount -and
             [long]$recommendedPack.sizeBytes -eq $ExpectedRecommendedBusinessPackBytes -and
@@ -200,7 +224,16 @@ if (-not $SkipCatalog) {
             componentCount = $components.Count
             opusModelCount = $opusModels.Count
             opusDownloadableCount = $opusDownloadable.Count
+            opusPlannedCount = $opusPlanned.Count
             businessPackCount = $businessPacks.Count
+            imageBusinessPackPresent = $null -ne $imagePack
+            imageBusinessPackComponents = $imageComponents.Count
+            imageBusinessPackBytes = $(if ($null -ne $imagePack) { [long]$imagePack.sizeBytes } else { 0 })
+            imageBusinessPackComponentDiffCount = $imageComponentDiff.Count
+            conversationBusinessPackPresent = $null -ne $conversationPack
+            conversationBusinessPackComponents = $conversationComponents.Count
+            conversationBusinessPackBytes = $(if ($null -ne $conversationPack) { [long]$conversationPack.sizeBytes } else { 0 })
+            conversationBusinessPackComponentDiffCount = $conversationComponentDiff.Count
             recommendedBusinessPackId = $ExpectedRecommendedBusinessPackId
             recommendedBusinessPackPresent = $null -ne $recommendedPack
             recommendedBusinessPackComponents = $recommendedComponents.Count

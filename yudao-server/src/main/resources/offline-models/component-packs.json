@@ -255,9 +255,9 @@
     "releaseStatus": "test",
     "minRamGb": 4,
     "installPath": "tts/tts-sherpa-core/1.0.0",
-    "sourceBytes": 336572939,
-    "sizeBytes": 288527483,
-    "sha256": "ff259c70094d8cbc6c2fa376664d688fc260a8a4d48bcc691a412e3174ba5f2b",
+    "sourceBytes": 564619536,
+    "sizeBytes": 498981317,
+    "sha256": "dc1ba414a021ae65a9a04b4d7792283a93010d01a300d05fa60861a190b32715",
     "url": "packs/tts/tts-sherpa-core/1.0.0/tts-sherpa-core-1.0.0.zip",
     "objectKey": "model-repo/cn/1.0.0/packs/tts/tts-sherpa-core/1.0.0/tts-sherpa-core-1.0.0.zip",
     "manifestUrl": "packs/tts/tts-sherpa-core/1.0.0/manifest.json",
@@ -407,6 +407,26 @@
         "path": "sherpa-onnx-supertonic-3-tts-int8-2026-05-11/voice.bin",
         "sizeBytes": 517168,
         "sha256": "67d5209b0ee8ce6c74105ffbe12fe6a7628aea3b4ba2fcb308a4a67938a93ce8"
+      },
+      {
+        "path": "vits-mms-tha/model.onnx",
+        "sizeBytes": 114042296,
+        "sha256": "0231a4919672699a75c862646236086519a2b7ed350f79212c69d816179aabb2"
+      },
+      {
+        "path": "vits-mms-tha/tokens.txt",
+        "sizeBytes": 473,
+        "sha256": "7e1f455df08c2bed0583f91b91921d6fc4d149bc232511a0ae11041cf489d798"
+      },
+      {
+        "path": "vits-mms-zlm/model.onnx",
+        "sizeBytes": 114013880,
+        "sha256": "9d96414153cce99a135ab8b2abfb621b19b18b874a7bf366ed4f2e64621750c8"
+      },
+      {
+        "path": "vits-mms-zlm/tokens.txt",
+        "sizeBytes": 275,
+        "sha256": "b15202c9758d0b77291cce82c06a9a3e5c110402e1e9074da2de1e9100098b49"
       }
     ],
     "modelIds": []
@@ -1862,6 +1882,50 @@
     ]
   },
   {
+    "packId": "text-opus-marian-zh-th",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian zh-th 离线文本翻译组件",
+    "summaryZh": "用于 zh 到 th 的中文中心直连离线文本翻译模型，待发布，当前不可下载。",
+    "releaseStatus": "planned",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-zh-th/1.0.0",
+    "sourceBytes": 0,
+    "sizeBytes": 0,
+    "sha256": "",
+    "url": "",
+    "objectKey": "",
+    "manifestUrl": "",
+    "manifestObjectKey": "",
+    "modelIds": [
+      "text-opus-marian-zh-th"
+    ],
+    "requiredFiles": []
+  },
+  {
+    "packId": "text-opus-marian-th-zh",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian th-zh 离线文本翻译组件",
+    "summaryZh": "用于 th 到 zh 的中文中心直连离线文本翻译模型，待发布，当前不可下载。",
+    "releaseStatus": "planned",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-th-zh/1.0.0",
+    "sourceBytes": 0,
+    "sizeBytes": 0,
+    "sha256": "",
+    "url": "",
+    "objectKey": "",
+    "manifestUrl": "",
+    "manifestObjectKey": "",
+    "modelIds": [
+      "text-opus-marian-th-zh"
+    ],
+    "requiredFiles": []
+  },
+  {
     "packId": "text-opus-marian-zh-vi",
     "type": "translation",
     "engine": "OPUS-Marian",
@@ -1920,6 +1984,72 @@
     ]
   },
   {
+    "packId": "text-opus-marian-vi-zh",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian vi-zh 离线文本翻译组件",
+    "summaryZh": "用于 vi 到 zh 的中文中心直连离线文本翻译模型，待发布，当前不可下载。",
+    "releaseStatus": "planned",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-vi-zh/1.0.0",
+    "sourceBytes": 0,
+    "sizeBytes": 0,
+    "sha256": "",
+    "url": "",
+    "objectKey": "",
+    "manifestUrl": "",
+    "manifestObjectKey": "",
+    "modelIds": [
+      "text-opus-marian-vi-zh"
+    ],
+    "requiredFiles": []
+  },
+  {
+    "packId": "text-opus-marian-zh-id",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian zh-id 离线文本翻译组件",
+    "summaryZh": "用于 zh 到 id 的中文中心直连离线文本翻译模型，待发布，当前不可下载。",
+    "releaseStatus": "planned",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-zh-id/1.0.0",
+    "sourceBytes": 0,
+    "sizeBytes": 0,
+    "sha256": "",
+    "url": "",
+    "objectKey": "",
+    "manifestUrl": "",
+    "manifestObjectKey": "",
+    "modelIds": [
+      "text-opus-marian-zh-id"
+    ],
+    "requiredFiles": []
+  },
+  {
+    "packId": "text-opus-marian-id-zh",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian id-zh 离线文本翻译组件",
+    "summaryZh": "用于 id 到 zh 的中文中心直连离线文本翻译模型，待发布，当前不可下载。",
+    "releaseStatus": "planned",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-id-zh/1.0.0",
+    "sourceBytes": 0,
+    "sizeBytes": 0,
+    "sha256": "",
+    "url": "",
+    "objectKey": "",
+    "manifestUrl": "",
+    "manifestObjectKey": "",
+    "modelIds": [
+      "text-opus-marian-id-zh"
+    ],
+    "requiredFiles": []
+  },
+  {
     "packId": "text-opus-marian-zh-ms",
     "type": "translation",
     "engine": "OPUS-Marian",
@@ -1929,9 +2059,9 @@
     "releaseStatus": "test",
     "minRamGb": 2,
     "installPath": "translation/text-opus-marian-zh-ms/1.0.0",
-    "sourceBytes": 116423858,
-    "sizeBytes": 74597244,
-    "sha256": "caa5c524eaeb5cbf7925254f077be0cf39412bd157fae50be227c7eb5d61bd62",
+    "sourceBytes": 116423856,
+    "sizeBytes": 74626168,
+    "sha256": "78aeb0b1a6f8872e0657ff0622bd826019328fec3857b6d37423830db99d1acc",
     "url": "packs/translation/text-opus-marian-zh-ms/1.0.0/text-opus-marian-zh-ms-1.0.0.zip",
     "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-zh-ms/1.0.0/text-opus-marian-zh-ms-1.0.0.zip",
     "manifestUrl": "packs/translation/text-opus-marian-zh-ms/1.0.0/manifest.json",
@@ -1962,20 +2092,42 @@
       },
       {
         "path": "metadata.json",
-        "sizeBytes": 1503,
-        "sha256": "45093367f2882e1c40b83623796244ffb3f633942677f03ebf4a8f453f365068"
+        "sizeBytes": 1501,
+        "sha256": "4e500afea67a7058f2941a72955d5c086e0a123045758ccdb24e2e02ad3e766c"
       },
       {
         "path": "manifest.json",
-        "sizeBytes": 2324,
-        "sha256": "e47678dd30b14a823019fc6ca87b7d350d10256e486af939eb5fbca3bbe5e14d"
+        "sizeBytes": 3380,
+        "sha256": "4d842faaa2afa5a27a033391d6636d866f361b8386564c08c3a1db5e15a7d71f"
       },
       {
         "path": "checksum.sha256",
-        "sizeBytes": 737,
-        "sha256": "62a99c2d5884fc5a35d3e273ad7b31cb304cd225a6dd76c55c56f7560c048ee0"
+        "sizeBytes": 740,
+        "sha256": "2fdbf70031e8f01bb7caeeaaaf4299f089c888935988c5468f524bcf3d418f6e"
       }
     ]
+  },
+  {
+    "packId": "text-opus-marian-ms-zh",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian ms-zh 离线文本翻译组件",
+    "summaryZh": "用于 ms 到 zh 的中文中心直连离线文本翻译模型，待发布，当前不可下载。",
+    "releaseStatus": "planned",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-ms-zh/1.0.0",
+    "sourceBytes": 0,
+    "sizeBytes": 0,
+    "sha256": "",
+    "url": "",
+    "objectKey": "",
+    "manifestUrl": "",
+    "manifestObjectKey": "",
+    "modelIds": [
+      "text-opus-marian-ms-zh"
+    ],
+    "requiredFiles": []
   },
   {
     "packId": "text-opus-marian-zh-de",
@@ -1988,8 +2140,8 @@
     "minRamGb": 2,
     "installPath": "translation/text-opus-marian-zh-de/1.0.0",
     "sourceBytes": 116464490,
-    "sizeBytes": 70244076,
-    "sha256": "91bf128035548c9b650e9f0073bdf1453c11a392e9c6154c06725972eab395ab",
+    "sizeBytes": 70312919,
+    "sha256": "b9632815b875e89a8550056f1f162c2284d8002562f806a848c21093efdbfb08",
     "url": "packs/translation/text-opus-marian-zh-de/1.0.0/text-opus-marian-zh-de-1.0.0.zip",
     "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-zh-de/1.0.0/text-opus-marian-zh-de-1.0.0.zip",
     "manifestUrl": "packs/translation/text-opus-marian-zh-de/1.0.0/manifest.json",
@@ -2020,8 +2172,8 @@
       },
       {
         "path": "metadata.json",
-        "sizeBytes": 1516,
-        "sha256": "f079b7a69d07a6fc112934342235b99b0d3a886898973ca8de0a8534356d3a32"
+        "sizeBytes": 1514,
+        "sha256": "0cb495057515c36bcee81752ded0e4db1c8f0ce46ba69227f302eaaca5133565"
       },
       {
         "path": "manifest.json",
@@ -2046,8 +2198,8 @@
     "minRamGb": 2,
     "installPath": "translation/text-opus-marian-de-zh/1.0.0",
     "sourceBytes": 113102359,
-    "sizeBytes": 66986419,
-    "sha256": "aac977b7ed953fab8872133a0b37af490aa38872ab758054a65c67e32556b8ee",
+    "sizeBytes": 67066448,
+    "sha256": "734dfea6e59c3d1c1c5ec99ccfbf75a81fa87001718a631ee5a3352d133d080a",
     "url": "packs/translation/text-opus-marian-de-zh/1.0.0/text-opus-marian-de-zh-1.0.0.zip",
     "objectKey": "model-repo/cn/1.0.0/packs/translation/text-opus-marian-de-zh/1.0.0/text-opus-marian-de-zh-1.0.0.zip",
     "manifestUrl": "packs/translation/text-opus-marian-de-zh/1.0.0/manifest.json",
@@ -2078,8 +2230,8 @@
       },
       {
         "path": "metadata.json",
-        "sizeBytes": 1513,
-        "sha256": "e1897c8b9dadcaf0c07a086512ded9c2f60a7e07112b33cb8f60261ed3eafa5a"
+        "sizeBytes": 1511,
+        "sha256": "f65fb7e6934f24b711d6761f0fd67f12474b3d209afbf174677244fca00491d0"
       },
       {
         "path": "manifest.json",
@@ -2092,6 +2244,138 @@
         "sha256": "f51bfeced3f5c2abdc63752b4b0b97f3d38b21e5401331b72a43b858092d65d6"
       }
     ]
+  },
+  {
+    "packId": "text-opus-marian-zh-fr",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian zh-fr 离线文本翻译组件",
+    "summaryZh": "用于 zh 到 fr 的中文中心直连离线文本翻译模型，待发布，当前不可下载。",
+    "releaseStatus": "planned",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-zh-fr/1.0.0",
+    "sourceBytes": 0,
+    "sizeBytes": 0,
+    "sha256": "",
+    "url": "",
+    "objectKey": "",
+    "manifestUrl": "",
+    "manifestObjectKey": "",
+    "modelIds": [
+      "text-opus-marian-zh-fr"
+    ],
+    "requiredFiles": []
+  },
+  {
+    "packId": "text-opus-marian-fr-zh",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian fr-zh 离线文本翻译组件",
+    "summaryZh": "用于 fr 到 zh 的中文中心直连离线文本翻译模型，待发布，当前不可下载。",
+    "releaseStatus": "planned",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-fr-zh/1.0.0",
+    "sourceBytes": 0,
+    "sizeBytes": 0,
+    "sha256": "",
+    "url": "",
+    "objectKey": "",
+    "manifestUrl": "",
+    "manifestObjectKey": "",
+    "modelIds": [
+      "text-opus-marian-fr-zh"
+    ],
+    "requiredFiles": []
+  },
+  {
+    "packId": "text-opus-marian-zh-es",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian zh-es 离线文本翻译组件",
+    "summaryZh": "用于 zh 到 es 的中文中心直连离线文本翻译模型，待发布，当前不可下载。",
+    "releaseStatus": "planned",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-zh-es/1.0.0",
+    "sourceBytes": 0,
+    "sizeBytes": 0,
+    "sha256": "",
+    "url": "",
+    "objectKey": "",
+    "manifestUrl": "",
+    "manifestObjectKey": "",
+    "modelIds": [
+      "text-opus-marian-zh-es"
+    ],
+    "requiredFiles": []
+  },
+  {
+    "packId": "text-opus-marian-es-zh",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian es-zh 离线文本翻译组件",
+    "summaryZh": "用于 es 到 zh 的中文中心直连离线文本翻译模型，待发布，当前不可下载。",
+    "releaseStatus": "planned",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-es-zh/1.0.0",
+    "sourceBytes": 0,
+    "sizeBytes": 0,
+    "sha256": "",
+    "url": "",
+    "objectKey": "",
+    "manifestUrl": "",
+    "manifestObjectKey": "",
+    "modelIds": [
+      "text-opus-marian-es-zh"
+    ],
+    "requiredFiles": []
+  },
+  {
+    "packId": "text-opus-marian-zh-ru",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian zh-ru 离线文本翻译组件",
+    "summaryZh": "用于 zh 到 ru 的中文中心直连离线文本翻译模型，待发布，当前不可下载。",
+    "releaseStatus": "planned",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-zh-ru/1.0.0",
+    "sourceBytes": 0,
+    "sizeBytes": 0,
+    "sha256": "",
+    "url": "",
+    "objectKey": "",
+    "manifestUrl": "",
+    "manifestObjectKey": "",
+    "modelIds": [
+      "text-opus-marian-zh-ru"
+    ],
+    "requiredFiles": []
+  },
+  {
+    "packId": "text-opus-marian-ru-zh",
+    "type": "translation",
+    "engine": "OPUS-Marian",
+    "version": "1.0.0",
+    "displayNameZh": "OPUS/Marian ru-zh 离线文本翻译组件",
+    "summaryZh": "用于 ru 到 zh 的中文中心直连离线文本翻译模型，待发布，当前不可下载。",
+    "releaseStatus": "planned",
+    "minRamGb": 2,
+    "installPath": "translation/text-opus-marian-ru-zh/1.0.0",
+    "sourceBytes": 0,
+    "sizeBytes": 0,
+    "sha256": "",
+    "url": "",
+    "objectKey": "",
+    "manifestUrl": "",
+    "manifestObjectKey": "",
+    "modelIds": [
+      "text-opus-marian-ru-zh"
+    ],
+    "requiredFiles": []
   },
   {
     "packId": "text-opus-marian-ja-vi",

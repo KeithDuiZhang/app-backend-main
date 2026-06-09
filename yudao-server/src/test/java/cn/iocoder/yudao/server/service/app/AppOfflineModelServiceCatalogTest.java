@@ -5,6 +5,7 @@ import cn.iocoder.yudao.server.service.app.AppOfflineModelService.BusinessPackRe
 import cn.iocoder.yudao.server.service.app.AppOfflineModelService.ComponentPackRespVO;
 import cn.iocoder.yudao.server.service.app.AppOfflineModelService.DownloadUrlReqVO;
 import cn.iocoder.yudao.server.service.app.AppOfflineModelService.ModelCatalogRespVO;
+import cn.iocoder.yudao.server.service.app.AppOfflineModelService.RequiredFileRespVO;
 import cn.iocoder.yudao.server.service.app.AppOfflineModelService.TranslationModelRespVO;
 import cn.iocoder.yudao.server.service.integration.AppIntegrationConfigService;
 import cn.iocoder.yudao.server.service.integration.AppIntegrationConfigService.CosConfig;
@@ -15,6 +16,7 @@ import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.lang.reflect.Field;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -70,9 +72,9 @@ class AppOfflineModelServiceCatalogTest {
         assertBusinessPack(catalog.getBusinessPacks(), "offline-text-translation-full",
                 expectedBusinessComponents("text-hymt-core"));
         assertBusinessPack(catalog.getBusinessPacks(), "offline-image-translation-full",
-                expectedBusinessComponents("text-hymt-core", "ocr-tesseract-core"));
+                List.of(), 0L);
         assertBusinessPack(catalog.getBusinessPacks(), "offline-conversation-translation-full",
-                expectedBusinessComponents("text-hymt-core", "asr-sensevoice-core", "asr-whisper-wide", "tts-sherpa-core"));
+                List.of("asr-sensevoice-core", "asr-whisper-wide", "tts-sherpa-core"), 902_832_184L);
 
         String catalogJson = new ObjectMapper().writeValueAsString(catalog);
         assertFalse(catalogJson.contains("downloadUrl"));
@@ -88,8 +90,11 @@ class AppOfflineModelServiceCatalogTest {
                 .collect(Collectors.toMap(ComponentPackRespVO::getPackId, Function.identity()));
 
         Set<String> expectedOpusModelIds = expectedOpusModelIds();
-        assertEquals(54, expectedOpusModelIds.size());
+        Set<String> expectedPlannedOpusModelIds = expectedPlannedOpusModelIds();
+        assertEquals(66, expectedOpusModelIds.size());
+        assertEquals(12, expectedPlannedOpusModelIds.size());
         for (String modelId : expectedOpusModelIds) {
+            boolean planned = expectedPlannedOpusModelIds.contains(modelId);
             TranslationModelRespVO model = modelsById.get(modelId);
             assertNotNull(model, modelId);
             String[] parts = modelId.replace("text-opus-marian-", "").split("-");
@@ -100,9 +105,7 @@ class AppOfflineModelServiceCatalogTest {
             assertEquals(modelId, model.getComponentPackId());
             assertEquals("onnx", model.getModelFormat());
             assertEquals("int8", model.getQuantization());
-            assertEquals("downloadable", model.getCapabilityStatus());
-            assertTrue(model.getSizeBytes() > 0L);
-            assertFalse(model.getSha256().trim().isEmpty());
+            assertEquals(planned ? "planned" : "downloadable", model.getCapabilityStatus());
             assertTrue(model.getSupportsText());
             assertTrue(model.getSupportsOcrBlock());
             assertTrue(model.getSupportsBatch());
@@ -112,11 +115,23 @@ class AppOfflineModelServiceCatalogTest {
             ComponentPackRespVO component = componentsById.get(modelId);
             assertNotNull(component, modelId);
             assertEquals(List.of(modelId), component.getModelIds());
-            assertFalse(component.getReleaseStatus().contains("planned"));
-            assertTrue(component.getSizeBytes() > 0L);
-            assertFalse(component.getSha256().trim().isEmpty());
-            assertFalse(component.getUrl().trim().isEmpty());
-            assertFalse(component.getRequiredFiles().isEmpty());
+            if (planned) {
+                assertTrue(component.getReleaseStatus().contains("planned"));
+                assertEquals(0L, model.getSizeBytes());
+                assertTrue(model.getSha256().isBlank());
+                assertEquals(0L, component.getSizeBytes());
+                assertTrue(component.getSha256().isBlank());
+                assertTrue(component.getUrl().isBlank());
+                assertTrue(component.getRequiredFiles().isEmpty());
+            } else {
+                assertFalse(component.getReleaseStatus().contains("planned"));
+                assertTrue(model.getSizeBytes() > 0L);
+                assertFalse(model.getSha256().trim().isEmpty());
+                assertTrue(component.getSizeBytes() > 0L);
+                assertFalse(component.getSha256().trim().isEmpty());
+                assertFalse(component.getUrl().trim().isEmpty());
+                assertFalse(component.getRequiredFiles().isEmpty());
+            }
         }
         for (String unpublishedModelId : unpublishedOpusModelIds()) {
             assertFalse(modelsById.containsKey(unpublishedModelId), unpublishedModelId);
@@ -125,9 +140,13 @@ class AppOfflineModelServiceCatalogTest {
         TranslationModelRespVO realtimeDirect = modelsById.get("text-opus-marian-id-en");
         assertNotNull(realtimeDirect);
         assertTrue(realtimeDirect.getSupportsRealtime());
-        TranslationModelRespVO nonRealtimeDirect = modelsById.get("text-opus-marian-ms-en");
-        assertNotNull(nonRealtimeDirect);
-        assertFalse(nonRealtimeDirect.getSupportsRealtime());
+        TranslationModelRespVO zhDeRealtime = modelsById.get("text-opus-marian-zh-de");
+        assertNotNull(zhDeRealtime);
+        assertTrue(zhDeRealtime.getSupportsRealtime());
+        TranslationModelRespVO plannedZhFrRealtime = modelsById.get("text-opus-marian-zh-fr");
+        assertNotNull(plannedZhFrRealtime);
+        assertEquals("planned", plannedZhFrRealtime.getCapabilityStatus());
+        assertTrue(plannedZhFrRealtime.getSupportsRealtime());
 
         TranslationModelRespVO m2m100 = modelsById.get("text-m2m100-418m-int8");
         assertNotNull(m2m100);
@@ -146,9 +165,41 @@ class AppOfflineModelServiceCatalogTest {
     }
 
     @Test
-    void downloadUrlsRejectsUnpublishedOpusComponentsWithoutSignedUrls() {
+    void downloadUrlsRejectsPlannedOpusComponentsWithoutSignedUrls() {
         DownloadUrlReqVO reqVO = new DownloadUrlReqVO();
-        reqVO.setComponentIds(List.of("text-opus-marian-en-ko"));
+        reqVO.setComponentIds(List.of("text-opus-marian-zh-th"));
+
+        ServiceException exception = assertThrows(ServiceException.class,
+                () -> service.createDownloadUrls(1L, reqVO));
+
+        assertFalse(exception.getMessage().contains("downloadUrl"));
+        assertFalse(exception.getMessage().contains("X-Amz-Signature"));
+    }
+
+    @Test
+    void downloadUrlsRejectsPlannedComponentsEvenIfUrlIsFilled() throws Exception {
+        ComponentPackRespVO component = new ComponentPackRespVO();
+        component.setPackId("text-opus-marian-test-planned");
+        component.setType("translation");
+        component.setVersion("1.0.0");
+        component.setReleaseStatus("planned");
+        component.setUrl("packs/translation/text-opus-marian-test-planned.zip");
+        component.setSha256("abc123");
+        RequiredFileRespVO requiredFile = new RequiredFileRespVO();
+        requiredFile.setPath("model.int8.onnx");
+        requiredFile.setSizeBytes(1L);
+        requiredFile.setSha256("def456");
+        component.setRequiredFiles(List.of(requiredFile));
+
+        Field field = AppOfflineModelService.class.getDeclaredField("componentPacksById");
+        field.setAccessible(true);
+        Map<String, ComponentPackRespVO> components = new LinkedHashMap<>(
+                (Map<String, ComponentPackRespVO>) field.get(service));
+        components.put(component.getPackId(), component);
+        field.set(service, components);
+
+        DownloadUrlReqVO reqVO = new DownloadUrlReqVO();
+        reqVO.setComponentIds(List.of(component.getPackId()));
 
         ServiceException exception = assertThrows(ServiceException.class,
                 () -> service.createDownloadUrls(1L, reqVO));
@@ -158,11 +209,18 @@ class AppOfflineModelServiceCatalogTest {
     }
 
     private void assertBusinessPack(List<BusinessPackRespVO> packs, String packId, List<String> components) {
+        assertBusinessPack(packs, packId, components, null);
+    }
+
+    private void assertBusinessPack(List<BusinessPackRespVO> packs, String packId, List<String> components, Long sizeBytes) {
         BusinessPackRespVO pack = packs.stream()
                 .filter(item -> packId.equals(item.getPackId()))
                 .findFirst()
                 .orElseThrow();
         assertEquals(components, pack.getComponents());
+        if (sizeBytes != null) {
+            assertEquals(sizeBytes, pack.getSizeBytes());
+        }
     }
 
     private void assertRecommendedZhCentricTextPack(ModelCatalogRespVO catalog) {
@@ -186,11 +244,22 @@ class AppOfflineModelServiceCatalogTest {
                 .mapToLong(ComponentPackRespVO::getSizeBytes)
                 .sum();
         assertEquals(expectedSizeBytes, pack.getSizeBytes());
-        assertEquals(1_602_490_006L, pack.getSizeBytes());
+        assertEquals("planned", pack.getReleaseStatus());
+        assertEquals(751_968_666L, pack.getSizeBytes());
+        for (String pivotComponent : List.of(
+                "text-opus-marian-vi-en",
+                "text-opus-marian-en-id",
+                "text-opus-marian-ms-en",
+                "text-opus-marian-en-th",
+                "text-opus-marian-en-fr",
+                "text-opus-marian-en-es",
+                "text-opus-marian-en-ru")) {
+            assertFalse(pack.getComponents().contains(pivotComponent), pivotComponent);
+        }
     }
 
     private List<String> expectedBusinessComponents(String... extraComponents) {
-        java.util.ArrayList<String> components = new java.util.ArrayList<>(expectedOpusModelIds());
+        java.util.ArrayList<String> components = new java.util.ArrayList<>(expectedDownloadableOpusModelIds());
         components.addAll(List.of(extraComponents));
         return components;
     }
@@ -203,22 +272,22 @@ class AppOfflineModelServiceCatalogTest {
                 "text-opus-marian-ja-zh",
                 "text-opus-marian-zh-ko",
                 "text-opus-marian-ko-zh",
+                "text-opus-marian-zh-th",
+                "text-opus-marian-th-zh",
                 "text-opus-marian-zh-vi",
-                "text-opus-marian-vi-en",
-                "text-opus-marian-en-id",
-                "text-opus-marian-id-en",
+                "text-opus-marian-vi-zh",
+                "text-opus-marian-zh-id",
+                "text-opus-marian-id-zh",
                 "text-opus-marian-zh-ms",
-                "text-opus-marian-ms-en",
-                "text-opus-marian-en-th",
-                "text-opus-marian-th-en",
+                "text-opus-marian-ms-zh",
                 "text-opus-marian-zh-de",
                 "text-opus-marian-de-zh",
-                "text-opus-marian-en-fr",
-                "text-opus-marian-fr-en",
-                "text-opus-marian-en-es",
-                "text-opus-marian-es-en",
-                "text-opus-marian-en-ru",
-                "text-opus-marian-ru-en");
+                "text-opus-marian-zh-fr",
+                "text-opus-marian-fr-zh",
+                "text-opus-marian-zh-es",
+                "text-opus-marian-es-zh",
+                "text-opus-marian-zh-ru",
+                "text-opus-marian-ru-zh");
     }
 
     private Set<String> expectedOpusModelIds() {
@@ -248,10 +317,22 @@ class AppOfflineModelServiceCatalogTest {
                 List.of("en", "ru"),
                 List.of("zh", "ko"),
                 List.of("ko", "zh"),
+                List.of("zh", "th"),
+                List.of("th", "zh"),
                 List.of("zh", "vi"),
+                List.of("vi", "zh"),
+                List.of("zh", "id"),
+                List.of("id", "zh"),
                 List.of("zh", "ms"),
+                List.of("ms", "zh"),
                 List.of("zh", "de"),
                 List.of("de", "zh"),
+                List.of("zh", "fr"),
+                List.of("fr", "zh"),
+                List.of("zh", "es"),
+                List.of("es", "zh"),
+                List.of("zh", "ru"),
+                List.of("ru", "zh"),
                 List.of("ja", "vi"),
                 List.of("ja", "es"),
                 List.of("ja", "fr"),
@@ -282,14 +363,34 @@ class AppOfflineModelServiceCatalogTest {
                 .collect(Collectors.toCollection(java.util.LinkedHashSet::new));
     }
 
+    private Set<String> expectedDownloadableOpusModelIds() {
+        Set<String> planned = expectedPlannedOpusModelIds();
+        return expectedOpusModelIds().stream()
+                .filter(modelId -> !planned.contains(modelId))
+                .collect(Collectors.toCollection(java.util.LinkedHashSet::new));
+    }
+
+    private Set<String> expectedPlannedOpusModelIds() {
+        return List.of(
+                List.of("zh", "th"),
+                List.of("th", "zh"),
+                List.of("vi", "zh"),
+                List.of("zh", "id"),
+                List.of("id", "zh"),
+                List.of("ms", "zh"),
+                List.of("zh", "fr"),
+                List.of("fr", "zh"),
+                List.of("zh", "es"),
+                List.of("es", "zh"),
+                List.of("zh", "ru"),
+                List.of("ru", "zh"))
+                .stream()
+                .map(pair -> modelId(pair.get(0), pair.get(1)))
+                .collect(Collectors.toCollection(java.util.LinkedHashSet::new));
+    }
+
     private Set<String> unpublishedOpusModelIds() {
-        return Set.of(
-                modelId("en", "ko"),
-                modelId("zh", "th"),
-                modelId("th", "zh"),
-                modelId("vi", "zh"),
-                modelId("zh", "id"),
-                modelId("id", "zh"));
+        return Set.of(modelId("en", "ko"));
     }
 
     private String modelId(String sourceLanguage, String targetLanguage) {
