@@ -167,7 +167,7 @@ image-translation:
     presigned-url-expire-minutes: 30
     key-prefix: image-translation
   aliyun-translate-image:
-    enabled: ${ALIYUN_TRANSLATE_IMAGE_ENABLED:false}
+    enabled: ${ALIYUN_TRANSLATE_IMAGE_ENABLED:true}
     access-key-id: ${ALIYUN_ACCESS_KEY_ID:}
     access-key-secret: ${ALIYUN_ACCESS_KEY_SECRET:}
     endpoint: ${ALIYUN_MT_ENDPOINT:}

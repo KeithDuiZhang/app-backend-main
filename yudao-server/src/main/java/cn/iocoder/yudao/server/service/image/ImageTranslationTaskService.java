@@ -354,16 +354,22 @@ public class ImageTranslationTaskService {
             ProviderResult result = runProvider(taskId, provider, request);
             result = ensureFinalImageBytes(result);
             QualityResult quality = qualityChecker.check(result);
-            ImageTranslationProvider fallback = fallbackPolicy.fallbackAfter(result.getProvider());
-            if (quality.getStatus() == QualityStatus.FAIL && fallback != null) {
-                ProviderResult fallbackResult = runProvider(taskId, fallback, request.setScene(properties.getBailianImageTranslate().getScene()));
-                fallbackResult = ensureFinalImageBytes(fallbackResult);
-                QualityResult fallbackQuality = qualityChecker.check(fallbackResult);
-                if (fallbackQuality.getQualityScore() >= quality.getQualityScore()) {
-                    result = fallbackResult;
-                    quality = fallbackQuality;
+            if (quality.getStatus() == QualityStatus.FAIL) {
+                for (ImageTranslationProvider fallback : fallbackPolicy.fallbacksAfter(result.getProvider())) {
+                    ProviderResult fallbackResult = runProvider(taskId, fallback,
+                            request.setScene(properties.getBailianImageTranslate().getScene()));
+                    fallbackResult = ensureFinalImageBytes(fallbackResult);
+                    QualityResult fallbackQuality = qualityChecker.check(fallbackResult);
+                    if (fallbackQuality.getQualityScore() >= quality.getQualityScore()) {
+                        result = fallbackResult;
+                        quality = fallbackQuality;
+                    }
+                    if (quality.getStatus() != QualityStatus.FAIL) {
+                        break;
+                    }
                 }
-            } else if (quality.getStatus() == QualityStatus.FAIL && !fallbackPolicy.bailianEnabled()) {
+            }
+            if (quality.getStatus() == QualityStatus.FAIL && !fallbackPolicy.bailianEnabled()) {
                 log.info("image translation bailian disabled taskId={} provider={}", taskNo, result.getProvider());
             }
             persistProviderOutcome(task, result, quality);

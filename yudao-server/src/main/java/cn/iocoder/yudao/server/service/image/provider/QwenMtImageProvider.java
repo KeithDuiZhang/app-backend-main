@@ -128,8 +128,15 @@ public class QwenMtImageProvider implements ImageTranslationProvider {
                         .setCostMs(elapsedMs(start));
             }
             if ("FAILED".equalsIgnoreCase(status) || "ERROR".equalsIgnoreCase(status)) {
-                return failure(firstText(root, "code", "Code", "error_code", "ErrorCode"),
+                JsonNode output = root.path("output");
+                String code = firstNonBlank(
+                        firstText(root, "code", "Code", "error_code", "ErrorCode"),
+                        firstText(output, "code", "Code", "error_code", "ErrorCode"));
+                String message = firstNonBlank(
                         firstText(root, "message", "Message", "error_message", "ErrorMessage"),
+                        firstText(output, "message", "Message", "error_message", "ErrorMessage"));
+                return failure(code,
+                        message,
                         httpStatus,
                         start).setRequestId(firstText(root, "request_id", "requestId", "RequestId"))
                         .setRawResponseJson(root.toString())
@@ -235,6 +242,18 @@ public class QwenMtImageProvider implements ImageTranslationProvider {
         for (String key : keys) {
             if (node.has(key) && !node.get(key).isNull()) {
                 return node.get(key).asText("");
+            }
+        }
+        return "";
+    }
+
+    private String firstNonBlank(String... values) {
+        if (values == null) {
+            return "";
+        }
+        for (String value : values) {
+            if (StrUtil.isNotBlank(value)) {
+                return value;
             }
         }
         return "";

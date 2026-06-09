@@ -1,11 +1,17 @@
 param(
     [string] $JarPath = "D:\Code_Project\app-backend-main\yudao-server\target\yudao-server.jar",
-    [int] $ExpectedComponentCount = 59,
-    [int] $ExpectedOpusComponentCount = 54,
+    [int] $ExpectedComponentCount = 71,
+    [int] $ExpectedOpusComponentCount = 66,
+    [int] $ExpectedDownloadableOpusComponentCount = 54,
+    [int] $ExpectedPlannedOpusComponentCount = 12,
     [int] $ExpectedBusinessPackCount = 4,
     [string] $ExpectedRecommendedPackId = "offline-text-zh-centric-12",
     [int] $ExpectedRecommendedPackComponentCount = 22,
-    [long] $ExpectedRecommendedPackBytes = 1602490006
+    [long] $ExpectedRecommendedPackBytes = 751968666,
+    [int] $ExpectedImagePackComponentCount = 0,
+    [long] $ExpectedImagePackBytes = 0,
+    [int] $ExpectedConversationPackComponentCount = 3,
+    [long] $ExpectedConversationPackBytes = 902832184
 )
 
 $ErrorActionPreference = "Stop"
@@ -37,13 +43,14 @@ function As-Array([object] $Value) {
     return $items
 }
 
+function Test-PlannedComponent([object] $Component) {
+    return ([string]$Component.releaseStatus -match "planned") -or
+        [string]::IsNullOrWhiteSpace([string]$Component.url) -or
+        [string]::IsNullOrWhiteSpace([string]$Component.sha256)
+}
+
 $blockedIds = @(
-    "text-opus-marian-en-ko",
-    "text-opus-marian-zh-th",
-    "text-opus-marian-th-zh",
-    "text-opus-marian-vi-zh",
-    "text-opus-marian-zh-id",
-    "text-opus-marian-id-zh"
+    "text-opus-marian-en-ko"
 )
 
 $zip = [System.IO.Compression.ZipFile]::OpenRead($JarPath)
@@ -56,12 +63,14 @@ try {
 
 $componentIds = @($components | ForEach-Object { $_.packId })
 $opusComponents = @($components | Where-Object { $_.packId -like "text-opus-marian-*" })
+$downloadableOpusComponents = @($opusComponents | Where-Object { -not (Test-PlannedComponent $_) })
+$plannedOpusComponents = @($opusComponents | Where-Object { Test-PlannedComponent $_ })
 $blockedPresent = @($componentIds | Where-Object { $blockedIds -contains $_ })
 $componentById = @{}
 foreach ($component in $components) {
     $componentById[$component.packId] = $component
 }
-$missingOpusMetadata = @($opusComponents | Where-Object {
+$missingOpusMetadata = @($downloadableOpusComponents | Where-Object {
     [string]::IsNullOrWhiteSpace($_.url) -or
     [string]::IsNullOrWhiteSpace($_.sha256) -or
     [string]::IsNullOrWhiteSpace($_.manifestUrl) -or
@@ -72,6 +81,24 @@ $textPack = @($businessPacks | Where-Object { $_.packId -eq "offline-text-transl
 $imagePack = @($businessPacks | Where-Object { $_.packId -eq "offline-image-translation-full" })[0]
 $conversationPack = @($businessPacks | Where-Object { $_.packId -eq "offline-conversation-translation-full" })[0]
 $recommendedPack = @($businessPacks | Where-Object { $_.packId -eq $ExpectedRecommendedPackId })[0]
+$expectedImageComponents = @()
+$expectedConversationComponents = @("asr-sensevoice-core", "asr-whisper-wide", "tts-sherpa-core")
+$imageComponents = @($imagePack.components)
+$conversationComponents = @($conversationPack.components)
+$imageComputedBytes = 0L
+$conversationComputedBytes = 0L
+foreach ($componentId in $imageComponents) {
+    if ($componentById.ContainsKey($componentId)) {
+        $imageComputedBytes += [long]$componentById[$componentId].sizeBytes
+    }
+}
+foreach ($componentId in $conversationComponents) {
+    if ($componentById.ContainsKey($componentId)) {
+        $conversationComputedBytes += [long]$componentById[$componentId].sizeBytes
+    }
+}
+$imageComponentDiff = @(Compare-Object -ReferenceObject $expectedImageComponents -DifferenceObject $imageComponents)
+$conversationComponentDiff = @(Compare-Object -ReferenceObject $expectedConversationComponents -DifferenceObject $conversationComponents)
 $recommendedComponents = @()
 $recommendedMissingComponents = @()
 $recommendedComputedBytes = 0L
@@ -90,12 +117,20 @@ if ($null -ne $recommendedPack) {
 
 $ok = $components.Count -eq $ExpectedComponentCount -and
     $opusComponents.Count -eq $ExpectedOpusComponentCount -and
+    $downloadableOpusComponents.Count -eq $ExpectedDownloadableOpusComponentCount -and
+    $plannedOpusComponents.Count -eq $ExpectedPlannedOpusComponentCount -and
     $businessPacks.Count -eq $ExpectedBusinessPackCount -and
     $blockedPresent.Count -eq 0 -and
     $missingOpusMetadata.Count -eq 0 -and
     @($textPack.components).Count -eq 55 -and
-    @($imagePack.components).Count -eq 56 -and
-    @($conversationPack.components).Count -eq 58 -and
+    $imageComponents.Count -eq $ExpectedImagePackComponentCount -and
+    $imageComponentDiff.Count -eq 0 -and
+    [long]$imagePack.sizeBytes -eq $ExpectedImagePackBytes -and
+    $imageComputedBytes -eq $ExpectedImagePackBytes -and
+    $conversationComponents.Count -eq $ExpectedConversationPackComponentCount -and
+    $conversationComponentDiff.Count -eq 0 -and
+    [long]$conversationPack.sizeBytes -eq $ExpectedConversationPackBytes -and
+    $conversationComputedBytes -eq $ExpectedConversationPackBytes -and
     $null -ne $recommendedPack -and
     $recommendedComponents.Count -eq $ExpectedRecommendedPackComponentCount -and
     [long]$recommendedPack.sizeBytes -eq $ExpectedRecommendedPackBytes -and
@@ -108,12 +143,20 @@ $result = [pscustomobject]@{
     jarBytes = (Get-Item -LiteralPath $JarPath).Length
     componentCount = $components.Count
     opusComponentCount = $opusComponents.Count
+    downloadableOpusComponentCount = $downloadableOpusComponents.Count
+    plannedOpusComponentCount = $plannedOpusComponents.Count
     businessPackCount = $businessPacks.Count
     blockedComponentCount = $blockedPresent.Count
     opusMissingMetadataCount = $missingOpusMetadata.Count
     textPackComponents = @($textPack.components).Count
-    imagePackComponents = @($imagePack.components).Count
-    conversationPackComponents = @($conversationPack.components).Count
+    imagePackComponents = $imageComponents.Count
+    imagePackBytes = $(if ($null -ne $imagePack) { [long]$imagePack.sizeBytes } else { 0 })
+    imagePackComputedBytes = $imageComputedBytes
+    imagePackComponentDiffCount = $imageComponentDiff.Count
+    conversationPackComponents = $conversationComponents.Count
+    conversationPackBytes = $(if ($null -ne $conversationPack) { [long]$conversationPack.sizeBytes } else { 0 })
+    conversationPackComputedBytes = $conversationComputedBytes
+    conversationPackComponentDiffCount = $conversationComponentDiff.Count
     recommendedPackId = $ExpectedRecommendedPackId
     recommendedPackPresent = $null -ne $recommendedPack
     recommendedPackComponents = $recommendedComponents.Count

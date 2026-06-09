@@ -56,7 +56,7 @@ public class AppOfflineModelService {
             "D:/Code_Project/md_CN_model_repo/published/model-repo/cn/1.0.0";
     private static final String LOCAL_REPO_GUARD = "D:/Code_Project/md_CN_model_repo";
     private static final Set<String> REALTIME_TRANSLATION_LANGUAGES =
-            Set.of("zh", "en", "ja", "ko", "th", "vi", "id");
+            Set.of("zh", "en", "ja", "ko", "th", "vi", "id", "ms", "fr", "de", "es", "ru");
 
     @Resource
     private ResourceLoader resourceLoader;
@@ -275,7 +275,7 @@ public class AppOfflineModelService {
         }
         for (String componentId : componentIds) {
             ComponentPackRespVO component = componentPacksById.get(componentId);
-            if (component == null || StrUtil.isBlank(component.getUrl())) {
+            if (!isPublishedComponent(component)) {
                 throw ServiceExceptionUtil.invalidParamException("离线模型包暂不可用，请稍后重试");
             }
         }
@@ -373,10 +373,22 @@ public class AppOfflineModelService {
                 new String[]{"en", "ru"},
                 new String[]{"zh", "ko"},
                 new String[]{"ko", "zh"},
+                new String[]{"zh", "th"},
+                new String[]{"th", "zh"},
                 new String[]{"zh", "vi"},
+                new String[]{"vi", "zh"},
+                new String[]{"zh", "id"},
+                new String[]{"id", "zh"},
                 new String[]{"zh", "ms"},
+                new String[]{"ms", "zh"},
                 new String[]{"zh", "de"},
                 new String[]{"de", "zh"},
+                new String[]{"zh", "fr"},
+                new String[]{"fr", "zh"},
+                new String[]{"zh", "es"},
+                new String[]{"es", "zh"},
+                new String[]{"zh", "ru"},
+                new String[]{"ru", "zh"},
                 new String[]{"ja", "vi"},
                 new String[]{"ja", "es"},
                 new String[]{"ja", "fr"},
