@@ -4,6 +4,7 @@ import cn.iocoder.yudao.framework.common.exception.ServiceException;
 import cn.iocoder.yudao.server.service.app.AppOfflineModelService.BusinessPackRespVO;
 import cn.iocoder.yudao.server.service.app.AppOfflineModelService.ComponentPackRespVO;
 import cn.iocoder.yudao.server.service.app.AppOfflineModelService.DownloadUrlReqVO;
+import cn.iocoder.yudao.server.service.app.AppOfflineModelService.DownloadUrlRespVO;
 import cn.iocoder.yudao.server.service.app.AppOfflineModelService.ModelCatalogRespVO;
 import cn.iocoder.yudao.server.service.app.AppOfflineModelService.RequiredFileRespVO;
 import cn.iocoder.yudao.server.service.app.AppOfflineModelService.TranslationModelRespVO;
@@ -46,8 +47,14 @@ class AppOfflineModelServiceCatalogTest {
             @Override
             public CosConfig getCosRuntimeConfig() {
                 CosConfig config = new CosConfig();
+                config.setSecretId("test-secret-id");
+                config.setSecretKey("test-secret-key");
+                config.setBucket("kqtranslate-1300276385");
+                config.setRegion("ap-shanghai");
+                config.setEndpoint("https://cos.ap-shanghai.myqcloud.com");
                 config.setDomain("https://kqtranslate-1300276385.cos.ap-shanghai.myqcloud.com");
                 config.setPrefix("model-repo/cn/1.0.0/");
+                config.setSignedUrlTtlSeconds("60");
                 return config;
             }
         });
@@ -67,7 +74,8 @@ class AppOfflineModelServiceCatalogTest {
         assertEquals(2, catalog.getSchemaVersion());
         assertEquals("1.0.0", catalog.getReleaseVersion());
         assertTrue(catalog.isDownloadRequiresSignedUrl());
-        assertEquals(4, catalog.getBusinessPacks().size());
+        assertEquals(8, catalog.getBusinessPacks().size());
+        assertDefaultUserVisiblePacks(catalog);
         assertRecommendedZhCentricTextPack(catalog);
         assertBusinessPack(catalog.getBusinessPacks(), "offline-text-translation-full",
                 expectedBusinessComponents("text-hymt-core"));
@@ -162,6 +170,33 @@ class AppOfflineModelServiceCatalogTest {
         assertFalse(hymt.getSupportsRealtime());
         assertEquals("manual-enhance", hymt.getCapabilityStatus());
         assertEquals(List.of("text-hymt-enhance"), componentsById.get("text-hymt-core").getModelIds());
+
+        TranslationModelRespVO small100Model = modelsById.get("text-small100-multi");
+        assertNotNull(small100Model);
+        assertEquals("small100", small100Model.getFamily());
+        assertEquals("SMaLL-100", small100Model.getEngine());
+        assertEquals("*", small100Model.getSourceLanguageCode());
+        assertEquals("*", small100Model.getTargetLanguageCode());
+        assertEquals("text-small100-multi", small100Model.getComponentPackId());
+        assertEquals("onnx", small100Model.getModelFormat());
+        assertEquals("fp32", small100Model.getQuantization());
+        assertTrue(small100Model.getSupportsText());
+        assertTrue(small100Model.getSupportsOcrBlock());
+        assertTrue(small100Model.getSupportsRealtime());
+        assertTrue(small100Model.getSupportsBatch());
+        assertEquals("downloadable", small100Model.getCapabilityStatus());
+        assertEquals(1_866_441_897L, small100Model.getSizeBytes());
+        assertFalse(small100Model.getSha256().trim().isEmpty());
+
+        ComponentPackRespVO small100 = componentsById.get("text-small100-multi");
+        assertNotNull(small100);
+        assertEquals("translation", small100.getType());
+        assertEquals("SMaLL-100", small100.getEngine());
+        assertEquals("released", small100.getReleaseStatus());
+        assertEquals("translation/text-small100-multi/1.0.0", small100.getInstallPath());
+        assertEquals(1_866_441_897L, small100.getSizeBytes());
+        assertEquals(8, small100.getRequiredFiles().size());
+        assertEquals(List.of("text-small100-multi"), small100.getModelIds());
     }
 
     @Test
@@ -208,11 +243,25 @@ class AppOfflineModelServiceCatalogTest {
         assertFalse(exception.getMessage().contains("X-Amz-Signature"));
     }
 
-    private void assertBusinessPack(List<BusinessPackRespVO> packs, String packId, List<String> components) {
-        assertBusinessPack(packs, packId, components, null);
+    @Test
+    void downloadUrlsCreatesSmall100BusinessPackSignedUrl() {
+        DownloadUrlReqVO reqVO = new DownloadUrlReqVO();
+        reqVO.setBusinessPackId("small100_multi_v1");
+
+        DownloadUrlRespVO response = service.createDownloadUrls(1L, reqVO);
+
+        assertEquals(1, response.getComponents().size());
+        assertEquals("text-small100-multi", response.getComponents().get(0).getPackId());
+        assertEquals(1_866_441_897L, response.getComponents().get(0).getSizeBytes());
+        assertEquals(8, response.getComponents().get(0).getRequiredFiles().size());
+        assertFalse(response.getComponents().get(0).getDownloadUrl().trim().isEmpty());
     }
 
-    private void assertBusinessPack(List<BusinessPackRespVO> packs, String packId, List<String> components, Long sizeBytes) {
+    private BusinessPackRespVO assertBusinessPack(List<BusinessPackRespVO> packs, String packId, List<String> components) {
+        return assertBusinessPack(packs, packId, components, null);
+    }
+
+    private BusinessPackRespVO assertBusinessPack(List<BusinessPackRespVO> packs, String packId, List<String> components, Long sizeBytes) {
         BusinessPackRespVO pack = packs.stream()
                 .filter(item -> packId.equals(item.getPackId()))
                 .findFirst()
@@ -221,6 +270,25 @@ class AppOfflineModelServiceCatalogTest {
         if (sizeBytes != null) {
             assertEquals(sizeBytes, pack.getSizeBytes());
         }
+        return pack;
+    }
+
+    private void assertDefaultUserVisiblePacks(ModelCatalogRespVO catalog) {
+        assertBusinessPack(catalog.getBusinessPacks(), "opus_zh_core_v1",
+                List.of(
+                        "text-opus-marian-zh-en",
+                        "text-opus-marian-en-zh",
+                        "text-opus-marian-zh-ja",
+                        "text-opus-marian-ja-zh",
+                        "text-opus-marian-zh-ko",
+                        "text-opus-marian-ko-zh"),
+                460_419_006L);
+        BusinessPackRespVO small100 = assertBusinessPack(catalog.getBusinessPacks(), "small100_multi_v1",
+                List.of("text-small100-multi"), 1_866_441_897L);
+        assertEquals("released", small100.getReleaseStatus());
+        assertBusinessPack(catalog.getBusinessPacks(), "ocr_photo_recognition_v1", List.of(), 0L);
+        assertBusinessPack(catalog.getBusinessPacks(), "offline_dialog_voice_v1",
+                List.of("asr-sensevoice-core", "asr-whisper-wide", "tts-sherpa-core"), 902_832_184L);
     }
 
     private void assertRecommendedZhCentricTextPack(ModelCatalogRespVO catalog) {

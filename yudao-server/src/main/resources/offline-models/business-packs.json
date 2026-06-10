@@ -1,7 +1,60 @@
 [
   {
+    "packId": "opus_zh_core_v1",
+    "displayNameZh": "基础极速包",
+    "summaryZh": "中英、中日、中韩双向互译基础包，安装后可用于文本、拍照和离线对话里的翻译环节。",
+    "version": "1.0.0",
+    "releaseStatus": "test",
+    "components": [
+      "text-opus-marian-zh-en",
+      "text-opus-marian-en-zh",
+      "text-opus-marian-zh-ja",
+      "text-opus-marian-ja-zh",
+      "text-opus-marian-zh-ko",
+      "text-opus-marian-ko-zh"
+    ],
+    "sizeBytes": 460419006,
+    "dependencyModel": "component-progress"
+  },
+  {
+    "packId": "small100_multi_v1",
+    "displayNameZh": "多语言包",
+    "summaryZh": "更多语言之间的离线互译包。真机速度和质量验收通过后可下载使用。",
+    "version": "poc",
+    "releaseStatus": "released",
+    "components": [
+      "text-small100-multi"
+    ],
+    "sizeBytes": 1866441897,
+    "dependencyModel": "component-progress"
+  },
+  {
+    "packId": "ocr_photo_recognition_v1",
+    "displayNameZh": "拍照识别包",
+    "summaryZh": "拍照文字识别已随应用内置；翻译仍依赖基础包或多语言包。",
+    "version": "1.0.0",
+    "releaseStatus": "test",
+    "components": [],
+    "sizeBytes": 0,
+    "dependencyModel": "builtin"
+  },
+  {
+    "packId": "offline_dialog_voice_v1",
+    "displayNameZh": "离线对话语音包",
+    "summaryZh": "离线实时对话所需的语音识别和播报能力；不包含文本翻译模型。",
+    "version": "1.0.0",
+    "releaseStatus": "test",
+    "components": [
+      "asr-sensevoice-core",
+      "asr-whisper-wide",
+      "tts-sherpa-core"
+    ],
+    "sizeBytes": 902832184,
+    "dependencyModel": "component-progress"
+  },
+  {
     "packId": "offline-text-zh-centric-12",
-    "displayNameZh": "中文中心12语文本包",
+    "displayNameZh": "兼容：中文中心 12 语种文本包",
     "summaryZh": "中文与多语种互译将按直连模型提供，未发布方向暂不提供下载。",
     "version": "1.0.0",
     "releaseStatus": "planned",
@@ -34,7 +87,7 @@
   },
   {
     "packId": "offline-text-translation-full",
-    "displayNameZh": "文本翻译离线包",
+    "displayNameZh": "兼容：文本翻译扩展包",
     "summaryZh": "下载后可使用稳定离线文本翻译；增强翻译模式需手动开启。",
     "version": "1.0.0",
     "releaseStatus": "test",
@@ -100,7 +153,7 @@
   },
   {
     "packId": "offline-image-translation-full",
-    "displayNameZh": "拍照翻译离线包",
+    "displayNameZh": "兼容：拍照翻译离线包",
     "summaryZh": "拍照识别已内置；翻译结果仍依赖中文中心12语文本包或自选语言对。",
     "version": "1.0.0",
     "releaseStatus": "test",
@@ -110,7 +163,7 @@
   },
   {
     "packId": "offline-conversation-translation-full",
-    "displayNameZh": "实时对话离线包",
+    "displayNameZh": "兼容：实时对话离线包",
     "summaryZh": "补齐离线对话需要的语音识别和播报能力；不包含稳定翻译小包。",
     "version": "1.0.0",
     "releaseStatus": "test",
