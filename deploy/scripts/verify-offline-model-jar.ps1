@@ -1,17 +1,23 @@
 param(
     [string] $JarPath = "D:\Code_Project\app-backend-main\yudao-server\target\yudao-server.jar",
-    [int] $ExpectedComponentCount = 71,
+    [int] $ExpectedComponentCount = 72,
     [int] $ExpectedOpusComponentCount = 66,
     [int] $ExpectedDownloadableOpusComponentCount = 54,
     [int] $ExpectedPlannedOpusComponentCount = 12,
-    [int] $ExpectedBusinessPackCount = 4,
-    [string] $ExpectedRecommendedPackId = "offline-text-zh-centric-12",
-    [int] $ExpectedRecommendedPackComponentCount = 22,
-    [long] $ExpectedRecommendedPackBytes = 751968666,
+    [int] $ExpectedBusinessPackCount = 8,
+    [string] $ExpectedRecommendedPackId = "opus_zh_core_v1",
+    [int] $ExpectedRecommendedPackComponentCount = 6,
+    [long] $ExpectedRecommendedPackBytes = 460419006,
     [int] $ExpectedImagePackComponentCount = 0,
     [long] $ExpectedImagePackBytes = 0,
     [int] $ExpectedConversationPackComponentCount = 3,
-    [long] $ExpectedConversationPackBytes = 902832184
+    [long] $ExpectedConversationPackBytes = 902832184,
+    [string] $ExpectedSmall100BusinessPackId = "small100_multi_v1",
+    [string] $ExpectedSmall100ComponentId = "text-small100-multi",
+    [int] $ExpectedSmall100PackComponentCount = 1,
+    [long] $ExpectedSmall100PackBytes = 1866441897,
+    [int] $ExpectedSmall100RequiredFileCount = 8,
+    [string] $ExpectedSmall100ReleaseStatus = ""
 )
 
 $ErrorActionPreference = "Stop"
@@ -78,13 +84,18 @@ $missingOpusMetadata = @($downloadableOpusComponents | Where-Object {
 })
 
 $textPack = @($businessPacks | Where-Object { $_.packId -eq "offline-text-translation-full" })[0]
-$imagePack = @($businessPacks | Where-Object { $_.packId -eq "offline-image-translation-full" })[0]
-$conversationPack = @($businessPacks | Where-Object { $_.packId -eq "offline-conversation-translation-full" })[0]
+$imagePack = @($businessPacks | Where-Object { $_.packId -eq "ocr_photo_recognition_v1" })[0]
+$conversationPack = @($businessPacks | Where-Object { $_.packId -eq "offline_dialog_voice_v1" })[0]
 $recommendedPack = @($businessPacks | Where-Object { $_.packId -eq $ExpectedRecommendedPackId })[0]
+$small100Pack = @($businessPacks | Where-Object { $_.packId -eq $ExpectedSmall100BusinessPackId })[0]
+$small100Component = @($components | Where-Object { $_.packId -eq $ExpectedSmall100ComponentId })[0]
 $expectedImageComponents = @()
 $expectedConversationComponents = @("asr-sensevoice-core", "asr-whisper-wide", "tts-sherpa-core")
+$expectedSmall100Components = @($ExpectedSmall100ComponentId)
 $imageComponents = @($imagePack.components)
 $conversationComponents = @($conversationPack.components)
+$small100Components = @($small100Pack.components)
+$small100RequiredFiles = @($small100Component.requiredFiles)
 $imageComputedBytes = 0L
 $conversationComputedBytes = 0L
 foreach ($componentId in $imageComponents) {
@@ -99,6 +110,9 @@ foreach ($componentId in $conversationComponents) {
 }
 $imageComponentDiff = @(Compare-Object -ReferenceObject $expectedImageComponents -DifferenceObject $imageComponents)
 $conversationComponentDiff = @(Compare-Object -ReferenceObject $expectedConversationComponents -DifferenceObject $conversationComponents)
+$small100ComponentDiff = @(Compare-Object -ReferenceObject $expectedSmall100Components -DifferenceObject $small100Components)
+$small100ReleaseStatusOk = [string]::IsNullOrWhiteSpace($ExpectedSmall100ReleaseStatus) -or
+    [string]$small100Component.releaseStatus -eq $ExpectedSmall100ReleaseStatus
 $recommendedComponents = @()
 $recommendedMissingComponents = @()
 $recommendedComputedBytes = 0L
@@ -123,6 +137,14 @@ $ok = $components.Count -eq $ExpectedComponentCount -and
     $blockedPresent.Count -eq 0 -and
     $missingOpusMetadata.Count -eq 0 -and
     @($textPack.components).Count -eq 55 -and
+    $null -ne $small100Pack -and
+    $null -ne $small100Component -and
+    $small100Components.Count -eq $ExpectedSmall100PackComponentCount -and
+    $small100ComponentDiff.Count -eq 0 -and
+    [long]$small100Pack.sizeBytes -eq $ExpectedSmall100PackBytes -and
+    [long]$small100Component.sizeBytes -eq $ExpectedSmall100PackBytes -and
+    $small100RequiredFiles.Count -eq $ExpectedSmall100RequiredFileCount -and
+    $small100ReleaseStatusOk -and
     $imageComponents.Count -eq $ExpectedImagePackComponentCount -and
     $imageComponentDiff.Count -eq 0 -and
     [long]$imagePack.sizeBytes -eq $ExpectedImagePackBytes -and
@@ -149,6 +171,14 @@ $result = [pscustomobject]@{
     blockedComponentCount = $blockedPresent.Count
     opusMissingMetadataCount = $missingOpusMetadata.Count
     textPackComponents = @($textPack.components).Count
+    small100BusinessPackPresent = $null -ne $small100Pack
+    small100ComponentPresent = $null -ne $small100Component
+    small100BusinessPackComponents = $small100Components.Count
+    small100BusinessPackBytes = $(if ($null -ne $small100Pack) { [long]$small100Pack.sizeBytes } else { 0 })
+    small100ComponentBytes = $(if ($null -ne $small100Component) { [long]$small100Component.sizeBytes } else { 0 })
+    small100RequiredFileCount = $small100RequiredFiles.Count
+    small100ReleaseStatus = $(if ($null -ne $small100Component) { [string]$small100Component.releaseStatus } else { "" })
+    small100ReleaseStatusOk = $small100ReleaseStatusOk
     imagePackComponents = $imageComponents.Count
     imagePackBytes = $(if ($null -ne $imagePack) { [long]$imagePack.sizeBytes } else { 0 })
     imagePackComputedBytes = $imageComputedBytes

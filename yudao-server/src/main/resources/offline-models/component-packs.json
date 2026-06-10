@@ -432,6 +432,69 @@
     "modelIds": []
   },
   {
+    "packId": "text-small100-multi",
+    "type": "translation",
+    "engine": "SMaLL-100",
+    "version": "1.0.0",
+    "displayNameZh": "多语言离线翻译组件",
+    "summaryZh": "用于更多语言之间的离线文本翻译、拍照文字翻译和实时对话翻译。",
+    "releaseStatus": "released",
+    "minRamGb": 6,
+    "installPath": "translation/text-small100-multi/1.0.0",
+    "sourceBytes": 1866437453,
+    "sizeBytes": 1866441897,
+    "sha256": "31636626a1c2eb6818c928c5836c455b4460f329cb545e748e76b5fc220bacc2",
+    "url": "packs/translation/text-small100-multi/1.0.0/text-small100-multi-1.0.0.zip",
+    "objectKey": "model-repo/cn/1.0.0/packs/translation/text-small100-multi/1.0.0/text-small100-multi-1.0.0.zip",
+    "manifestUrl": "packs/translation/text-small100-multi/1.0.0/manifest.json",
+    "manifestObjectKey": "model-repo/cn/1.0.0/packs/translation/text-small100-multi/1.0.0/manifest.json",
+    "modelIds": [
+      "text-small100-multi"
+    ],
+    "requiredFiles": [
+      {
+        "path": "model.onnx",
+        "sizeBytes": 1860275258,
+        "sha256": "e9af23aff4bb7c277fcd20c94a6edef88e908b82a5af82c269f725010e6f4cc1"
+      },
+      {
+        "path": "sentencepiece.bpe.model",
+        "sizeBytes": 2423393,
+        "sha256": "d8f7c76ed2a5e0822be39f0a4f95a55eb19c78f4593ce609e2edbc2aea4d380a"
+      },
+      {
+        "path": "vocab.json",
+        "sizeBytes": 3708092,
+        "sha256": "b6e77e474aeea8f441363aca7614317c06381f3eacfe10fb9856d5081d1074cc"
+      },
+      {
+        "path": "config.json",
+        "sizeBytes": 890,
+        "sha256": "26fd3989cea6037d432c480f5181d05c088a613394d0361edc6605a6a1058715"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "sizeBytes": 1867,
+        "sha256": "d5a67f279887133e8eb8b9749fd1b6b5831bb1a040fcd6ac820296041f303ba2"
+      },
+      {
+        "path": "metadata.json",
+        "sizeBytes": 1390,
+        "sha256": "dc4ab17e57f94247e1dc15df13c8d3faa401957bada936ab139aecc6b9195c4d"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 2415,
+        "sha256": "acc555a63140b5a3c8ac5159e0bfe93d290416dd99e09d0b37b93596463ecc1c"
+      },
+      {
+        "path": "checksum.sha256",
+        "sizeBytes": 827,
+        "sha256": "321330d7e1e865704251843aaab2c8608370a15f87bc8257973a02f3bbd459be"
+      }
+    ]
+  },
+  {
     "packId": "text-opus-marian-en-zh",
     "type": "translation",
     "engine": "OPUS-Marian",

@@ -417,6 +417,8 @@ public class AppOfflineModelService {
             addOpusModel(models, pair[0], pair[1], componentsById);
         }
 
+        addSmall100Model(models, componentsById);
+
         TranslationModelRespVO m2m100 = new TranslationModelRespVO();
         m2m100.setModelId("text-m2m100-418m-int8");
         m2m100.setFamily("m2m100");
@@ -516,6 +518,44 @@ public class AppOfflineModelService {
         model.setAttribution("OPUS-MT / Marian");
         model.setRequiredPlan("offline_membership");
         model.setRecommendedDeviceLevel("LOW");
+        model.setMinAndroidSdk(23);
+        model.setMinIosVersion("13.0");
+        model.setCapabilityStatus(published ? "downloadable" : "planned");
+        models.add(model);
+    }
+
+    private static void addSmall100Model(List<TranslationModelRespVO> models,
+                                         Map<String, ComponentPackRespVO> componentsById) {
+        String modelId = "text-small100-multi";
+        ComponentPackRespVO component = componentsById.get(modelId);
+        boolean published = isPublishedComponent(component);
+        TranslationModelRespVO model = new TranslationModelRespVO();
+        model.setModelId(modelId);
+        model.setFamily("small100");
+        model.setEngine("SMaLL-100");
+        model.setSourceLanguageCode("*");
+        model.setTargetLanguageCode("*");
+        model.setComponentPackId(modelId);
+        model.setArtifactPaths(Map.of(
+                "model", "model.onnx",
+                "sentencepiece", "sentencepiece.bpe.model",
+                "vocab", "vocab.json",
+                "metadata", "metadata.json",
+                "manifest", "manifest.json",
+                "checksum", "checksum.sha256"));
+        model.setModelFormat("onnx");
+        model.setQuantization("fp32");
+        model.setSizeBytes(component != null && component.getSizeBytes() != null ? component.getSizeBytes() : 0L);
+        model.setSha256(component != null && component.getSha256() != null ? component.getSha256() : "");
+        model.setSupportsText(true);
+        model.setSupportsOcrBlock(true);
+        model.setSupportsRealtime(true);
+        model.setSupportsBatch(true);
+        model.setPriority(30);
+        model.setLicense("MIT");
+        model.setAttribution("SMaLL-100");
+        model.setRequiredPlan("offline_membership");
+        model.setRecommendedDeviceLevel("HIGH");
         model.setMinAndroidSdk(23);
         model.setMinIosVersion("13.0");
         model.setCapabilityStatus(published ? "downloadable" : "planned");
